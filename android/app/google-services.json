@@ -1,0 +1,76 @@
+{
+  "project_info": {
+    "project_number": "756588761844",
+    "project_id": "mera-app-41a4e",
+    "storage_bucket": "mera-app-41a4e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:756588761844:android:f8e13868e339832af544a1",
+        "android_client_info": {
+          "package_name": "com.example.food_user_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "756588761844-j32mkkj7e6n2hjjbojfv0alk61cjq0q2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOJ3W_Qe6DcGyG1AqthvZtSVVTpyuMxiY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "756588761844-j32mkkj7e6n2hjjbojfv0alk61cjq0q2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:756588761844:android:4ee318646a7facc5f544a1",
+        "android_client_info": {
+          "package_name": "com.example.mera_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "756588761844-dgc7424cf6dah7vitt9gv5e59ofhlm2s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mera_app",
+            "certificate_hash": "849ab367c3737ee978d24751a0e0591104f8a073"
+          }
+        },
+        {
+          "client_id": "756588761844-j32mkkj7e6n2hjjbojfv0alk61cjq0q2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOJ3W_Qe6DcGyG1AqthvZtSVVTpyuMxiY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "756588761844-j32mkkj7e6n2hjjbojfv0alk61cjq0q2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
