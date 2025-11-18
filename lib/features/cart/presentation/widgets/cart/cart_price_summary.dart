@@ -3,7 +3,7 @@ import 'package:food_user_app/core/theme/app_color.dart';
 import 'package:food_user_app/core/theme/text_style.dart';
 import 'package:food_user_app/features/cart/logic/bloc/cart_bloc.dart';
 import 'package:food_user_app/features/cart/presentation/screens/checkout_screen.dart';
-import 'package:food_user_app/features/cart/presentation/widgets/drinks_bottom_sheet.dart';
+import 'package:food_user_app/features/cart/presentation/widgets/cart/drinks_bottom_sheet.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

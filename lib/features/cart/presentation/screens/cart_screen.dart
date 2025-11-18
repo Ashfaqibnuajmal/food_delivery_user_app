@@ -6,9 +6,9 @@ import 'package:food_user_app/core/widgets/food_image.dart';
 import 'package:food_user_app/features/cart/controller/cart_controller.dart';
 import 'package:food_user_app/features/cart/logic/bloc/cart_bloc.dart';
 import 'package:food_user_app/features/cart/logic/bloc/cart_state.dart';
-import 'package:food_user_app/features/cart/presentation/widgets/cart_actions.dart';
-import 'package:food_user_app/features/cart/presentation/widgets/cart_item_info.dart';
-import 'package:food_user_app/features/cart/presentation/widgets/cart_price_summary.dart';
+import 'package:food_user_app/features/cart/presentation/widgets/cart/cart_actions.dart';
+import 'package:food_user_app/features/cart/presentation/widgets/cart/cart_item_info.dart';
+import 'package:food_user_app/features/cart/presentation/widgets/cart/cart_price_summary.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
