@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_user_app/core/theme/app_color.dart';
+import 'package:food_user_app/core/theme/text_style.dart';
 import 'package:food_user_app/features/cart/logic/bloc/cart_bloc.dart';
 import 'package:food_user_app/features/cart/logic/bloc/cart_event.dart';
 import 'package:food_user_app/features/cart/logic/bloc/cart_state.dart';
@@ -22,13 +23,7 @@ class FavoriteAddRow extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          price.isNotEmpty ? " ₹ $price.00" : "",
-          style: const TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
+        Text(price.isNotEmpty ? " ₹ $price.00" : "", style: mediumBold),
 
         BlocBuilder<CartBloc, CartState>(
           builder: (context, state) {
@@ -96,13 +91,7 @@ class FavoriteAddRow extends StatelessWidget {
                 ),
                 child: const Row(
                   children: [
-                    Text(
-                      "Add",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                    ),
+                    Text("Add", style: smallBold),
                     SizedBox(width: 4),
                     Icon(Icons.add_circle_rounded, color: Colors.black),
                   ],

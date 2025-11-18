@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_user_app/core/theme/app_color.dart';
+import 'package:food_user_app/core/theme/text_style.dart';
 import 'package:food_user_app/features/favorites/presentation/widgets/favorite_add_row.dart';
 import 'package:food_user_app/features/favorites/presentation/widgets/favorite_image.dart';
 import 'package:food_user_app/features/favorites/presentation/widgets/favorite_rating.dart';
@@ -46,14 +47,7 @@ class FavoriteCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        name,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                      Text(name, style: mediumBold),
 
                       const SizedBox(height: 2),
 
@@ -67,10 +61,7 @@ class FavoriteCard extends StatelessWidget {
                           const SizedBox(width: 4),
                           Text(
                             prepTime.isNotEmpty ? "$prepTime min" : "N/A",
-                            style: const TextStyle(
-                              color: Colors.grey,
-                              fontSize: 12,
-                            ),
+                            style: prepkcalTextStyle,
                           ),
                         ],
                       ),
