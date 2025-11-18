@@ -59,6 +59,7 @@ const TextStyle smallBold = TextStyle(
 );
 const TextStyle mediumBold = TextStyle(
   fontSize: 16,
+  color: Colors.black,
   fontWeight: FontWeight.bold,
 );
 
@@ -107,3 +108,11 @@ const TextStyle viewTextStyle = TextStyle(
   decorationThickness: 1.5,
   shadows: [Shadow(offset: Offset(1, 1), blurRadius: 2, color: Colors.black)],
 );
+
+TextStyle priceStyle({required bool isTodayOffer}) {
+  return TextStyle(
+    fontSize: 15,
+    fontWeight: FontWeight.w600,
+    color: isTodayOffer ? Colors.redAccent : Colors.black,
+  );
+}

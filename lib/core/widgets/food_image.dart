@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-class FavoriteImage extends StatelessWidget {
+class FoodImage extends StatelessWidget {
   final String imageUrl;
 
-  const FavoriteImage({super.key, required this.imageUrl});
+  const FoodImage({super.key, required this.imageUrl});
 
   @override
   Widget build(BuildContext context) {

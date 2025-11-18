@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_user_app/core/theme/app_color.dart';
 import 'package:food_user_app/core/theme/text_style.dart';
 import 'package:food_user_app/features/favorites/presentation/widgets/favorite_add_row.dart';
-import 'package:food_user_app/features/favorites/presentation/widgets/favorite_image.dart';
+import 'package:food_user_app/core/widgets/food_image.dart';
 import 'package:food_user_app/features/favorites/presentation/widgets/favorite_rating.dart';
 import 'package:food_user_app/features/favorites/presentation/widgets/favorite_remove_icon.dart';
 
@@ -39,7 +39,7 @@ class FavoriteCard extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Row(
               children: [
-                FavoriteImage(imageUrl: imageUrl),
+                FoodImage(imageUrl: imageUrl),
 
                 const SizedBox(width: 15),
 
