@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
-import 'package:food_user_app/features/home/logic/bloc/ai_chat_event.dart';
-import 'package:food_user_app/features/home/logic/bloc/ai_chat_state.dart';
+import 'ai_chat_event.dart';
+import 'ai_chat_state.dart';
 
 class AiChatBloc extends Bloc<AiChatEvent, AiChatState> {
   final String apiKey = "AIzaSyBY5c6Xoy95ohk65AsuTNMIeLlfqcMe8SQ";
@@ -54,12 +54,13 @@ class AiChatBloc extends Bloc<AiChatEvent, AiChatState> {
     "vegan", "vegetarian", "non-veg", "gluten free", "low carb", "sugar free",
     "spicy", "sweet", "savory", "tangy", "crunchy", "crispy", "juicy", "sauce",
   ];
-
   AiChatBloc() : super(const AiChatInitial()) {
     model = GenerativeModel(model: 'gemini-2.5-pro', apiKey: apiKey);
+
     on<GenerateContentEvent>((event, emit) async {
       final updatedMessages = List<Map<String, dynamic>>.from(state.messages)
         ..add({'text': event.prompt, 'isUser': true});
+
       bool allowed = allowedKeywords.any(
         (keyword) => event.prompt.toLowerCase().contains(keyword.toLowerCase()),
       );
@@ -67,40 +68,72 @@ class AiChatBloc extends Bloc<AiChatEvent, AiChatState> {
       if (!allowed) {
         updatedMessages.add({
           'text':
-              " Sorry, only food and cooking-related questions are allowed. Please try asking something about recipes, ingredients, or cooking methods.",
+              "❌ Only food & cooking-related questions are allowed.\nTry asking about recipes, ingredients, or preparation.",
           'isUser': false,
         });
+
         emit(AiChatLoaded(messages: updatedMessages));
-        return; // Stop further processing
+        return;
       }
+
       emit(
         AiChatLoading(messages: updatedMessages, loadingStage: "Thinking..."),
       );
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(seconds: 1));
+
       emit(
         AiChatLoading(messages: updatedMessages, loadingStage: "Analyzing..."),
       );
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(seconds: 1));
+
       emit(AiChatLoading(messages: updatedMessages, loadingStage: "Typing..."));
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(seconds: 1));
+
       try {
-        final content = [Content.text(event.prompt)];
-        final response = await model.generateContent(content);
+        final response = await model.generateContent([
+          Content.text(event.prompt),
+        ]);
 
         if (response.candidates.isNotEmpty) {
-          updatedMessages.add({'text': response.text ?? "", 'isUser': false});
+          updatedMessages.add({
+            'text': response.text ?? "No response found.",
+            'isUser': false,
+          });
         } else {
-          updatedMessages.add({'text': "No response found.", 'isUser': false});
+          updatedMessages.add({
+            'text': "⚠️ No response found.",
+            'isUser': false,
+          });
         }
 
         emit(AiChatLoaded(messages: updatedMessages));
       } catch (error) {
-        updatedMessages.add({
-          'text': "Error: ${error.toString()}",
-          'isUser': false,
-        });
+        String userFriendlyMessage = _handleAiError(error);
+
+        updatedMessages.add({'text': userFriendlyMessage, 'isUser': false});
+
         emit(AiChatError(error: error.toString(), messages: updatedMessages));
       }
     });
+  }
+
+  String _handleAiError(dynamic error) {
+    final errorStr = error.toString().toLowerCase();
+
+    if (errorStr.contains("503")) {
+      return "⚠️ **Server is busy right now.**\nPlease try again in a moment.";
+    }
+
+    if (errorStr.contains("timeout") ||
+        errorStr.contains("deadline") ||
+        errorStr.contains("future not completed")) {
+      return "⏳ Request timed out.\nPlease check your internet and try again.";
+    }
+
+    if (errorStr.contains("overloaded") || errorStr.contains("unavailable")) {
+      return "🚧 AI model is overloaded.\nPlease try again shortly.";
+    }
+
+    return "❌ Something went wrong.\nError: $error";
   }
 }
