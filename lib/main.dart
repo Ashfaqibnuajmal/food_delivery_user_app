@@ -17,6 +17,7 @@ import 'package:food_user_app/features/cart/logic/bloc/cart_bloc.dart';
 import 'package:food_user_app/features/cart/logic/cubit/cart/cart_quantity_cubit.dart';
 import 'package:food_user_app/features/cart/logic/cubit/cart/drink_selection_cubit.dart';
 import 'package:food_user_app/features/cart/logic/cubit/checkout/checkout_cubit.dart';
+import 'package:food_user_app/features/cart/logic/cubit/location/location_cubit.dart';
 import 'package:food_user_app/features/favorites/bloc/favorite_bloc.dart';
 import 'package:food_user_app/features/home/logic/bloc/ai_chat_bloc.dart';
 import 'package:food_user_app/features/home/logic/cubit/food_portion_cubit.dart';
@@ -45,6 +46,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => FoodCategoryFilterCubit()),
         BlocProvider(create: (context) => ImageBloc(ImageServices())),
         BlocProvider(create: (context) => DrinkSelectionCubit()),
+        BlocProvider(create: (context) => LocationCubit()),
         BlocProvider(create: (context) => CheckoutCubit()),
         BlocProvider(create: (context) => FoodPortionCubit(initialHalf: false)),
         BlocProvider(create: (context) => CartQuantityCubit()),

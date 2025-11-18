@@ -5,6 +5,8 @@ import 'package:food_user_app/core/widgets/loading.dart';
 import 'package:food_user_app/features/cart/logic/bloc/cart_bloc.dart';
 import 'package:food_user_app/features/cart/logic/bloc/cart_event.dart';
 import 'package:food_user_app/features/cart/logic/cubit/checkout/checkout_cubit.dart';
+import 'package:food_user_app/features/cart/logic/cubit/location/location_cubit.dart';
+import 'package:food_user_app/features/cart/logic/cubit/location/location_state.dart';
 import 'package:food_user_app/features/cart/presentation/screens/address_screen.dart';
 import 'package:food_user_app/features/profile/screens/order/order_history.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -87,67 +89,173 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // 🔹 Delivery Address
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            "Delivery Address",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                            ),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) => const AddressScreen(),
+                      Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: BlocBuilder<LocationCubit, LocationState>(
+                          builder: (context, state) {
+                            return Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // HEADER
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const Text(
+                                      "Delivery Address",
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18,
+                                      ),
+                                    ),
+                                    if (state is LocationLoaded)
+                                      InkWell(
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  AddressScreen(),
+                                            ),
+                                          );
+                                        },
+                                        child: Text(
+                                          "Change",
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                            decoration:
+                                                TextDecoration.underline,
+                                            decorationColor: Colors.grey,
+                                            decorationThickness: 1.5,
+                                            shadows: [
+                                              Shadow(
+                                                offset: const Offset(1, 1),
+                                                blurRadius: 2,
+                                                color: Colors.black.withOpacity(
+                                                  0.3,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                  ],
                                 ),
-                              );
-                            },
-                            child: Text(
-                              "Change",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                decoration: TextDecoration.underline,
-                                decorationColor: Colors.grey,
-                                decorationThickness: 1.5,
-                                shadows: [
-                                  Shadow(
-                                    offset: const Offset(1, 1),
-                                    blurRadius: 2,
-                                    color: Colors.black.withOpacity(0.3),
+
+                                const SizedBox(height: 15),
+
+                                if (state is LocationLoading)
+                                  const Center(child: LoadingIndicator())
+                                else if (state is LocationLoaded)
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Row(
+                                        children: [
+                                          Icon(
+                                            Icons.location_on_outlined,
+                                            color: Colors.grey,
+                                          ),
+                                          SizedBox(width: 6),
+                                          Text(
+                                            "Home",
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 6),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                          left: 40,
+                                        ),
+                                        child: Text(
+                                          state.address,
+                                          style: const TextStyle(
+                                            color: Colors.grey,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                else if (state is LocationError)
+                                  Center(
+                                    child: Text(
+                                      state.message,
+                                      textAlign: TextAlign.center,
+                                      style: const TextStyle(
+                                        color: Colors.red,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  )
+                                else
+                                  Center(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius: BorderRadius.circular(
+                                            30,
+                                          ),
+                                          child: Image.asset(
+                                            'assets/location.jpeg',
+                                            height: 200,
+                                            width: 200,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 30),
+                                        ElevatedButton.icon(
+                                          onPressed: () {
+                                            context
+                                                .read<LocationCubit>()
+                                                .getCurrentLocation();
+                                          },
+                                          icon: const Icon(
+                                            Icons.my_location,
+                                            size: 20,
+                                          ),
+                                          label: const Text(
+                                            "Add Current Location",
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          style: ElevatedButton.styleFrom(
+                                            elevation: 0,
+                                            backgroundColor: Colors.white,
+                                            foregroundColor: Colors.black,
+                                            side: const BorderSide(
+                                              color: Colors.black,
+                                            ),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(30),
+                                            ),
+                                            minimumSize: const Size(250, 50),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
+                              ],
+                            );
+                          },
+                        ),
                       ),
-                      const SizedBox(height: 10),
-                      const Row(
-                        children: [
-                          Icon(Icons.location_on_outlined, color: Colors.grey),
-                          SizedBox(width: 6),
-                          Text(
-                            "Home",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 6),
-                      const Text(
-                        "Kunnamkulam, Thrissur, Kerala",
-                        style: TextStyle(color: Colors.black, fontSize: 15),
-                      ),
+
                       const Divider(height: 30),
 
                       // 🔹 Payment Method
