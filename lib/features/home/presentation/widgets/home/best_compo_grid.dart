@@ -132,6 +132,28 @@ class BestCompoCardGrid extends StatelessWidget {
                                         ),
                                         BlocBuilder<CartBloc, CartState>(
                                           builder: (context, cartState) {
+                                            final bool inCart = cartState
+                                                .cartItems
+                                                .any(
+                                                  (it) =>
+                                                      it['id'].toString() ==
+                                                      id.toString(),
+                                                );
+                                            if (inCart) {
+                                              return Container(
+                                                height: 30,
+                                                width: 30,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.grey.shade300,
+                                                  shape: BoxShape.circle,
+                                                ),
+                                                child: const Icon(
+                                                  Icons.check,
+                                                  color: Colors.white,
+                                                  size: 18,
+                                                ),
+                                              );
+                                            }
                                             return InkWell(
                                               onTap: () {
                                                 final cartItems = {

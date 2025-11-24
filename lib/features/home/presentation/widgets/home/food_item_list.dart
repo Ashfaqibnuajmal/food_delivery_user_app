@@ -255,6 +255,43 @@ class FoodItemsList extends StatelessWidget {
                                             ),
                                             BlocBuilder<CartBloc, CartState>(
                                               builder: (context, state) {
+                                                final bool inCart = state
+                                                    .cartItems
+                                                    .any(
+                                                      (it) =>
+                                                          it['id']
+                                                              ?.toString() ==
+                                                          id.toString(),
+                                                    );
+                                                if (inCart) {
+                                                  return Container(
+                                                    padding:
+                                                        const EdgeInsets.symmetric(
+                                                          horizontal: 10,
+                                                          vertical: 4,
+                                                        ),
+                                                    decoration: BoxDecoration(
+                                                      color:
+                                                          Colors.grey.shade300,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                            50,
+                                                          ),
+                                                      boxShadow: const [
+                                                        BoxShadow(
+                                                          color: Colors.black26,
+                                                          blurRadius: 2,
+                                                          offset: Offset(1, 2),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    child: Icon(
+                                                      Icons.check,
+                                                      color: Colors.white,
+                                                      size: 20,
+                                                    ),
+                                                  );
+                                                }
                                                 return InkWell(
                                                   onTap: () {
                                                     final cartItems = {

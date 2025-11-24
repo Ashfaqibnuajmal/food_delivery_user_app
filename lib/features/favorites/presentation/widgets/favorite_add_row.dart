@@ -27,6 +27,33 @@ class FavoriteAddRow extends StatelessWidget {
 
         BlocBuilder<CartBloc, CartState>(
           builder: (context, state) {
+            final bool inCart = state.cartItems.any(
+              (it) => it['id']?.toString() == id.toString(),
+            );
+
+            /// IF ALREADY IN CART → SHOW CHECK BUTTON
+            if (inCart) {
+              return Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 4,
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade300,
+                  borderRadius: BorderRadius.circular(50),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.black26,
+                      blurRadius: 2,
+                      offset: Offset(1, 2),
+                    ),
+                  ],
+                ),
+                child: const Icon(Icons.check, color: Colors.white, size: 20),
+              );
+            }
+
+            /// IF NOT IN CART → SHOW ADD BUTTON
             return InkWell(
               onTap: () {
                 final cartItems = {

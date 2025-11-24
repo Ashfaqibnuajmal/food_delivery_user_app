@@ -5,6 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_user_app/core/theme/app_color.dart';
 import 'package:food_user_app/core/theme/text_style.dart';
 import 'package:food_user_app/core/widgets/loading.dart';
+import 'package:food_user_app/features/cart/logic/bloc/cart_bloc.dart';
+import 'package:food_user_app/features/cart/logic/bloc/cart_state.dart';
 import 'package:food_user_app/features/home/logic/cubit/today_offer_cubit.dart';
 import 'package:food_user_app/features/home/presentation/screens/food_details.dart';
 import 'package:shimmer/shimmer.dart';
@@ -151,20 +153,45 @@ class TodayOfferCard extends StatelessWidget {
                                   ),
                                 );
                               },
-                              child: SizedBox(
-                                height: 30,
-                                width: 90,
-                                child: Material(
-                                  color: Colors.black,
-                                  borderRadius: BorderRadius.circular(25),
-                                  elevation: 3,
-                                  child: const Center(
-                                    child: Text(
-                                      "Order Now",
-                                      style: orangeBoldSmallTextStyle,
+                              child: BlocBuilder<CartBloc, CartState>(
+                                builder: (context, state) {
+                                  final bool inCart = state.cartItems.any(
+                                    (it) =>
+                                        it['id']?.toString() == id.toString(),
+                                  );
+                                  if (inCart) {
+                                    return SizedBox(
+                                      height: 30,
+                                      width: 90,
+                                      child: Material(
+                                        color: Colors.black,
+                                        borderRadius: BorderRadius.circular(25),
+                                        elevation: 3,
+                                        child: const Center(
+                                          child: Text(
+                                            "Ordered",
+                                            style: orangeBoldSmallTextStyle,
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                  return SizedBox(
+                                    height: 30,
+                                    width: 90,
+                                    child: Material(
+                                      color: Colors.black,
+                                      borderRadius: BorderRadius.circular(25),
+                                      elevation: 3,
+                                      child: const Center(
+                                        child: Text(
+                                          "Order Now",
+                                          style: orangeBoldSmallTextStyle,
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ),
+                                  );
+                                },
                               ),
                             ),
                           ],

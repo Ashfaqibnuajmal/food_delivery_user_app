@@ -9,6 +9,12 @@ class CartController {
     return context.read<CartBloc>().state.cartItems;
   }
 
+  /// Get item length
+  static int getCartItemsCount(BuildContext context) {
+    final items = getCartItems(context);
+    return items.length;
+  }
+
   /// Get item quantity
   static int getQuantity(BuildContext context, String id) {
     return context.read<CartQuantityCubit>().state[id] ?? 1;

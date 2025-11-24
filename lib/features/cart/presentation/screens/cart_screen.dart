@@ -120,8 +120,11 @@ class _CartScreenState extends State<CartScreen> {
 
           BlocBuilder<CartBloc, CartState>(
             builder: (context, state) {
+              final cartitems = CartController.getCartItems(context);
+              if (cartitems.isEmpty) {
+                return SizedBox.shrink();
+              }
               final totals = CartController.calculateTotals(context);
-
               return Padding(
                 padding: const EdgeInsets.all(16),
                 child: CartPriceSummary(

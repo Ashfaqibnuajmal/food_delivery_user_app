@@ -43,6 +43,20 @@ class AddToCartButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<CartBloc, CartState>(
       builder: (context, state) {
+        final bool inCart = state.cartItems.any(
+          (it) => it['id']?.toString() == id.toString(),
+        );
+        if (inCart) {
+          return Container(
+            height: 35,
+            width: 35,
+            decoration: BoxDecoration(
+              color: Colors.grey.shade300,
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(Icons.check, color: Colors.white, size: 20),
+          );
+        }
         return InkWell(
           onTap: () => _addToCart(context),
           child: Container(
