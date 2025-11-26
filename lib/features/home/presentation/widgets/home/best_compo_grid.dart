@@ -247,12 +247,12 @@ class BestCompoCardGrid extends StatelessWidget {
                                             color: AppColors.primaryOrange,
                                           ),
                                           SizedBox(width: 3),
-                                          Text("0.0", style: ratingTextStyle),
+                                          Text("N/A", style: ratingTextStyle),
                                         ],
                                       );
                                     }
                                     final data = snapshot.data!;
-                                    final avg = (data['averageRating'] ?? 0.0)
+                                    final avg = (data['averageRating'] ?? "N/A")
                                         .toDouble();
                                     return Row(
                                       children: [

@@ -33,27 +33,22 @@ class RatingServices {
     int count = ratingsSnapshot.docs.length;
 
     // Step 3: Update both averageRating and totalRatings
-    await foodRef.update({
-      'averageRating': avg,
-      'totalRatings': count,
-    });
+    await foodRef.update({'averageRating': avg, 'totalRatings': count});
   }
 
   /// Stream to get both average and total ratings live
   static Stream<Map<String, dynamic>> getRatingData(String foodId) {
-    return _firestore
-        .collection('FoodItems')
-        .doc(foodId)
-        .snapshots()
-        .map((snapshot) {
+    return _firestore.collection('FoodItems').doc(foodId).snapshots().map((
+      snapshot,
+    ) {
       if (!snapshot.exists) {
-        return {'averageRating': 0.0, 'totalRatings': 0};
+        return {'averageRating': "N/A", 'totalRatings': 0};
       }
 
       final data = snapshot.data() ?? {};
       return {
-        'averageRating': (data['averageRating'] ?? 0.0).toDouble(),
-        'totalRatings': (data['totalRatings'] ?? 0),
+        'averageRating': (data['averageRating'] ?? "N/A").toDouble(),
+        'totalRatings': (data['totalRatings'] ?? "N/A"),
       };
     });
   }
@@ -65,12 +60,12 @@ class RatingServices {
         .collection('Ratings')
         .snapshots()
         .map((snapshot) {
-      if (snapshot.docs.isEmpty) return 0.0;
-      double total = 0;
-      for (var doc in snapshot.docs) {
-        total += (doc['rating'] ?? 0).toDouble();
-      }
-      return total / snapshot.docs.length;
-    });
+          if (snapshot.docs.isEmpty) return 0.0;
+          double total = 0;
+          for (var doc in snapshot.docs) {
+            total += (doc['rating'] ?? 'N/A').toDouble();
+          }
+          return total / snapshot.docs.length;
+        });
   }
 }

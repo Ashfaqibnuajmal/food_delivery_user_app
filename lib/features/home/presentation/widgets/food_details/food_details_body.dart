@@ -100,7 +100,7 @@ class FoodDetailsBody extends StatelessWidget {
                               children: [
                                 Icon(Icons.star, size: 16, color: Colors.amber),
                                 SizedBox(width: 4),
-                                Text("0.0"),
+                                Text("N/A"),
                               ],
                             );
                           }

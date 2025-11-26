@@ -31,7 +31,7 @@ class FavoriteRating extends StatelessWidget {
               children: [
                 Icon(Icons.star, size: 14, color: AppColors.primaryOrange),
                 SizedBox(width: 3),
-                Text("Add rating", style: ratingTextStyle),
+                Text("N/A", style: ratingTextStyle),
               ],
             );
           }
