@@ -32,6 +32,9 @@ dependencies:
   shimmer: ^3.0.0
   geolocator: ^14.0.2
   geocoding: ^4.0.0
+  dio: ^5.9.0
+  flutter_stripe: ^12.1.1
+  flutter_dotenv: ^6.0.0
 
 
 dev_dependencies:
@@ -44,3 +47,5 @@ flutter:
   
   assets:
     - assets/
+    - .env
+

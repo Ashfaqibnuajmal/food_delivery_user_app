@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:food_user_app/core/widgets/snack_bar.dart';
 import 'package:food_user_app/features/favorites/bloc/favorite_bloc.dart';
 import 'package:food_user_app/features/favorites/bloc/favorite_event.dart';
 import '../../../../core/theme/app_color.dart';
@@ -28,29 +29,7 @@ class RemoveFavoriteButton extends StatelessWidget {
           onPressed: () {
             context.read<FavoriteBloc>().add(RemoveFromFavorite(id));
 
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: const Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Remove from favorites!',
-                      style: TextStyle(
-                        color: Colors.red,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Icon(Icons.check_circle_outline, color: Colors.red),
-                  ],
-                ),
-                backgroundColor: Colors.white,
-                behavior: SnackBarBehavior.floating,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                duration: const Duration(seconds: 2),
-              ),
-            );
+            CustomSnackBar.redCustomSnackBar(context, "Remove from favorites!");
           },
           icon: const Icon(Icons.favorite, color: Colors.white),
           padding: EdgeInsets.zero,

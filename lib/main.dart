@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:food_user_app/core/blocs/category/food_category_filter_cubit.dart';
 import 'package:food_user_app/core/blocs/image/image_bloc.dart';
 import 'package:food_user_app/core/blocs/search/search_bloc.dart';
@@ -18,6 +20,8 @@ import 'package:food_user_app/features/cart/logic/cubit/cart/cart_quantity_cubit
 import 'package:food_user_app/features/cart/logic/cubit/cart/drink_selection_cubit.dart';
 import 'package:food_user_app/features/cart/logic/cubit/checkout/checkout_cubit.dart';
 import 'package:food_user_app/features/cart/logic/cubit/location/location_cubit.dart';
+import 'package:food_user_app/core/constant/payment_key.dart';
+import 'package:food_user_app/features/cart/logic/cubit/payment/select_payment_cubit.dart';
 import 'package:food_user_app/features/favorites/bloc/favorite_bloc.dart';
 import 'package:food_user_app/features/home/logic/bloc/ai_chat_bloc.dart';
 import 'package:food_user_app/features/home/logic/cubit/food_portion_cubit.dart';
@@ -27,7 +31,8 @@ import 'package:food_user_app/features/onboarding/screens/splash_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  await dotenv.load();
+  Stripe.publishableKey = publishableKey;
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   runApp(const MyApp());
@@ -55,6 +60,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => TodayOfferCubit()),
         BlocProvider(create: (context) => AuthBlocBloc()),
         BlocProvider(create: (context) => AiChatBloc()),
+        BlocProvider(create: (context) => SelectPaymentCubit()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
