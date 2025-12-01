@@ -51,7 +51,7 @@ class PriceRow extends StatelessWidget {
     required this.title,
     required this.value,
     this.isBold = false,
-    this.fontSize = 15,
+    this.fontSize = 14,
   });
 
   @override

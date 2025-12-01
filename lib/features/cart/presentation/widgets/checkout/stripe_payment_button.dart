@@ -1,25 +1,23 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_user_app/core/enum/payment_mode.dart';
 import 'package:food_user_app/core/theme/app_color.dart';
 import 'package:food_user_app/core/theme/text_style.dart';
 import 'package:food_user_app/core/widgets/snack_bar.dart';
 import 'package:food_user_app/features/cart/data/services/payment_service.dart';
+import 'package:food_user_app/core/enum/payment_mode.dart';
 import 'package:food_user_app/features/cart/logic/cubit/payment/select_payment_cubit.dart';
 
-class StripePaymentButton extends StatefulWidget {
-  final int totalAmount;
+class StripePayButton extends StatelessWidget {
+  final double total;
+  final bool stripePaid;
+  final VoidCallback onPaid;
 
-  const StripePaymentButton({super.key, required this.totalAmount});
-
-  @override
-  State<StripePaymentButton> createState() => _StripePaymentButtonState();
-}
-
-class _StripePaymentButtonState extends State<StripePaymentButton> {
-  bool stripePaid = false;
+  const StripePayButton({
+    super.key,
+    required this.total,
+    required this.stripePaid,
+    required this.onPaid,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -38,19 +36,14 @@ class _StripePaymentButtonState extends State<StripePaymentButton> {
               ),
               onPressed: () async {
                 try {
-                  await PaymentService().makePayment(widget.totalAmount);
-
+                  await PaymentService().makePayment(total.toInt());
                   CustomSnackBar.showSuccess(
                     context,
                     message: "Payment Successfully",
                   );
-
-                  setState(() => stripePaid = true);
+                  onPaid(); // Notify parent to update stripePaid
                 } catch (e) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Payment Failed")),
-                  );
-                  CustomSnackBar.redCustomSnackBar(context, "Payment Failed!");
+                  CustomSnackBar.redCustomSnackBar(context, "Payment Faid!");
                 }
               },
               child: const Row(
