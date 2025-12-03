@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:food_user_app/core/theme/app_color.dart';
 import 'package:food_user_app/core/widgets/appbar_action.dart';
 import 'package:food_user_app/core/widgets/loading.dart';
 import 'package:intl/intl.dart';
-import 'package:food_user_app/features/profile/screens/chat/chat_and_support.dart';
+import 'package:food_user_app/features/chat/presentation/screens/chat_and_support.dart';
 import 'package:food_user_app/features/profile/services/order_serivices.dart';
 
 class OrderHistory extends StatelessWidget {
@@ -353,8 +354,12 @@ class OrderHistory extends StatelessWidget {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) =>
-                                          const ChatAndSupport(),
+                                      builder: (context) => ChatAndSupport(
+                                        userId: FirebaseAuth
+                                            .instance
+                                            .currentUser!
+                                            .uid,
+                                      ),
                                     ),
                                   );
                                 },

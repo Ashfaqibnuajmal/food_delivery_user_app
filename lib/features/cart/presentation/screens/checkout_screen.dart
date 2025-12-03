@@ -78,7 +78,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       const DeliveryAddressSection(),
                       const SizedBox(height: 16),
                       PaymentMethodWidget(paymentCubit: paymentCubit),
-                      const SizedBox(height: 24),
+                      const SizedBox(height: 25),
                       PriceSummary(
                         subtotal: widget.subtotal,
                         discount: widget.discount,

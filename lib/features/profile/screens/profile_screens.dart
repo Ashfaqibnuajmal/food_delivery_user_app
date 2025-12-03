@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_user_app/core/blocs/image/image_bloc.dart';
@@ -9,7 +10,7 @@ import 'package:food_user_app/core/theme/app_color.dart';
 import 'package:food_user_app/core/widgets/appbar_action.dart';
 import 'package:food_user_app/core/widgets/loading.dart';
 import 'package:food_user_app/features/auth/bloc/auth_bloc_bloc.dart';
-import 'package:food_user_app/features/profile/screens/chat/chat_and_support.dart';
+import 'package:food_user_app/features/chat/presentation/screens/chat_and_support.dart';
 import 'package:food_user_app/features/profile/screens/order/order_history.dart';
 import 'package:food_user_app/features/profile/screens/settings/settings.dart';
 import 'package:shimmer/shimmer.dart';
@@ -248,7 +249,10 @@ class _ProfileScreensState extends State<ProfileScreens> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const ChatAndSupport(),
+                                  builder: (context) => ChatAndSupport(
+                                    userId:
+                                        FirebaseAuth.instance.currentUser!.uid,
+                                  ),
                                 ),
                               );
                             },
