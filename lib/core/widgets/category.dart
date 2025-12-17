@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -35,89 +36,146 @@ class CategoryList extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final data = categories[index].data() as Map<String, dynamic>;
                   final name = data['name'] ?? 'No Name';
-                  final imageUrl = data['imageUrl'] ?? '';
+
+                  // Support both imageUrls (list) and imageUrl (single) for backward compatibility
+                  List<String> imageUrls = [];
+                  if (data['imageUrls'] != null && data['imageUrls'] is List) {
+                    imageUrls = List<String>.from(data['imageUrls']);
+                  } else if (data['imageUrl'] != null &&
+                      data['imageUrl'].toString().isNotEmpty) {
+                    imageUrls = [data['imageUrl']];
+                  }
 
                   final isSelected = selectedCategory == name;
 
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: Column(
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            final cubit = context
-                                .read<FoodCategoryFilterCubit>();
-                            if (isSelected) {
-                              cubit.clearCategory(); // toggle off
-                            } else {
-                              cubit.selectCategory(name); // select category
-                            }
-                          },
-                          child: Container(
-                            width: 70,
-                            height: 70,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                color: isSelected
-                                    ? AppColors.primaryOrange
-                                    : AppColors.primaryOrange.withOpacity(0.1),
-                                width: 3,
-                              ),
-                            ),
-                            child: ClipOval(
-                              child: imageUrl.isNotEmpty
-                                  ? Image.network(
-                                      imageUrl,
-                                      fit: BoxFit.cover,
-                                      loadingBuilder:
-                                          (context, child, loadingProgress) {
-                                            if (loadingProgress == null) {
-                                              return child; // ✅ Image loaded
-                                            }
-                                            return Shimmer.fromColors(
-                                              baseColor: Colors.grey[300]!,
-                                              highlightColor: Colors.grey[100]!,
-                                              child: Container(
-                                                width: 70,
-                                                height: 70,
-                                                color: Colors.white,
-                                              ),
-                                            );
-                                          },
-                                      errorBuilder: (ctx, error, stack) =>
-                                          const Icon(
-                                            Icons.broken_image,
-                                            size: 40,
-                                            color: Colors.grey,
-                                          ),
-                                    )
-                                  : Shimmer.fromColors(
-                                      baseColor: Colors.grey[300]!,
-                                      highlightColor: Colors.grey[100]!,
-                                      child: const Icon(
-                                        Icons.image,
-                                        size: 40,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 3),
-                        Text(
-                          name,
-                          style: smallBold,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
-                    ),
+                  return CategoryItem(
+                    name: name,
+                    imageUrls: imageUrls,
+                    isSelected: isSelected,
                   );
                 },
               );
             },
           );
         },
+      ),
+    );
+  }
+}
+
+class CategoryItem extends StatefulWidget {
+  final String name;
+  final List<String> imageUrls;
+  final bool isSelected;
+
+  const CategoryItem({
+    super.key,
+    required this.name,
+    required this.imageUrls,
+    required this.isSelected,
+  });
+
+  @override
+  State<CategoryItem> createState() => _CategoryItemState();
+}
+
+class _CategoryItemState extends State<CategoryItem> {
+  int _currentImageIndex = 0;
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _startImageRotation();
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  void _startImageRotation() {
+    // Only start timer if there are multiple images
+    if (widget.imageUrls.length > 1) {
+      _timer = Timer.periodic(const Duration(minutes: 1), (timer) {
+        if (mounted) {
+          setState(() {
+            _currentImageIndex =
+                (_currentImageIndex + 1) % widget.imageUrls.length;
+          });
+        }
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      child: Column(
+        children: [
+          InkWell(
+            onTap: () {
+              final cubit = context.read<FoodCategoryFilterCubit>();
+              if (widget.isSelected) {
+                cubit.clearCategory();
+              } else {
+                cubit.selectCategory(widget.name);
+              }
+            },
+            child: Container(
+              width: 70,
+              height: 70,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: widget.isSelected
+                      ? AppColors.primaryOrange
+                      : AppColors.primaryOrange.withOpacity(0.1),
+                  width: 3,
+                ),
+              ),
+              child: ClipOval(
+                child: widget.imageUrls.isNotEmpty
+                    ? Image.network(
+                        widget.imageUrls[_currentImageIndex],
+                        fit: BoxFit.cover,
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) {
+                            return child; // ✅ Image loaded
+                          }
+                          return Shimmer.fromColors(
+                            baseColor: Colors.grey[300]!,
+                            highlightColor: Colors.grey[100]!,
+                            child: Container(
+                              width: 70,
+                              height: 70,
+                              color: Colors.white,
+                            ),
+                          );
+                        },
+                        errorBuilder: (ctx, error, stack) => const Icon(
+                          Icons.broken_image,
+                          size: 40,
+                          color: Colors.grey,
+                        ),
+                      )
+                    : Shimmer.fromColors(
+                        baseColor: Colors.grey[300]!,
+                        highlightColor: Colors.grey[100]!,
+                        child: const Icon(
+                          Icons.image,
+                          size: 40,
+                          color: Colors.white,
+                        ),
+                      ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 3),
+          Text(widget.name, style: smallBold, overflow: TextOverflow.ellipsis),
+        ],
       ),
     );
   }
