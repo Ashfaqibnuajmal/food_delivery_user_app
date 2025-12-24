@@ -5,8 +5,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:food_user_app/core/blocs/category/food_category_filter_cubit.dart';
 import 'package:food_user_app/core/blocs/image/image_bloc.dart';
-import 'package:food_user_app/features/search/bloc/search_bloc.dart';
-import 'package:food_user_app/features/search/bloc/search_event.dart';
+import 'package:food_user_app/features/search/logic/bloc/search_bloc.dart';
+import 'package:food_user_app/features/search/logic/bloc/search_event.dart';
 import 'package:food_user_app/core/constant/firebase_options.dart';
 import 'package:food_user_app/core/routes/app_routes.dart';
 import 'package:food_user_app/core/services/image_services.dart';
@@ -28,6 +28,7 @@ import 'package:food_user_app/features/home/logic/cubit/food_portion_cubit.dart'
 import 'package:food_user_app/features/home/logic/cubit/today_offer_cubit.dart';
 import 'package:food_user_app/features/onboarding/screens/intro_screen.dart';
 import 'package:food_user_app/features/onboarding/screens/splash_screen.dart';
+import 'package:food_user_app/features/search/logic/cubit/search_filter_cubit.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -49,6 +50,7 @@ class MyApp extends StatelessWidget {
           create: (context) => FoodSearchBloc()..add(const SetFoodItems([])),
         ),
         BlocProvider(create: (context) => FoodCategoryFilterCubit()),
+        BlocProvider(create: (context) => SearchFilterCubit()),
         BlocProvider(create: (context) => ImageBloc(ImageServices())),
         BlocProvider(create: (context) => DrinkSelectionCubit()),
         BlocProvider(create: (context) => LocationCubit()),

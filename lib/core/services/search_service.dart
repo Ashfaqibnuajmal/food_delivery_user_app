@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_user_app/features/search/bloc/search_bloc.dart';
+import 'package:food_user_app/features/search/logic/bloc/search_bloc.dart';
 
 class SearchService {
   static TextEditingController createSyncedController(BuildContext context) {

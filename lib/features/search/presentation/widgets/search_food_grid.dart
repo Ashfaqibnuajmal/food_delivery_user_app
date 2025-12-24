@@ -2,12 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_user_app/core/blocs/category/food_category_filter_cubit.dart';
-import 'package:food_user_app/features/search/bloc/search_bloc.dart';
-import 'package:food_user_app/features/search/bloc/search_event.dart';
-import 'package:food_user_app/features/search/bloc/search_state.dart';
 import 'package:food_user_app/core/theme/app_color.dart';
 import 'package:food_user_app/core/theme/text_style.dart';
 import 'package:food_user_app/core/widgets/loading.dart';
+import 'package:food_user_app/features/favorites/bloc/favorite_bloc.dart';
+import 'package:food_user_app/features/favorites/bloc/favorite_state.dart';
+import 'package:food_user_app/features/search/logic/bloc/search_bloc.dart';
+import 'package:food_user_app/features/search/logic/bloc/search_event.dart';
+import 'package:food_user_app/features/search/logic/bloc/search_state.dart';
+import 'package:food_user_app/features/search/logic/cubit/search_filter_cubit.dart';
 import 'package:food_user_app/features/search/presentation/widgets/search_food_card.dart';
 
 class SearchFoodGrid extends StatelessWidget {
@@ -29,59 +32,107 @@ class SearchFoodGrid extends StatelessWidget {
             return const Center(child: Text("No Food Items Found"));
           }
 
+          // 🔹 Convert Firestore docs to list
           final items = snapshot.data!.docs.map((doc) {
             final data = doc.data() as Map<String, dynamic>;
             data['id'] = doc.id;
             return data;
           }).toList();
 
-          // Send to Bloc once
+          // 🔹 Send items to FoodSearchBloc
           WidgetsBinding.instance.addPostFrameCallback((_) {
             context.read<FoodSearchBloc>().add(SetFoodItems(items));
           });
 
           return BlocBuilder<FoodSearchBloc, FoodSearchState>(
-            builder: (context, state) {
-              final filteredItems = state.filteredItems;
+            builder: (context, searchState) {
               return BlocBuilder<FoodCategoryFilterCubit, String?>(
                 builder: (context, selectedCategory) {
-                  final filteredByCategory = selectedCategory == null
-                      ? filteredItems
-                      : filteredItems
-                            .where(
-                              (item) => item['category'] == selectedCategory,
-                            )
-                            .toList();
+                  return BlocBuilder<SearchFilterCubit, bool>(
+                    builder: (context, showFavoritesOnly) {
+                      return BlocBuilder<FavoriteBloc, FavoriteState>(
+                        builder: (context, favState) {
+                          // Start with search-filtered items
+                          List<Map<String, dynamic>> finalItems =
+                              List<Map<String, dynamic>>.from(
+                                searchState.filteredItems,
+                              );
 
-                  if (filteredByCategory.isEmpty) {
-                    return const Center(
-                      child: Column(
-                        children: [
-                          SizedBox(height: 100),
-                          Icon(
-                            Icons.search_off_rounded,
-                            size: 50,
-                            color: AppColors.primaryOrange,
-                          ),
-                          Text("No Food Items Found!", style: emptyTextStyle),
-                        ],
-                      ),
-                    );
-                  }
+                          // 🔹 Category filter
+                          if (selectedCategory != null) {
+                            finalItems = finalItems
+                                .where(
+                                  (item) =>
+                                      item['category'] == selectedCategory,
+                                )
+                                .toList();
+                          }
 
-                  return GridView.builder(
-                    padding: const EdgeInsets.all(8),
-                    itemCount: filteredByCategory.length,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 12,
-                          mainAxisSpacing: 12,
-                          childAspectRatio: 0.72,
-                        ),
-                    itemBuilder: (context, index) {
-                      final food = filteredByCategory[index];
-                      return FoodCard(food: food);
+                          // 🔹 Favorites filter
+                          if (showFavoritesOnly) {
+                            final favoriteIds = favState.favorites
+                                .map((e) => e['id'].toString())
+                                .toSet();
+
+                            finalItems = finalItems.where((item) {
+                              final itemId = item['id'].toString();
+                              final isFavorite = favoriteIds.contains(itemId);
+                              return isFavorite;
+                            }).toList();
+                          }
+
+                          // 🔹 Empty state
+                          if (finalItems.isEmpty) {
+                            return Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    showFavoritesOnly
+                                        ? Icons.favorite_border
+                                        : Icons.search_off,
+                                    size: 50,
+                                    color: AppColors.primaryOrange,
+                                  ),
+                                  const SizedBox(height: 10),
+                                  Text(
+                                    showFavoritesOnly
+                                        ? "No Favorite Items Yet!"
+                                        : "No Food Items Found!",
+                                    style: emptyTextStyle,
+                                  ),
+                                  if (showFavoritesOnly) ...[
+                                    const SizedBox(height: 5),
+                                    const Text(
+                                      "Add items to favorites to see them here",
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ],
+                                ],
+                              ),
+                            );
+                          }
+
+                          // 🔹 Grid view
+                          return GridView.builder(
+                            padding: const EdgeInsets.all(8),
+                            itemCount: finalItems.length,
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  crossAxisSpacing: 12,
+                                  mainAxisSpacing: 12,
+                                  childAspectRatio: 0.72,
+                                ),
+                            itemBuilder: (context, index) {
+                              return FoodCard(food: finalItems[index]);
+                            },
+                          );
+                        },
+                      );
                     },
                   );
                 },

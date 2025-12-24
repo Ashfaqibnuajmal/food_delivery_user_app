@@ -1,6 +1,10 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart' show BlocBuilder, ReadContext;
 import 'package:food_user_app/core/theme/app_color.dart';
 import 'package:food_user_app/core/theme/text_style.dart';
+import 'package:food_user_app/features/search/logic/cubit/search_filter_cubit.dart';
 
 class FilterBottomSheet extends StatelessWidget {
   const FilterBottomSheet({super.key});
@@ -18,24 +22,54 @@ class FilterBottomSheet extends StatelessWidget {
             const SizedBox(height: 20),
 
             // 🔹 Favorites
-            Container(
-              margin: const EdgeInsets.only(bottom: 10),
-              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.grey.shade300),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text("Favorites", style: mediumBold),
-                  Switch(
-                    value: false,
-                    activeColor: AppColors.primaryOrange,
-                    onChanged: (value) {},
+            BlocBuilder<SearchFilterCubit, bool>(
+              builder: (context, isFavoriteOnly) {
+                return Container(
+                  margin: const EdgeInsets.only(bottom: 10),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 14,
+                    vertical: 6,
                   ),
-                ],
-              ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: Colors.grey.shade300,
+                      width: isFavoriteOnly ? 2 : 1,
+                    ),
+                    color: Colors.white,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.favorite,
+                            color: isFavoriteOnly
+                                ? AppColors.primaryOrange
+                                : Colors.grey,
+                            size: 20,
+                          ),
+                          const SizedBox(width: 8),
+                          const Text("Favorites Only", style: mediumBold),
+                        ],
+                      ),
+                      Switch(
+                        value: isFavoriteOnly,
+                        activeColor: AppColors.primaryOrange,
+                        inactiveThumbColor: AppColors.primaryOrange,
+                        inactiveTrackColor: Colors.white,
+                        focusColor: Colors.white,
+                        onChanged: (value) {
+                          context.read<SearchFilterCubit>().toggleFavorites(
+                            value,
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                );
+              },
             ),
 
             // 🔹 Combo Food
@@ -49,7 +83,13 @@ class FilterBottomSheet extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text("Combo Food", style: mediumBold),
+                  Row(
+                    children: [
+                      Icon(Icons.fastfood, color: Colors.grey, size: 20),
+                      const SizedBox(width: 8),
+                      const Text("Combo Food", style: mediumBold),
+                    ],
+                  ),
                   Switch(
                     value: false,
                     activeColor: AppColors.primaryOrange,
@@ -109,8 +149,17 @@ class FilterBottomSheet extends StatelessWidget {
                     borderRadius: BorderRadius.circular(30),
                   ),
                 ),
-                onPressed: () {},
-                child: const Text("Apply Filter", style: mediumBold),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text(
+                  "Apply Filter",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
             ),
 
