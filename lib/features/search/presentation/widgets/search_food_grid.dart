@@ -2,8 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_user_app/core/blocs/category/food_category_filter_cubit.dart';
-import 'package:food_user_app/core/theme/app_color.dart';
-import 'package:food_user_app/core/theme/text_style.dart';
 import 'package:food_user_app/core/widgets/loading.dart';
 import 'package:food_user_app/features/favorites/bloc/favorite_bloc.dart';
 import 'package:food_user_app/features/favorites/bloc/favorite_state.dart';
@@ -11,6 +9,7 @@ import 'package:food_user_app/features/search/logic/bloc/search_bloc.dart';
 import 'package:food_user_app/features/search/logic/bloc/search_event.dart';
 import 'package:food_user_app/features/search/logic/bloc/search_state.dart';
 import 'package:food_user_app/features/search/logic/cubit/search_filter_cubit.dart';
+import 'package:food_user_app/features/search/logic/cubit/search_filter_state.dart';
 import 'package:food_user_app/features/search/presentation/widgets/search_food_card.dart';
 
 class SearchFoodGrid extends StatelessWidget {
@@ -48,8 +47,12 @@ class SearchFoodGrid extends StatelessWidget {
             builder: (context, searchState) {
               return BlocBuilder<FoodCategoryFilterCubit, String?>(
                 builder: (context, selectedCategory) {
-                  return BlocBuilder<SearchFilterCubit, bool>(
-                    builder: (context, showFavoritesOnly) {
+                  // 🔹 Updated BlocBuilder for combined filters
+                  return BlocBuilder<SearchFilterCubit, SearchFilterState>(
+                    builder: (context, filterState) {
+                      final showFavoritesOnly = filterState.showFavoritesOnly;
+                      final showComboOnly = filterState.showComboOnly;
+
                       return BlocBuilder<FavoriteBloc, FavoriteState>(
                         builder: (context, favState) {
                           // Start with search-filtered items
@@ -76,43 +79,21 @@ class SearchFoodGrid extends StatelessWidget {
 
                             finalItems = finalItems.where((item) {
                               final itemId = item['id'].toString();
-                              final isFavorite = favoriteIds.contains(itemId);
-                              return isFavorite;
+                              return favoriteIds.contains(itemId);
                             }).toList();
+                          }
+
+                          // 🔹 Combo food filter
+                          if (showComboOnly) {
+                            finalItems = finalItems
+                                .where((item) => item['isCompo'] == true)
+                                .toList();
                           }
 
                           // 🔹 Empty state
                           if (finalItems.isEmpty) {
-                            return Center(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    showFavoritesOnly
-                                        ? Icons.favorite_border
-                                        : Icons.search_off,
-                                    size: 50,
-                                    color: AppColors.primaryOrange,
-                                  ),
-                                  const SizedBox(height: 10),
-                                  Text(
-                                    showFavoritesOnly
-                                        ? "No Favorite Items Yet!"
-                                        : "No Food Items Found!",
-                                    style: emptyTextStyle,
-                                  ),
-                                  if (showFavoritesOnly) ...[
-                                    const SizedBox(height: 5),
-                                    const Text(
-                                      "Add items to favorites to see them here",
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                  ],
-                                ],
-                              ),
+                            return const Center(
+                              child: Text("No Food Items Found"),
                             );
                           }
 

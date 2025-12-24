@@ -6,6 +6,7 @@ import 'package:food_user_app/core/widgets/appbar.dart';
 import 'package:food_user_app/core/widgets/category.dart';
 import 'package:food_user_app/core/widgets/search_bar.dart';
 import 'package:food_user_app/features/search/logic/cubit/search_filter_cubit.dart';
+import 'package:food_user_app/features/search/logic/cubit/search_filter_state.dart';
 import 'package:food_user_app/features/search/presentation/widgets/filter_bottom_sheet.dart';
 import 'package:food_user_app/features/search/presentation/widgets/search_food_grid.dart';
 
@@ -33,17 +34,22 @@ class SearchScreen extends StatelessWidget {
                       child: SearchBarController(controller: controller),
                     ),
                     const SizedBox(width: 10),
-                    BlocBuilder<SearchFilterCubit, bool>(
-                      builder: (context, showFavoritesOnly) {
+                    // 🔹 Filter Icon
+                    BlocBuilder<SearchFilterCubit, SearchFilterState>(
+                      builder: (context, filterState) {
+                        final isActive =
+                            filterState.showFavoritesOnly ||
+                            filterState.showComboOnly;
+
                         return Container(
                           height: 50,
                           width: 50,
                           decoration: BoxDecoration(
                             border: Border.all(
-                              color: showFavoritesOnly
+                              color: isActive
                                   ? AppColors.primaryOrange
                                   : AppColors.primaryOrange.withOpacity(0.3),
-                              width: showFavoritesOnly ? 2 : 1,
+                              width: isActive ? 2 : 1,
                             ),
                             color: Colors.white,
                             shape: BoxShape.circle,
@@ -58,7 +64,7 @@ class SearchScreen extends StatelessWidget {
                           child: IconButton(
                             icon: Icon(
                               Icons.filter_list_rounded,
-                              color: showFavoritesOnly
+                              color: isActive
                                   ? AppColors.primaryOrange
                                   : Colors.black,
                             ),
@@ -85,7 +91,7 @@ class SearchScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 const CategoryList(),
-                SearchFoodGrid(collection: "FoodItems"),
+                const SearchFoodGrid(collection: "FoodItems"),
               ],
             ),
           ),

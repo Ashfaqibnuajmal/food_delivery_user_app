@@ -1,10 +1,11 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart' show BlocBuilder, ReadContext;
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_user_app/core/theme/app_color.dart';
 import 'package:food_user_app/core/theme/text_style.dart';
 import 'package:food_user_app/features/search/logic/cubit/search_filter_cubit.dart';
+import 'package:food_user_app/features/search/logic/cubit/search_filter_state.dart';
 
 class FilterBottomSheet extends StatelessWidget {
   const FilterBottomSheet({super.key});
@@ -21,9 +22,11 @@ class FilterBottomSheet extends StatelessWidget {
             Center(child: const Text("Filter Foods.", style: bigBold)),
             const SizedBox(height: 20),
 
-            // 🔹 Favorites
-            BlocBuilder<SearchFilterCubit, bool>(
-              builder: (context, isFavoriteOnly) {
+            // 🔹 Favorites Only
+            BlocBuilder<SearchFilterCubit, SearchFilterState>(
+              builder: (context, filterState) {
+                final showFavoritesOnly = filterState.showFavoritesOnly;
+
                 return Container(
                   margin: const EdgeInsets.only(bottom: 10),
                   padding: const EdgeInsets.symmetric(
@@ -34,7 +37,7 @@ class FilterBottomSheet extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(
                       color: Colors.grey.shade300,
-                      width: isFavoriteOnly ? 2 : 1,
+                      width: showFavoritesOnly ? 2 : 1,
                     ),
                     color: Colors.white,
                   ),
@@ -45,7 +48,7 @@ class FilterBottomSheet extends StatelessWidget {
                         children: [
                           Icon(
                             Icons.favorite,
-                            color: isFavoriteOnly
+                            color: showFavoritesOnly
                                 ? AppColors.primaryOrange
                                 : Colors.grey,
                             size: 20,
@@ -55,11 +58,8 @@ class FilterBottomSheet extends StatelessWidget {
                         ],
                       ),
                       Switch(
-                        value: isFavoriteOnly,
+                        value: showFavoritesOnly,
                         activeColor: AppColors.primaryOrange,
-                        inactiveThumbColor: AppColors.primaryOrange,
-                        inactiveTrackColor: Colors.white,
-                        focusColor: Colors.white,
                         onChanged: (value) {
                           context.read<SearchFilterCubit>().toggleFavorites(
                             value,
@@ -73,30 +73,43 @@ class FilterBottomSheet extends StatelessWidget {
             ),
 
             // 🔹 Combo Food
-            Container(
-              margin: const EdgeInsets.only(bottom: 10),
-              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.grey.shade300),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
+            BlocBuilder<SearchFilterCubit, SearchFilterState>(
+              builder: (context, filterState) {
+                final showComboOnly = filterState.showComboOnly;
+
+                return Container(
+                  margin: const EdgeInsets.only(bottom: 10),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 14,
+                    vertical: 6,
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: Colors.grey.shade300),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Icon(Icons.fastfood, color: Colors.grey, size: 20),
-                      const SizedBox(width: 8),
-                      const Text("Combo Food", style: mediumBold),
+                      Row(
+                        children: [
+                          Icon(Icons.fastfood, color: Colors.grey, size: 20),
+                          const SizedBox(width: 8),
+                          const Text("Combo Food", style: mediumBold),
+                        ],
+                      ),
+                      Switch(
+                        value: showComboOnly,
+                        activeColor: AppColors.primaryOrange,
+                        onChanged: (value) {
+                          context.read<SearchFilterCubit>().toggleCompoFood(
+                            value,
+                          );
+                        },
+                      ),
                     ],
                   ),
-                  Switch(
-                    value: false,
-                    activeColor: AppColors.primaryOrange,
-                    onChanged: (value) {},
-                  ),
-                ],
-              ),
+                );
+              },
             ),
 
             const SizedBox(height: 20),

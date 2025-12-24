@@ -1,9 +1,21 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'search_filter_state.dart';
 
-class SearchFilterCubit extends Cubit<bool> {
-  SearchFilterCubit() : super(false);
+class SearchFilterCubit extends Cubit<SearchFilterState> {
+  SearchFilterCubit() : super(const SearchFilterState());
 
-  void toggleFavorites(bool value) => emit(value);
+  // 🔹 Toggle Favorites filter
+  void toggleFavorites(bool value) {
+    emit(state.copyWith(showFavoritesOnly: value));
+  }
 
-  void reset() => emit(false);
+  // 🔹 Toggle Combo Food filter
+  void toggleCompoFood(bool value) {
+    emit(state.copyWith(showComboOnly: value));
+  }
+
+  // 🔹 Optional: Reset filters
+  void resetFilters() {
+    emit(const SearchFilterState());
+  }
 }
