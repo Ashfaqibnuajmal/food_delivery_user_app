@@ -25,3 +25,10 @@ class SetFoodItems extends FoodSearchEvent {
   @override
   List<Object?> get props => [items];
 }
+
+class ToggleFavoritesFilter extends FoodSearchEvent {
+  final bool onlyFavorites;
+  const ToggleFavoritesFilter(this.onlyFavorites);
+  @override
+  List<Object?> get props => [onlyFavorites];
+}

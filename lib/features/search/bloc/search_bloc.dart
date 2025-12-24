@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_user_app/core/blocs/search/search_event.dart';
-import 'package:food_user_app/core/blocs/search/search_state.dart';
+import 'package:food_user_app/features/search/bloc/search_event.dart';
+import 'package:food_user_app/features/search/bloc/search_state.dart';
 
 class FoodSearchBloc extends Bloc<FoodSearchEvent, FoodSearchState> {
   FoodSearchBloc() : super(const FoodSearchState()) {

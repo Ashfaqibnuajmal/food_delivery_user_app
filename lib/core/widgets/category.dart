@@ -1,7 +1,7 @@
-import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:food_user_app/core/blocs/category/category_image_rotation_cubit.dart';
 import 'package:food_user_app/core/blocs/category/food_category_filter_cubit.dart';
 import 'package:food_user_app/core/theme/app_color.dart';
 import 'package:food_user_app/core/theme/text_style.dart';
@@ -35,9 +35,9 @@ class CategoryList extends StatelessWidget {
                 itemCount: categories.length,
                 itemBuilder: (context, index) {
                   final data = categories[index].data() as Map<String, dynamic>;
+
                   final name = data['name'] ?? 'No Name';
 
-                  // Support both imageUrls (list) and imageUrl (single) for backward compatibility
                   List<String> imageUrls = [];
                   if (data['imageUrls'] != null && data['imageUrls'] is List) {
                     imageUrls = List<String>.from(data['imageUrls']);
@@ -46,12 +46,15 @@ class CategoryList extends StatelessWidget {
                     imageUrls = [data['imageUrl']];
                   }
 
-                  final isSelected = selectedCategory == name;
-
-                  return CategoryItem(
-                    name: name,
-                    imageUrls: imageUrls,
-                    isSelected: isSelected,
+                  return BlocProvider(
+                    create: (_) => CategoryImageRotationCubit(
+                      imageCount: imageUrls.length,
+                    ),
+                    child: CategoryItem(
+                      name: name,
+                      imageUrls: imageUrls,
+                      isSelected: selectedCategory == name,
+                    ),
                   );
                 },
               );
@@ -63,7 +66,7 @@ class CategoryList extends StatelessWidget {
   }
 }
 
-class CategoryItem extends StatefulWidget {
+class CategoryItem extends StatelessWidget {
   final String name;
   final List<String> imageUrls;
   final bool isSelected;
@@ -76,40 +79,6 @@ class CategoryItem extends StatefulWidget {
   });
 
   @override
-  State<CategoryItem> createState() => _CategoryItemState();
-}
-
-class _CategoryItemState extends State<CategoryItem> {
-  int _currentImageIndex = 0;
-  Timer? _timer;
-
-  @override
-  void initState() {
-    super.initState();
-    _startImageRotation();
-  }
-
-  @override
-  void dispose() {
-    _timer?.cancel();
-    super.dispose();
-  }
-
-  void _startImageRotation() {
-    // Only start timer if there are multiple images
-    if (widget.imageUrls.length > 1) {
-      _timer = Timer.periodic(const Duration(minutes: 1), (timer) {
-        if (mounted) {
-          setState(() {
-            _currentImageIndex =
-                (_currentImageIndex + 1) % widget.imageUrls.length;
-          });
-        }
-      });
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -118,10 +87,10 @@ class _CategoryItemState extends State<CategoryItem> {
           InkWell(
             onTap: () {
               final cubit = context.read<FoodCategoryFilterCubit>();
-              if (widget.isSelected) {
+              if (isSelected) {
                 cubit.clearCategory();
               } else {
-                cubit.selectCategory(widget.name);
+                cubit.selectCategory(name);
               }
             },
             child: Container(
@@ -130,38 +99,17 @@ class _CategoryItemState extends State<CategoryItem> {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
-                  color: widget.isSelected
+                  color: isSelected
                       ? AppColors.primaryOrange
                       : AppColors.primaryOrange.withOpacity(0.1),
                   width: 3,
                 ),
               ),
               child: ClipOval(
-                child: widget.imageUrls.isNotEmpty
-                    ? Image.network(
-                        widget.imageUrls[_currentImageIndex],
-                        fit: BoxFit.cover,
-                        loadingBuilder: (context, child, loadingProgress) {
-                          if (loadingProgress == null) {
-                            return child; // ✅ Image loaded
-                          }
-                          return Shimmer.fromColors(
-                            baseColor: Colors.grey[300]!,
-                            highlightColor: Colors.grey[100]!,
-                            child: Container(
-                              width: 70,
-                              height: 70,
-                              color: Colors.white,
-                            ),
-                          );
-                        },
-                        errorBuilder: (ctx, error, stack) => const Icon(
-                          Icons.broken_image,
-                          size: 40,
-                          color: Colors.grey,
-                        ),
-                      )
-                    : Shimmer.fromColors(
+                child: BlocBuilder<CategoryImageRotationCubit, int>(
+                  builder: (context, index) {
+                    if (imageUrls.isEmpty) {
+                      return Shimmer.fromColors(
                         baseColor: Colors.grey[300]!,
                         highlightColor: Colors.grey[100]!,
                         child: const Icon(
@@ -169,12 +117,37 @@ class _CategoryItemState extends State<CategoryItem> {
                           size: 40,
                           color: Colors.white,
                         ),
+                      );
+                    }
+
+                    return Image.network(
+                      imageUrls[index],
+                      fit: BoxFit.cover,
+                      loadingBuilder: (context, child, loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Shimmer.fromColors(
+                          baseColor: Colors.grey[300]!,
+                          highlightColor: Colors.grey[100]!,
+                          child: Container(
+                            width: 70,
+                            height: 70,
+                            color: Colors.white,
+                          ),
+                        );
+                      },
+                      errorBuilder: (_, __, ___) => const Icon(
+                        Icons.broken_image,
+                        size: 40,
+                        color: Colors.grey,
                       ),
+                    );
+                  },
+                ),
               ),
             ),
           ),
           const SizedBox(height: 3),
-          Text(widget.name, style: smallBold, overflow: TextOverflow.ellipsis),
+          Text(name, style: smallBold, overflow: TextOverflow.ellipsis),
         ],
       ),
     );

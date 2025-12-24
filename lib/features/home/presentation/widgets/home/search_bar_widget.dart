@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_user_app/core/theme/app_color.dart';
 import 'package:food_user_app/core/theme/text_style.dart';
-import 'package:food_user_app/features/home/presentation/screens/search_screen.dart';
+import 'package:food_user_app/features/search/presentation/screens/search_screen.dart';
 
 class SearchBarWidget extends StatelessWidget {
   const SearchBarWidget({super.key});

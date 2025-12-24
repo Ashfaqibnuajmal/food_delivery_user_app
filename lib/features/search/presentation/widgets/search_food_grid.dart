@@ -2,13 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_user_app/core/blocs/category/food_category_filter_cubit.dart';
-import 'package:food_user_app/core/blocs/search/search_bloc.dart';
-import 'package:food_user_app/core/blocs/search/search_event.dart';
-import 'package:food_user_app/core/blocs/search/search_state.dart';
+import 'package:food_user_app/features/search/bloc/search_bloc.dart';
+import 'package:food_user_app/features/search/bloc/search_event.dart';
+import 'package:food_user_app/features/search/bloc/search_state.dart';
 import 'package:food_user_app/core/theme/app_color.dart';
 import 'package:food_user_app/core/theme/text_style.dart';
 import 'package:food_user_app/core/widgets/loading.dart';
-import 'package:food_user_app/features/home/presentation/widgets/search_page/search_food_card.dart';
+import 'package:food_user_app/features/search/presentation/widgets/search_food_card.dart';
 
 class SearchFoodGrid extends StatelessWidget {
   final String collection;

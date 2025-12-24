@@ -6,7 +6,7 @@ import 'package:food_user_app/features/favorites/bloc/favorite_bloc.dart';
 import 'package:food_user_app/features/favorites/bloc/favorite_state.dart';
 import 'package:food_user_app/features/favorites/controller/favorite_cotroller.dart';
 import 'package:food_user_app/features/favorites/presentation/widgets/favorite_card.dart';
-import '../../../../core/blocs/search/search_bloc.dart';
+import '../../../search/bloc/search_bloc.dart';
 
 class FavoritesScreen extends StatefulWidget {
   const FavoritesScreen({super.key});

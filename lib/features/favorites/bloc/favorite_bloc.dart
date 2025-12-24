@@ -14,20 +14,25 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
   }
 
   Future<void> _onLoadFavorites(
-      LoadFavorites event, Emitter<FavoriteState> emit) async {
+    LoadFavorites event,
+    Emitter<FavoriteState> emit,
+  ) async {
     final prefs = await SharedPreferences.getInstance();
     final jsonString = prefs.getString('favorites');
 
     if (jsonString != null) {
       final List<dynamic> decoded = jsonDecode(jsonString);
-      final List<Map<String, dynamic>> loaded =
-          decoded.map((e) => Map<String, dynamic>.from(e)).toList();
+      final List<Map<String, dynamic>> loaded = decoded
+          .map((e) => Map<String, dynamic>.from(e))
+          .toList();
       emit(state.copyWith(favorites: loaded));
     }
   }
 
   Future<void> _onAddFavorite(
-      AddToFavorite event, Emitter<FavoriteState> emit) async {
+    AddToFavorite event,
+    Emitter<FavoriteState> emit,
+  ) async {
     final updated = List<Map<String, dynamic>>.from(state.favorites);
     final exists = updated.any((item) => item['id'] == event.item['id']);
     if (!exists) {
@@ -37,20 +42,16 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
     }
   }
 
-  // -----------------------------
-  // Remove from favorite
-  // -----------------------------
   Future<void> _onRemoveFavorite(
-      RemoveFromFavorite event, Emitter<FavoriteState> emit) async {
+    RemoveFromFavorite event,
+    Emitter<FavoriteState> emit,
+  ) async {
     final updated = List<Map<String, dynamic>>.from(state.favorites)
       ..removeWhere((item) => item['id'] == event.itemId);
     emit(state.copyWith(favorites: updated));
     await _saveToLocal(updated); // ✅ Save after remove
   }
 
-  // -----------------------------
-  // Save to SharedPreferences
-  // -----------------------------
   Future<void> _saveToLocal(List<Map<String, dynamic>> favorites) async {
     final prefs = await SharedPreferences.getInstance();
     final jsonString = jsonEncode(favorites);

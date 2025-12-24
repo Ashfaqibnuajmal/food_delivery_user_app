@@ -15,10 +15,11 @@ class FoodSearchState extends Equatable {
   List<Map<String, dynamic>> get filteredItems {
     if (query.isEmpty) return allItems;
     return allItems
-        .where((item) => (item['name'] ?? '')
-            .toString()
-            .toLowerCase()
-            .contains(query.toLowerCase()))
+        .where(
+          (item) => (item['name'] ?? '').toString().toLowerCase().contains(
+            query.toLowerCase(),
+          ),
+        )
         .toList();
   }
 

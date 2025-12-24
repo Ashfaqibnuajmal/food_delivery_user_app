@@ -4,7 +4,7 @@ import 'package:food_user_app/core/widgets/food_container.dart';
 import 'package:food_user_app/features/home/presentation/screens/food_details.dart';
 import 'package:food_user_app/features/home/presentation/widgets/best_compo/add_to_cart_button.dart';
 import 'package:food_user_app/core/widgets/favorite_button.dart';
-import 'package:food_user_app/features/home/presentation/widgets/search_page/search_rating_bar.dart';
+import 'package:food_user_app/features/search/presentation/widgets/search_rating_bar.dart';
 import 'package:shimmer/shimmer.dart';
 
 class FoodCard extends StatelessWidget {

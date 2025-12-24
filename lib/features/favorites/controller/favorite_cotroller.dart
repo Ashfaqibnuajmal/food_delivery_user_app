@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_user_app/features/favorites/bloc/favorite_state.dart';
-import '../../../../core/blocs/search/search_bloc.dart';
+import '../../search/bloc/search_bloc.dart';
 
 class FavoritesController {
   /// Returns filtered favorites using the search query
