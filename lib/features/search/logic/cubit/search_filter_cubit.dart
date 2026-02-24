@@ -14,6 +14,11 @@ class SearchFilterCubit extends Cubit<SearchFilterState> {
     emit(state.copyWith(showComboOnly: value));
   }
 
+  // 🆕 Update Price Range filter (ONLY stores values)
+  void updatePriceRange(double min, double max) {
+    emit(state.copyWith(minPrice: min, maxPrice: max));
+  }
+
   // 🔹 Optional: Reset filters
   void resetFilters() {
     emit(const SearchFilterState());

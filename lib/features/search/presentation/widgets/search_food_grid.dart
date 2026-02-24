@@ -89,7 +89,12 @@ class SearchFoodGrid extends StatelessWidget {
                                 .where((item) => item['isCompo'] == true)
                                 .toList();
                           }
-
+                          final double minPrice = filterState.minPrice;
+                          final double maxPrice = filterState.maxPrice;
+                          finalItems = finalItems.where((item) {
+                            final price = (item['price'] as num).toDouble();
+                            return price >= minPrice && price <= maxPrice;
+                          }).toList();
                           // 🔹 Empty state
                           if (finalItems.isEmpty) {
                             return const Center(

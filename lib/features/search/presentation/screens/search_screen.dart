@@ -37,9 +37,13 @@ class SearchScreen extends StatelessWidget {
                     // 🔹 Filter Icon
                     BlocBuilder<SearchFilterCubit, SearchFilterState>(
                       builder: (context, filterState) {
+                        final bool isPriceFilterActive =
+                            filterState.minPrice != 10 ||
+                            filterState.maxPrice != 150;
                         final isActive =
                             filterState.showFavoritesOnly ||
-                            filterState.showComboOnly;
+                            filterState.showComboOnly ||
+                            isPriceFilterActive;
 
                         return Container(
                           height: 50,
