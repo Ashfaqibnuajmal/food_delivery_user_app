@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_user_app/core/blocs/category/food_category_filter_cubit.dart';
+import 'package:food_user_app/core/theme/app_color.dart';
+import 'package:food_user_app/core/theme/text_style.dart';
 import 'package:food_user_app/core/widgets/loading.dart';
 import 'package:food_user_app/features/favorites/bloc/favorite_bloc.dart';
 import 'package:food_user_app/features/favorites/bloc/favorite_state.dart';
@@ -89,6 +91,7 @@ class SearchFoodGrid extends StatelessWidget {
                                 .where((item) => item['isCompo'] == true)
                                 .toList();
                           }
+
                           final double minPrice = filterState.minPrice;
                           final double maxPrice = filterState.maxPrice;
                           finalItems = finalItems.where((item) {
@@ -101,7 +104,42 @@ class SearchFoodGrid extends StatelessWidget {
                               child: Text("No Food Items Found"),
                             );
                           }
-
+                          if (filterState.minRating != null) {
+                            finalItems = finalItems.where((item) {
+                              final rating = (item['averageRating'] ?? 0)
+                                  .toDouble();
+                              return rating >= filterState.minRating!;
+                            }).toList();
+                          }
+                          final bool isRatingApplied =
+                              filterState.minRating != null;
+                          if (finalItems.isEmpty) {
+                            return Center(
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 24,
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Icon(
+                                      Icons.star_border_rounded,
+                                      size: 48,
+                                      color: AppColors.primaryOrange,
+                                    ),
+                                    const SizedBox(height: 12),
+                                    Text(
+                                      isRatingApplied
+                                          ? "No food items found with ${filterState.minRating}+ rating"
+                                          : "No food items found",
+                                      textAlign: TextAlign.center,
+                                      style: mediumBold,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          }
                           // 🔹 Grid view
                           return GridView.builder(
                             padding: const EdgeInsets.all(8),

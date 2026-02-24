@@ -19,6 +19,16 @@ class SearchFilterCubit extends Cubit<SearchFilterState> {
     emit(state.copyWith(minPrice: min, maxPrice: max));
   }
 
+  // ⭐ Set minimum rating filter
+  void updateMinRating(int rating) {
+    emit(state.copyWith(minRating: rating));
+  }
+
+  // ⭐ Clear rating filter (no rating applied)
+  void clearRating() {
+    emit(state.copyWith(minRating: null));
+  }
+
   // 🔹 Optional: Reset filters
   void resetFilters() {
     emit(const SearchFilterState());

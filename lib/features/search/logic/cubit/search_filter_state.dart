@@ -8,6 +8,8 @@ class SearchFilterState extends Equatable {
   final double minPrice;
   final double maxPrice;
 
+  // ⭐ Rating filter (null = no filter)
+  final int? minRating;
   const SearchFilterState({
     this.showFavoritesOnly = false,
     this.showComboOnly = false,
@@ -15,6 +17,9 @@ class SearchFilterState extends Equatable {
     // 🆕 Default price range
     this.minPrice = 10,
     this.maxPrice = 150,
+
+    // ⭐ default: no rating filter
+    this.minRating,
   });
 
   SearchFilterState copyWith({
@@ -22,12 +27,14 @@ class SearchFilterState extends Equatable {
     bool? showComboOnly,
     double? minPrice,
     double? maxPrice,
+    int? minRating,
   }) {
     return SearchFilterState(
       showFavoritesOnly: showFavoritesOnly ?? this.showFavoritesOnly,
       showComboOnly: showComboOnly ?? this.showComboOnly,
       minPrice: minPrice ?? this.minPrice,
       maxPrice: maxPrice ?? this.maxPrice,
+      minRating: minRating,
     );
   }
 
@@ -37,5 +44,6 @@ class SearchFilterState extends Equatable {
     showComboOnly,
     minPrice,
     maxPrice,
+    minRating,
   ];
 }
