@@ -116,3 +116,11 @@ TextStyle priceStyle({required bool isTodayOffer}) {
     color: isTodayOffer ? Colors.redAccent : Colors.black,
   );
 }
+
+TextStyle selectableText({required bool isSelected}) {
+  return TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w600,
+    color: isSelected ? AppColors.primaryOrange : Colors.black87,
+  );
+}

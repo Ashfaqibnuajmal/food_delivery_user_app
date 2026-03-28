@@ -120,10 +120,7 @@ class FilterBottomSheet extends StatelessWidget {
                   children: [
                     Text(
                       "₹${filterState.minPrice.toInt()} - ₹${filterState.maxPrice.toInt()}",
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w600,
-                        color: Colors.grey,
-                      ),
+                      style: mediumBold,
                     ),
                     RangeSlider(
                       values: RangeValues(
@@ -202,12 +199,7 @@ class FilterBottomSheet extends StatelessWidget {
                             const SizedBox(width: 4),
                             Text(
                               "$rating+",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                color: isSelected
-                                    ? AppColors.primaryOrange
-                                    : Colors.black87,
-                              ),
+                              style: selectableText(isSelected: isSelected),
                             ),
                           ],
                         ),
@@ -219,47 +211,6 @@ class FilterBottomSheet extends StatelessWidget {
             ),
 
             const SizedBox(height: 30),
-            // //Rating
-            // const Text("Rating", style: mediumBold),
-            // const SizedBox(height: 10),
-            // BlocBuilder<SearchFilterCubit, SearchFilterState>(
-            //   builder: (context, filterState) {
-            //     return Wrap(
-            //       spacing: 8,
-            //       children: List.generate(5, (index) {
-            //         final rating = index + 1;
-            //         final isSelected = filterState.minRating == rating;
-            //         return ChoiceChip(
-            //           selected: isSelected,
-            //           onSelected: (_) {
-            //             if (isSelected) {
-            //               context.read<SearchFilterCubit>().clearRating();
-            //             } else {
-            //               context.read<SearchFilterCubit>().updateMinRating(
-            //                 rating,
-            //               );
-            //             }
-            //           },
-            //           selectedColor: AppColors.secondaryOrange,
-            //           label: Row(
-            //             mainAxisSize: MainAxisSize.min,
-            //             children: [
-            //               Icon(
-            //                 Icons.start,
-            //                 size: 16,
-            //                 color: AppColors.primaryOrange,
-            //               ),
-            //               const SizedBox(width: 4),
-            //               Text("$rating"),
-            //             ],
-            //           ),
-            //         );
-            //       }),
-            //     );
-            //   },
-            // ),
-            // const SizedBox(height: 30),
-            // 🔹 Apply Button
             SizedBox(
               width: double.infinity,
               height: 48,
