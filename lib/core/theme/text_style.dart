@@ -57,6 +57,11 @@ const TextStyle smallBold = TextStyle(
   fontSize: 14,
   fontWeight: FontWeight.bold,
 );
+const TextStyle redBold = TextStyle(
+  fontSize: 14,
+  fontWeight: FontWeight.bold,
+  color: Colors.red,
+);
 const TextStyle mediumBold = TextStyle(
   fontSize: 16,
   color: Colors.black,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:food_user_app/core/theme/text_style.dart';
 import 'package:food_user_app/features/cart/logic/bloc/cart_bloc.dart';
 import 'package:food_user_app/features/cart/logic/bloc/cart_event.dart';
 import 'package:food_user_app/features/cart/logic/cubit/cart/cart_quantity_cubit.dart';
@@ -84,18 +85,11 @@ void _showDeleteDialog(BuildContext context, String id) {
                 ),
               ),
               const SizedBox(height: 16),
-              const Text(
-                'Remove food?',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black,
-                ),
-              ),
+              const Text('Remove food?', style: bigBold),
               const SizedBox(height: 12),
               const Text(
                 'Are you sure you want to remove \nthis food?',
-                style: TextStyle(fontSize: 16, color: Colors.black87),
+                style: greySmallTextStyle,
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 24),
@@ -112,13 +106,7 @@ void _showDeleteDialog(BuildContext context, String id) {
                           borderRadius: BorderRadius.circular(8),
                         ),
                       ),
-                      child: const Text(
-                        'NO',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
+                      child: const Text('NO', style: smallBold),
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -135,13 +123,7 @@ void _showDeleteDialog(BuildContext context, String id) {
                             content: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  'Removed from Cart!',
-                                  style: TextStyle(
-                                    color: Colors.red,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
+                                Text('Removed from Cart!', style: redBold),
                                 Icon(
                                   Icons.check_circle_outline,
                                   color: Colors.red,
@@ -168,13 +150,7 @@ void _showDeleteDialog(BuildContext context, String id) {
                         ),
                         elevation: 0,
                       ),
-                      child: const Text(
-                        'YES',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
+                      child: const Text('YES', style: smallBold),
                     ),
                   ),
                 ],

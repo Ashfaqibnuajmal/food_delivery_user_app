@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:food_user_app/features/chat/services/chat_services.dart';
 import 'package:food_user_app/features/chat/presentation/widgets/chat_delete_message.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ChatController {
   final UserChatServices _chatService = UserChatServices();
@@ -30,6 +31,15 @@ class ChatController {
       }
     } catch (e) {
       debugPrint("Error loading user info: $e");
+    }
+  }
+
+  Future<void> makeCall() async {
+    final Uri url = Uri(scheme: "tel", path: '9048591273');
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      debugPrint("Could not launch call");
     }
   }
 

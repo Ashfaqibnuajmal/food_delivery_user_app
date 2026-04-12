@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_user_app/core/theme/text_style.dart';
+import 'package:food_user_app/features/chat/logic/controller/chat_controller.dart';
 
 class ChatHeader extends StatelessWidget {
   final String title;
@@ -15,6 +16,7 @@ class ChatHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ChatController controller = ChatController();
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       decoration: const BoxDecoration(color: Colors.white),
@@ -39,7 +41,7 @@ class ChatHeader extends StatelessWidget {
               ),
             ],
           ),
-          IconButton(onPressed: () {}, icon: Icon(Icons.call)),
+          IconButton(onPressed: controller.makeCall, icon: Icon(Icons.call)),
         ],
       ),
     );

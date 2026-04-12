@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_user_app/core/theme/text_style.dart';
 
 class DeleteMessageDialog extends StatelessWidget {
   final Future<void> Function() onDelete;
@@ -33,10 +34,7 @@ class DeleteMessageDialog extends StatelessWidget {
             const SizedBox(height: 16),
 
             // 📝 Title
-            const Text(
-              'Delete message?',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-            ),
+            const Text('Delete message?', style: bigBold),
 
             const SizedBox(height: 12),
 
@@ -44,7 +42,7 @@ class DeleteMessageDialog extends StatelessWidget {
             const Text(
               'Are you sure you want to delete\nthis message?',
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 16, color: Colors.black87),
+              style: greySmallTextStyle,
             ),
 
             const SizedBox(height: 24),
@@ -60,7 +58,7 @@ class DeleteMessageDialog extends StatelessWidget {
                       backgroundColor: const Color(0xFFE5E5E5),
                       foregroundColor: Colors.black87,
                     ),
-                    child: const Text('NO'),
+                    child: const Text('NO', style: smallBold),
                   ),
                 ),
 
@@ -79,13 +77,7 @@ class DeleteMessageDialog extends StatelessWidget {
                           content: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                'Message deleted!',
-                                style: TextStyle(
-                                  color: Colors.red,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
+                              Text('Message deleted!', style: redBold),
                               Icon(
                                 Icons.check_circle_outline,
                                 color: Colors.red,
@@ -106,7 +98,7 @@ class DeleteMessageDialog extends StatelessWidget {
                       foregroundColor: Colors.white,
                       elevation: 0,
                     ),
-                    child: const Text('YES'),
+                    child: const Text('YES', style: smallBold),
                   ),
                 ),
               ],
