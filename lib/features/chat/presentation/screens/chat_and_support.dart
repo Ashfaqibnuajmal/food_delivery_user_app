@@ -29,7 +29,7 @@ class _ChatAndSupportState extends State<ChatAndSupport> {
         child: Column(
           children: [
             ChatHeader(
-              title: "Support",
+              title: "Admin",
               subtitle: "Online",
               onBack: () {
                 Navigator.pop(context);

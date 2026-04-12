@@ -17,44 +17,29 @@ class ChatHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        boxShadow: [BoxShadow(blurRadius: 4, color: Colors.black12)],
-      ),
+      decoration: const BoxDecoration(color: Colors.white),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          // 🔙 Back Button
-          IconButton(
-            onPressed: onBack,
-            icon: const Icon(Icons.arrow_back_ios_new),
-          ),
-
-          const SizedBox(width: 6),
-
-          // 👤 Profile Avatar
-          const CircleAvatar(
-            radius: 22,
-            backgroundColor: Colors.grey,
-            child: Icon(Icons.person, color: Colors.white),
-          ),
-
-          const SizedBox(width: 10),
-
-          // 📝 Title + Subtitle
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          Row(
             children: [
-              Text(title, style: bigBold),
-              const SizedBox(height: 2),
-              Text(subtitle, style: greySmallTextStyle),
+              IconButton(
+                onPressed: onBack,
+                icon: const Icon(Icons.arrow_back_ios_new),
+              ),
+
+              const SizedBox(width: 6),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(title, style: bigBold),
+                  const SizedBox(height: 2),
+                  Text(subtitle, style: greySmallTextStyle),
+                ],
+              ),
             ],
           ),
-
-          const Spacer(),
-
-          // 📞 Optional actions
-          IconButton(onPressed: () {}, icon: const Icon(Icons.call_outlined)),
-          IconButton(onPressed: () {}, icon: const Icon(Icons.more_vert)),
+          IconButton(onPressed: () {}, icon: Icon(Icons.call)),
         ],
       ),
     );

@@ -21,12 +21,6 @@ class ChatInputField extends StatelessWidget {
       ),
       child: Row(
         children: [
-          // 📎 Attachment icon (future use)
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.add, color: Colors.grey),
-          ),
-
           // ✍️ Text Field
           Expanded(
             child: Container(
@@ -49,7 +43,7 @@ class ChatInputField extends StatelessWidget {
 
           const SizedBox(width: 6),
 
-          // 🎤 / 📤 Dynamic Button
+          // 📤 Send Button Only
           ValueListenableBuilder(
             valueListenable: controller,
             builder: (context, TextEditingValue value, child) {
@@ -61,11 +55,8 @@ class ChatInputField extends StatelessWidget {
                   shape: BoxShape.circle,
                 ),
                 child: IconButton(
-                  icon: Icon(
-                    isTyping ? Icons.send : Icons.mic,
-                    color: Colors.white,
-                  ),
-                  onPressed: isTyping ? onSend : () {},
+                  icon: const Icon(Icons.send, color: Colors.white),
+                  onPressed: isTyping ? onSend : null,
                 ),
               );
             },
