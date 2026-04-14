@@ -1,8 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:food_user_app/locationfix/location/location_state.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-
-import 'location_state.dart';
 
 class LocationCubit extends Cubit<LocationState> {
   LocationCubit() : super(LocationInitial());
@@ -13,7 +12,7 @@ class LocationCubit extends Cubit<LocationState> {
     try {
       bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
       if (!serviceEnabled) {
-        emit(LocationError(message: "Please enable location services (GPS)."));
+        emit(LocationServiceDisabled()); // 🔴 New state for GPS off
         return;
       }
 
@@ -21,7 +20,6 @@ class LocationCubit extends Cubit<LocationState> {
 
       if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
-
         if (permission == LocationPermission.denied) {
           emit(LocationError(message: "Location permission denied."));
           return;
@@ -40,7 +38,7 @@ class LocationCubit extends Cubit<LocationState> {
 
       Position position = await Geolocator.getCurrentPosition(
         locationSettings: const LocationSettings(
-          accuracy: LocationAccuracy.best, // Best accuracy
+          accuracy: LocationAccuracy.best,
         ),
       );
 
@@ -50,7 +48,6 @@ class LocationCubit extends Cubit<LocationState> {
       );
 
       String address = "Unknown location";
-
       if (placemarks.isNotEmpty) {
         final p = placemarks.first;
         address =

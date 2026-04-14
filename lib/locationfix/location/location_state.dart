@@ -4,6 +4,8 @@ class LocationInitial extends LocationState {}
 
 class LocationLoading extends LocationState {}
 
+class LocationServiceDisabled extends LocationState {}
+
 class LocationLoaded extends LocationState {
   final double latitude;
   final double longitude;
@@ -18,6 +20,5 @@ class LocationLoaded extends LocationState {
 
 class LocationError extends LocationState {
   final String message;
-
   LocationError({required this.message});
 }
