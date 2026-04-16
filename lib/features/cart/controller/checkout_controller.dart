@@ -2,8 +2,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_user_app/features/cart/logic/bloc/cart_bloc.dart';
 import 'package:food_user_app/features/cart/logic/bloc/cart_event.dart';
 import 'package:food_user_app/features/cart/logic/cubit/checkout/checkout_cubit.dart';
-import 'package:food_user_app/locationfix/location/location_cubit.dart';
-import 'package:food_user_app/locationfix/location/location_state.dart';
+import '../../../../location/location_cubit.dart';
+import '../../../../location/location_state.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

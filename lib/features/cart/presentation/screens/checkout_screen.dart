@@ -11,7 +11,7 @@ import 'package:food_user_app/core/enum/payment_mode.dart';
 import 'package:food_user_app/features/cart/logic/cubit/payment/select_payment_cubit.dart';
 import 'package:food_user_app/features/cart/presentation/widgets/checkout/checkout_price_row.dart';
 import 'package:food_user_app/features/cart/presentation/widgets/checkout/place_order_button.dart';
-import 'package:food_user_app/locationfix/location/delivery_address_section.dart';
+import '../../../../../location/delivery_address_section.dart';
 import 'package:food_user_app/features/cart/presentation/widgets/checkout/stripe_payment_button.dart';
 import 'package:food_user_app/features/profile/screens/order/order_history.dart';
 

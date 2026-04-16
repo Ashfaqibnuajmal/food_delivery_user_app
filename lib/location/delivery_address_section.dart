@@ -232,7 +232,7 @@ import 'package:food_user_app/locationfix/location/address_card.dart';
 import 'package:food_user_app/locationfix/location/address_model.dart';
 import 'package:food_user_app/locationfix/location/location_cubit.dart';
 import 'package:food_user_app/locationfix/location/location_state.dart';
-import 'package:food_user_app/locationfix/address_screen.dart';
+import 'package:food_user_app/locationfix/location/address_screen.dart';
 import 'package:geolocator/geolocator.dart';
 
 class DeliveryAddressSection extends StatefulWidget {
