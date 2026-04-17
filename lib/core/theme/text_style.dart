@@ -56,6 +56,7 @@ const TextStyle anyColorTextStyleSmall = TextStyle(
 const TextStyle smallBold = TextStyle(
   fontSize: 14,
   fontWeight: FontWeight.bold,
+  color: Colors.black,
 );
 const TextStyle redBold = TextStyle(
   fontSize: 14,

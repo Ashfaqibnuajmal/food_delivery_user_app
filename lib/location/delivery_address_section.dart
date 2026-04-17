@@ -19,8 +19,6 @@ class DeliveryAddressSection extends StatefulWidget {
 }
 
 class _DeliveryAddressSectionState extends State<DeliveryAddressSection> {
-  AddressModel? _manualAddress;
-
   // ✅ GPS off alert — Cancel button or Open Settings button
   void _showGPSAlert(BuildContext context) {
     showDialog(
@@ -89,8 +87,12 @@ class _DeliveryAddressSectionState extends State<DeliveryAddressSection> {
       ),
     );
 
-    if (selected != null && mounted) {
-      setState(() => _manualAddress = selected);
+    if (selected != null && context.mounted) {
+      context.read<LocationCubit>().selectManualAddress(
+        label: selected.label,
+        address: selected.street,
+        phone: selected.phone,
+      );
     }
   }
 
@@ -106,8 +108,7 @@ class _DeliveryAddressSectionState extends State<DeliveryAddressSection> {
         },
         child: BlocBuilder<LocationCubit, LocationState>(
           builder: (context, state) {
-            final showManual = _manualAddress != null;
-
+            final showManual = state is ManualAddressSelected;
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -136,9 +137,9 @@ class _DeliveryAddressSectionState extends State<DeliveryAddressSection> {
                 if (showManual)
                   AddressCard(
                     icon: Icons.home_outlined,
-                    title: _manualAddress!.label,
-                    subtitle: _manualAddress!.street,
-                    phone: _manualAddress!.phone,
+                    title: (state).label,
+                    subtitle: state.address,
+                    phone: state.phone,
                     onChangeTap: () => _goToSavedAddresses(context),
                   )
                 /// Loading

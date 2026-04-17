@@ -1,20 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_user_app/core/theme/app_color.dart';
+import 'package:food_user_app/core/theme/text_style.dart';
 import 'package:food_user_app/core/widgets/appbar.dart';
 import 'package:food_user_app/location/add_address_screen.dart';
 import 'package:food_user_app/location/address_cubit.dart';
 import 'package:food_user_app/location/address_model.dart';
 
-class AddressScreen extends StatefulWidget {
+class AddressScreen extends StatelessWidget {
   const AddressScreen({super.key});
-
-  @override
-  State<AddressScreen> createState() => _AddressScreenState();
-}
-
-class _AddressScreenState extends State<AddressScreen> {
-  AddressModel? _selectedAddress;
 
   // ── Delete confirmation dialog ──
   void _showDeleteDialog(BuildContext context, String id) {
@@ -63,17 +57,13 @@ class _AddressScreenState extends State<AddressScreen> {
                       style: TextButton.styleFrom(
                         backgroundColor: const Color(0xFFE5E5E5),
                       ),
-                      child: const Text('NO'),
+                      child: const Text('NO', style: smallBold),
                     ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
-                        if (_selectedAddress?.id == id) {
-                          setState(() => _selectedAddress = null);
-                        }
-
                         context.read<AddressCubit>().removeAddress(id);
                         Navigator.pop(ctx);
 
@@ -84,7 +74,7 @@ class _AddressScreenState extends State<AddressScreen> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFFE53E3E),
                       ),
-                      child: const Text('YES'),
+                      child: const Text('YES', style: smallBold),
                     ),
                   ),
                 ],
@@ -98,6 +88,7 @@ class _AddressScreenState extends State<AddressScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final cubit = context.read<AddressCubit>();
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: CustomAppBar(title: "Address"),
@@ -114,12 +105,12 @@ class _AddressScreenState extends State<AddressScreen> {
                         separatorBuilder: (_, __) => const SizedBox(height: 12),
                         itemBuilder: (context, index) {
                           final addr = addresses[index];
-                          final isSelected = _selectedAddress?.id == addr.id;
+                          final isSelected =
+                              cubit.selectedAddress?.id == addr.id;
 
                           return GestureDetector(
-                            onTap: () => setState(() {
-                              _selectedAddress = isSelected ? null : addr;
-                            }),
+                            onTap: () =>
+                                cubit.selectAddress(isSelected ? null : addr),
                             onLongPress: () =>
                                 _showDeleteDialog(context, addr.id),
                             child: AnimatedContainer(
@@ -239,9 +230,9 @@ class _AddressScreenState extends State<AddressScreen> {
                     const SizedBox(height: 10),
 
                     ElevatedButton(
-                      onPressed: _selectedAddress == null
+                      onPressed: cubit.selectedAddress == null
                           ? null
-                          : () => Navigator.pop(context, _selectedAddress),
+                          : () => Navigator.pop(context, cubit.selectedAddress),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.primaryOrange,
                         foregroundColor: Colors.white,

@@ -69,4 +69,12 @@ class LocationCubit extends Cubit<LocationState> {
       emit(LocationError(message: "Error getting location: $e"));
     }
   }
+
+  void selectManualAddress({
+    required String label,
+    required String address,
+    required String phone,
+  }) {
+    emit(ManualAddressSelected(label: label, address: address, phone: phone));
+  }
 }

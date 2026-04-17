@@ -1,23 +1,27 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'address_model.dart';
+import 'package:food_user_app/location/address_model.dart';
 
 class AddressCubit extends Cubit<List<AddressModel>> {
   AddressCubit() : super([]) {
-    loadAddresses(); // auto load
+    loadAddresses();
   }
 
-  // ✅ Current user ID
   String get _uid => FirebaseAuth.instance.currentUser!.uid;
 
-  // ✅ Firestore path
   CollectionReference get _col => FirebaseFirestore.instance
       .collection('Users')
       .doc(_uid)
       .collection('Addresses');
 
-  // ✅ Load addresses
+  AddressModel? selectedAddress;
+
+  void selectAddress(AddressModel? address) {
+    selectedAddress = address;
+    emit([...state]); // 🔥 force UI rebuild
+  }
+
   Future<void> loadAddresses() async {
     try {
       final snapshot = await _col.get();
@@ -37,7 +41,6 @@ class AddressCubit extends Cubit<List<AddressModel>> {
     }
   }
 
-  // ✅ Add address
   Future<void> addAddress(AddressModel address) async {
     final docRef = _col.doc();
 
@@ -48,9 +51,12 @@ class AddressCubit extends Cubit<List<AddressModel>> {
     emit([...state, newAddress]);
   }
 
-  // ✅ Delete address
   Future<void> removeAddress(String id) async {
     await _col.doc(id).delete();
+
+    if (selectedAddress?.id == id) {
+      selectedAddress = null;
+    }
 
     emit(state.where((a) => a.id != id).toList());
   }
