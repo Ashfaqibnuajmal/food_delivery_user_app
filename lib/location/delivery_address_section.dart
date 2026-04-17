@@ -78,7 +78,6 @@ class _DeliveryAddressSectionState extends State<DeliveryAddressSection> {
     );
   }
 
-  // ✅ Open Address Screen — returns the selected AddressModel
   Future<void> _goToSavedAddresses(BuildContext context) async {
     final selected = await Navigator.push<AddressModel>(
       context,
@@ -89,6 +88,7 @@ class _DeliveryAddressSectionState extends State<DeliveryAddressSection> {
         ),
       ),
     );
+
     if (selected != null && mounted) {
       setState(() => _manualAddress = selected);
     }
@@ -100,7 +100,6 @@ class _DeliveryAddressSectionState extends State<DeliveryAddressSection> {
       padding: const EdgeInsets.all(10.0),
       child: BlocListener<LocationCubit, LocationState>(
         listener: (context, state) {
-          // ✅ Show GPS alert dialog when GPS is off
           if (state is LocationServiceDisabled) {
             _showGPSAlert(context);
           }
@@ -112,12 +111,11 @@ class _DeliveryAddressSectionState extends State<DeliveryAddressSection> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // ── Header ──
+                /// Header
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Text("Delivery Address", style: bigBold),
-                    // ✅ "Change" button always visible
                     GestureDetector(
                       onTap: () => _goToSavedAddresses(context),
                       child: const Text(
@@ -125,7 +123,6 @@ class _DeliveryAddressSectionState extends State<DeliveryAddressSection> {
                         style: TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.w600,
-                          color: Colors.black,
                           decoration: TextDecoration.underline,
                         ),
                       ),
@@ -135,30 +132,28 @@ class _DeliveryAddressSectionState extends State<DeliveryAddressSection> {
 
                 const SizedBox(height: 15),
 
-                // ── Manual address selected from Address Screen ──
+                /// ✅ Manual Address
                 if (showManual)
                   AddressCard(
                     icon: Icons.home_outlined,
                     title: _manualAddress!.label,
-                    subtitle: _manualAddress!.displayAddress,
-                    name: _manualAddress!.fullName,
+                    subtitle: _manualAddress!.street,
+                    phone: _manualAddress!.phone,
                     onChangeTap: () => _goToSavedAddresses(context),
                   )
-
-                // ── GPS Loading ──
+                /// Loading
                 else if (state is LocationLoading)
                   const Center(child: LoadingIndicator())
-
-                // ── GPS Loaded (current location) ──
+                /// GPS Location
                 else if (state is LocationLoaded)
                   AddressCard(
                     icon: Icons.my_location,
                     title: "Current Location",
                     subtitle: state.address,
+                    phone: "", // no phone for GPS
                     onChangeTap: () => _goToSavedAddresses(context),
                   )
-
-                // ── GPS Error ──
+                /// Error
                 else if (state is LocationError)
                   Center(
                     child: Text(
@@ -171,7 +166,6 @@ class _DeliveryAddressSectionState extends State<DeliveryAddressSection> {
                       ),
                     ),
                   )
-
                 // ── GPS Off — show image + hint + retry ──
                 else if (state is LocationServiceDisabled)
                   Center(
@@ -222,7 +216,6 @@ class _DeliveryAddressSectionState extends State<DeliveryAddressSection> {
                       ],
                     ),
                   )
-
                 // ── Initial state — no location yet ──
                 else
                   Center(

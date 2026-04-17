@@ -14,19 +14,16 @@ class AddAddressScreen extends StatefulWidget {
 
 class _AddAddressScreenState extends State<AddAddressScreen> {
   final _formKey = GlobalKey<FormState>();
-  bool _isDefault = false;
   bool _isSaving = false;
 
   final _nicknameCtrl = TextEditingController();
-  final _fullNameCtrl = TextEditingController();
-  final _fullAddressCtrl = TextEditingController();
+  final _addressCtrl = TextEditingController();
   final _phoneCtrl = TextEditingController();
 
   @override
   void dispose() {
     _nicknameCtrl.dispose();
-    _fullNameCtrl.dispose();
-    _fullAddressCtrl.dispose();
+    _addressCtrl.dispose();
     _phoneCtrl.dispose();
     super.dispose();
   }
@@ -39,72 +36,31 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
     final address = AddressModel(
       id: '',
       label: _nicknameCtrl.text.trim(),
-      fullName: _fullNameCtrl.text.trim(),
       phone: _phoneCtrl.text.trim(),
-      street: _fullAddressCtrl.text.trim(),
-      city: '',
-      state: '',
-      pincode: '',
-      isDefault: _isDefault,
+      street: _addressCtrl.text.trim(),
     );
 
-    // ✅ Awaits Firestore save before going back
-    await context.read<AddressCubit>().addAddress(
-      address,
-      isDefault: _isDefault,
-    );
+    await context.read<AddressCubit>().addAddress(address);
 
-    if (mounted) {
-      Navigator.pop(context);
-    }
+    if (mounted) Navigator.pop(context);
   }
 
-  Widget _buildField(
-    String label,
-    String hint,
-    TextEditingController ctrl, {
-    TextInputType keyboardType = TextInputType.text,
-    int maxLines = 1,
-  }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-        ),
-        const SizedBox(height: 8),
-        TextFormField(
-          controller: ctrl,
-          keyboardType: keyboardType,
-          maxLines: maxLines,
-          decoration: InputDecoration(
-            hintText: hint,
-            hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 14),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide(color: Colors.grey.shade300),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide(color: Colors.grey.shade300),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: const BorderSide(color: Colors.black, width: 1.5),
-            ),
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 14,
-            ),
-            filled: true,
-            fillColor: Colors.white,
-          ),
-          validator: (v) =>
-              (v == null || v.trim().isEmpty) ? 'This field is required' : null,
-        ),
-        const SizedBox(height: 20),
-      ],
+  InputDecoration _inputDecoration(String hint) {
+    return InputDecoration(
+      hintText: hint,
+      hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 14),
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: BorderSide(color: Colors.grey.shade300),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: const BorderSide(color: Colors.black, width: 1.5),
+      ),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      filled: true,
+      fillColor: Colors.white,
     );
   }
 
@@ -120,77 +76,75 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // ── Address Nickname (e.g. Home, Office) ──
-              _buildField(
+              /// 🔹 Nickname
+              const Text(
                 "Address Nickname",
-                "e.g. Home, Office, Other...",
-                _nicknameCtrl,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 8),
+              TextFormField(
+                controller: _nicknameCtrl,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                decoration: _inputDecoration("Home, Office..."),
+                validator: (v) {
+                  if (v == null || v.trim().isEmpty) {
+                    return 'Nickname is required';
+                  }
+                  return null;
+                },
               ),
 
-              // ── Full Name ──
-              _buildField(
-                "Full Name",
-                "Enter your full name...",
-                _fullNameCtrl,
-              ),
+              const SizedBox(height: 20),
 
-              // ── Full Address ──
-              _buildField(
+              /// 🔹 Address
+              const Text(
                 "Full Address",
-                "House no, Street, Area, City...",
-                _fullAddressCtrl,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 8),
+              TextFormField(
+                controller: _addressCtrl,
                 maxLines: 3,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                decoration: _inputDecoration("House no, Street, Area, City..."),
+                validator: (v) {
+                  if (v == null || v.trim().isEmpty) {
+                    return 'Address is required';
+                  }
+                  if (v.trim().length < 10) {
+                    return 'Address too short';
+                  }
+                  return null;
+                },
               ),
 
-              // ── Phone Number ──
-              _buildField(
+              const SizedBox(height: 20),
+
+              /// 🔹 Phone
+              const Text(
                 "Phone Number",
-                "Enter phone number...",
-                _phoneCtrl,
-                keyboardType: TextInputType.phone,
+                style: TextStyle(fontWeight: FontWeight.bold),
               ),
-
-              // ── Make Default checkbox ──
-              GestureDetector(
-                onTap: () => setState(() => _isDefault = !_isDefault),
-                child: Row(
-                  children: [
-                    AnimatedContainer(
-                      duration: const Duration(milliseconds: 200),
-                      width: 22,
-                      height: 22,
-                      decoration: BoxDecoration(
-                        color: _isDefault
-                            ? AppColors.primaryOrange
-                            : Colors.white,
-                        border: Border.all(
-                          color: _isDefault
-                              ? AppColors.primaryOrange
-                              : Colors.grey.shade400,
-                          width: 1.5,
-                        ),
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                      child: _isDefault
-                          ? const Icon(
-                              Icons.check,
-                              color: Colors.white,
-                              size: 15,
-                            )
-                          : null,
-                    ),
-                    const SizedBox(width: 10),
-                    const Text(
-                      "Make this as a default address",
-                      style: TextStyle(fontSize: 14, color: Colors.black87),
-                    ),
-                  ],
-                ),
+              const SizedBox(height: 8),
+              TextFormField(
+                controller: _phoneCtrl,
+                keyboardType: TextInputType.phone,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                decoration: _inputDecoration("Enter phone number"),
+                validator: (v) {
+                  if (v == null || v.trim().isEmpty) {
+                    return 'Phone number is required';
+                  }
+                  if (!RegExp(r'^[0-9]{10}$').hasMatch(v.trim())) {
+                    return 'Enter valid 10-digit number';
+                  }
+                  return null;
+                },
               ),
 
               const SizedBox(height: 30),
 
-              // ── Add Button ──
+              /// 🔹 Button
               SizedBox(
                 width: double.infinity,
                 height: 52,
@@ -199,31 +153,18 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primaryOrange,
                     foregroundColor: Colors.white,
-                    disabledBackgroundColor: AppColors.primaryOrange
-                        .withOpacity(0.6),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(14),
                     ),
                   ),
                   child: _isSaving
-                      ? const SizedBox(
-                          width: 22,
-                          height: 22,
-                          child: CircularProgressIndicator(
-                            color: Colors.white,
-                            strokeWidth: 2.5,
-                          ),
-                        )
+                      ? const CircularProgressIndicator(color: Colors.white)
                       : const Text(
                           "Add Address",
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                 ),
               ),
-              const SizedBox(height: 20),
             ],
           ),
         ),

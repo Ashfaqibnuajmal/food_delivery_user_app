@@ -5,22 +5,23 @@ import 'address_model.dart';
 
 class AddressCubit extends Cubit<List<AddressModel>> {
   AddressCubit() : super([]) {
-    loadAddresses(); // ✅ Auto-load from Firestore on app start
+    loadAddresses(); // auto load
   }
 
-  // ✅ Get current user's UID
+  // ✅ Current user ID
   String get _uid => FirebaseAuth.instance.currentUser!.uid;
 
-  // ✅ Firestore collection: Users/{uid}/Addresses
+  // ✅ Firestore path
   CollectionReference get _col => FirebaseFirestore.instance
       .collection('Users')
       .doc(_uid)
       .collection('Addresses');
 
-  // ✅ Load all addresses from Firestore
+  // ✅ Load addresses
   Future<void> loadAddresses() async {
     try {
-      final snapshot = await _col.orderBy('createdAt', descending: false).get();
+      final snapshot = await _col.get();
+
       final addresses = snapshot.docs
           .map(
             (doc) => AddressModel.fromMap(
@@ -29,58 +30,28 @@ class AddressCubit extends Cubit<List<AddressModel>> {
             ),
           )
           .toList();
+
       emit(addresses);
     } catch (e) {
-      emit([]); // If error, show empty list
+      emit([]);
     }
   }
 
-  // ✅ Add new address to Firestore
-  Future<void> addAddress(
-    AddressModel address, {
-    bool isDefault = false,
-  }) async {
-    // If this is default, unset all other defaults in Firestore
-    if (isDefault && state.isNotEmpty) {
-      final batch = FirebaseFirestore.instance.batch();
-      for (final a in state.where((a) => a.isDefault)) {
-        batch.update(_col.doc(a.id), {'isDefault': false});
-      }
-      await batch.commit();
-    }
-
-    // Create new Firestore doc reference (auto ID)
+  // ✅ Add address
+  Future<void> addAddress(AddressModel address) async {
     final docRef = _col.doc();
-    final newAddress = address.copyWith(id: docRef.id, isDefault: isDefault);
 
-    // Save to Firestore with timestamp for ordering
-    await docRef.set({
-      ...newAddress.toMap(),
-      'createdAt': FieldValue.serverTimestamp(),
-    });
+    final newAddress = address.copyWith(id: docRef.id);
 
-    // Update local state
-    List<AddressModel> updated = [...state];
-    if (isDefault) {
-      updated = updated.map((a) => a.copyWith(isDefault: false)).toList();
-    }
-    updated.add(newAddress);
-    emit(updated);
+    await docRef.set(newAddress.toMap());
+
+    emit([...state, newAddress]);
   }
 
-  // ✅ Delete address from Firestore
+  // ✅ Delete address
   Future<void> removeAddress(String id) async {
     await _col.doc(id).delete();
-    emit(state.where((a) => a.id != id).toList());
-  }
 
-  // ✅ Set a specific address as default
-  Future<void> setDefault(String id) async {
-    final batch = FirebaseFirestore.instance.batch();
-    for (final a in state) {
-      batch.update(_col.doc(a.id), {'isDefault': a.id == id});
-    }
-    await batch.commit();
-    emit(state.map((a) => a.copyWith(isDefault: a.id == id)).toList());
+    emit(state.where((a) => a.id != id).toList());
   }
 }

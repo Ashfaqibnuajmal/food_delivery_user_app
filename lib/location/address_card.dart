@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 class AddressCard extends StatelessWidget {
   final IconData icon;
-  final String title;
-  final String subtitle;
-  final String? name;
+  final String title; // label
+  final String subtitle; // address
+  final String phone; // phone
   final VoidCallback onChangeTap;
 
   const AddressCard({
@@ -12,7 +12,7 @@ class AddressCard extends StatelessWidget {
     required this.icon,
     required this.title,
     required this.subtitle,
-    this.name,
+    required this.phone,
     required this.onChangeTap,
   });
 
@@ -23,10 +23,12 @@ class AddressCard extends StatelessWidget {
       children: [
         Icon(icon, size: 22, color: Colors.black),
         const SizedBox(width: 12),
+
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              /// 🔹 Label
               Text(
                 title,
                 style: const TextStyle(
@@ -34,17 +36,21 @@ class AddressCard extends StatelessWidget {
                   fontSize: 14,
                 ),
               ),
-              if (name != null) ...[
-                const SizedBox(height: 2),
-                Text(
-                  name!,
-                  style: TextStyle(color: Colors.grey.shade500, fontSize: 12),
-                ),
-              ],
+
               const SizedBox(height: 4),
+
+              /// 🔹 Address
               Text(
                 subtitle,
                 style: TextStyle(color: Colors.grey.shade600, fontSize: 13),
+              ),
+
+              const SizedBox(height: 2),
+
+              /// 🔹 Phone
+              Text(
+                phone,
+                style: TextStyle(color: Colors.grey.shade500, fontSize: 12),
               ),
             ],
           ),

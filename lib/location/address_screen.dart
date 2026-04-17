@@ -16,19 +16,7 @@ class AddressScreen extends StatefulWidget {
 class _AddressScreenState extends State<AddressScreen> {
   AddressModel? _selectedAddress;
 
-  // ── Icon per label ──
-  IconData _labelIcon(String label) {
-    switch (label.toLowerCase()) {
-      case 'office':
-        return Icons.work_outline;
-      case 'other':
-        return Icons.location_on_outlined;
-      default:
-        return Icons.home_outlined;
-    }
-  }
-
-  // ── Delete confirmation dialog (same style as cart delete) ──
+  // ── Delete confirmation dialog ──
   void _showDeleteDialog(BuildContext context, String id) {
     showDialog(
       context: context,
@@ -40,7 +28,6 @@ class _AddressScreenState extends State<AddressScreen> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // Red circle icon
               Container(
                 width: 56,
                 height: 56,
@@ -58,101 +45,46 @@ class _AddressScreenState extends State<AddressScreen> {
 
               const Text(
                 'Delete address?',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black,
-                ),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
               ),
               const SizedBox(height: 12),
 
               const Text(
                 'Are you sure you want to delete\nthis address?',
-                style: TextStyle(fontSize: 16, color: Colors.black87),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 24),
 
               Row(
                 children: [
-                  // NO
                   Expanded(
                     child: TextButton(
                       onPressed: () => Navigator.pop(ctx),
                       style: TextButton.styleFrom(
                         backgroundColor: const Color(0xFFE5E5E5),
-                        foregroundColor: Colors.black87,
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
                       ),
-                      child: const Text(
-                        'NO',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
+                      child: const Text('NO'),
                     ),
                   ),
                   const SizedBox(width: 12),
-                  // YES
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
-                        // If the deleted address was selected, clear selection
                         if (_selectedAddress?.id == id) {
                           setState(() => _selectedAddress = null);
                         }
+
                         context.read<AddressCubit>().removeAddress(id);
                         Navigator.pop(ctx);
 
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Address deleted!',
-                                  style: TextStyle(
-                                    color: Colors.red,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Icon(
-                                  Icons.check_circle_outline,
-                                  color: Colors.red,
-                                ),
-                              ],
-                            ),
-                            backgroundColor: Colors.white,
-                            behavior: SnackBarBehavior.floating,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(8),
-                              ),
-                            ),
-                            duration: Duration(seconds: 2),
-                          ),
+                          const SnackBar(content: Text('Address deleted!')),
                         );
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFFE53E3E),
-                        foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        elevation: 0,
                       ),
-                      child: const Text(
-                        'YES',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
+                      child: const Text('YES'),
                     ),
                   ),
                 ],
@@ -173,37 +105,9 @@ class _AddressScreenState extends State<AddressScreen> {
         builder: (context, addresses) {
           return Column(
             children: [
-              // ── Address list ──
               Expanded(
                 child: addresses.isEmpty
-                    ? Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.location_off_outlined,
-                              size: 64,
-                              color: Colors.grey.shade300,
-                            ),
-                            const SizedBox(height: 16),
-                            Text(
-                              "No saved addresses",
-                              style: TextStyle(
-                                color: Colors.grey.shade500,
-                                fontSize: 16,
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              "Tap 'Add New Address' below to add one",
-                              style: TextStyle(
-                                color: Colors.grey.shade400,
-                                fontSize: 13,
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
+                    ? const Center(child: Text("No saved addresses"))
                     : ListView.separated(
                         padding: const EdgeInsets.fromLTRB(16, 16, 16, 100),
                         itemCount: addresses.length,
@@ -213,110 +117,50 @@ class _AddressScreenState extends State<AddressScreen> {
                           final isSelected = _selectedAddress?.id == addr.id;
 
                           return GestureDetector(
-                            // ✅ Tap to select / unselect
                             onTap: () => setState(() {
                               _selectedAddress = isSelected ? null : addr;
                             }),
-                            // ✅ Long press to delete
                             onLongPress: () =>
                                 _showDeleteDialog(context, addr.id),
                             child: AnimatedContainer(
                               duration: const Duration(milliseconds: 200),
+                              padding: const EdgeInsets.all(14),
                               decoration: BoxDecoration(
-                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(14),
                                 border: Border.all(
                                   color: isSelected
                                       ? AppColors.primaryOrange
                                       : Colors.grey.shade200,
                                   width: isSelected ? 1.5 : 1,
                                 ),
-                                borderRadius: BorderRadius.circular(14),
                               ),
-                              padding: const EdgeInsets.all(14),
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  // Icon
                                   Icon(
-                                    _labelIcon(addr.label),
-                                    size: 22,
+                                    Icons.location_on_outlined,
                                     color: isSelected
                                         ? AppColors.primaryOrange
                                         : Colors.grey,
                                   ),
                                   const SizedBox(width: 12),
 
-                                  // Details
+                                  /// ✅ Clean Data UI
                                   Expanded(
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Row(
-                                          children: [
-                                            Text(
-                                              addr.label,
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 14,
-                                              ),
-                                            ),
-                                            const SizedBox(width: 8),
-                                            // Default badge
-                                            if (addr.isDefault)
-                                              Container(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                      horizontal: 8,
-                                                      vertical: 2,
-                                                    ),
-                                                decoration: BoxDecoration(
-                                                  color: AppColors.primaryOrange
-                                                      .withOpacity(0.1),
-                                                  borderRadius:
-                                                      BorderRadius.circular(20),
-                                                  border: Border.all(
-                                                    color:
-                                                        AppColors.primaryOrange,
-                                                    width: 0.8,
-                                                  ),
-                                                ),
-                                                child: Text(
-                                                  "Default",
-                                                  style: TextStyle(
-                                                    fontSize: 11,
-                                                    color:
-                                                        AppColors.primaryOrange,
-                                                    fontWeight: FontWeight.w600,
-                                                  ),
-                                                ),
-                                              )
-                                            else
-                                              // Name chip
-                                              Container(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                      horizontal: 8,
-                                                      vertical: 2,
-                                                    ),
-                                                decoration: BoxDecoration(
-                                                  color: Colors.grey.shade100,
-                                                  borderRadius:
-                                                      BorderRadius.circular(20),
-                                                ),
-                                                child: Text(
-                                                  addr.fullName,
-                                                  style: const TextStyle(
-                                                    fontSize: 12,
-                                                    color: Colors.grey,
-                                                  ),
-                                                ),
-                                              ),
-                                          ],
+                                        Text(
+                                          addr.label,
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14,
+                                          ),
                                         ),
                                         const SizedBox(height: 4),
                                         Text(
-                                          addr.displayAddress,
+                                          addr.street,
                                           style: TextStyle(
                                             color: Colors.grey.shade600,
                                             fontSize: 13,
@@ -330,17 +174,14 @@ class _AddressScreenState extends State<AddressScreen> {
                                             fontSize: 12,
                                           ),
                                         ),
-                                        const SizedBox(height: 4),
                                       ],
                                     ),
                                   ),
 
-                                  // ✅ Check icon when selected
                                   if (isSelected)
                                     const Icon(
                                       Icons.check_circle,
                                       color: AppColors.primaryOrange,
-                                      size: 20,
                                     ),
                                 ],
                               ),
@@ -368,7 +209,6 @@ class _AddressScreenState extends State<AddressScreen> {
                 ),
                 child: Column(
                   children: [
-                    // ✅ Add new address — reloads list when coming back
                     OutlinedButton.icon(
                       onPressed: () async {
                         await Navigator.push(
@@ -380,7 +220,7 @@ class _AddressScreenState extends State<AddressScreen> {
                             ),
                           ),
                         );
-                        // Reload from Firestore after returning
+
                         if (context.mounted) {
                           context.read<AddressCubit>().loadAddresses();
                         }
@@ -398,7 +238,6 @@ class _AddressScreenState extends State<AddressScreen> {
                     ),
                     const SizedBox(height: 10),
 
-                    // ✅ Apply button — returns selected address
                     ElevatedButton(
                       onPressed: _selectedAddress == null
                           ? null
