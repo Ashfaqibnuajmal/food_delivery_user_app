@@ -90,7 +90,9 @@ class _AddressScreenState extends State<AddressScreen> {
                       child: const Text(
                         'NO',
                         style: TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.w500),
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ),
                   ),
@@ -127,8 +129,9 @@ class _AddressScreenState extends State<AddressScreen> {
                             backgroundColor: Colors.white,
                             behavior: SnackBarBehavior.floating,
                             shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(8)),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(8),
+                              ),
                             ),
                             duration: Duration(seconds: 2),
                           ),
@@ -146,7 +149,9 @@ class _AddressScreenState extends State<AddressScreen> {
                       child: const Text(
                         'YES',
                         style: TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.w500),
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ),
                   ),
@@ -200,21 +205,17 @@ class _AddressScreenState extends State<AddressScreen> {
                         ),
                       )
                     : ListView.separated(
-                        padding:
-                            const EdgeInsets.fromLTRB(16, 16, 16, 100),
+                        padding: const EdgeInsets.fromLTRB(16, 16, 16, 100),
                         itemCount: addresses.length,
-                        separatorBuilder: (_, __) =>
-                            const SizedBox(height: 12),
+                        separatorBuilder: (_, __) => const SizedBox(height: 12),
                         itemBuilder: (context, index) {
                           final addr = addresses[index];
-                          final isSelected =
-                              _selectedAddress?.id == addr.id;
+                          final isSelected = _selectedAddress?.id == addr.id;
 
                           return GestureDetector(
                             // ✅ Tap to select / unselect
                             onTap: () => setState(() {
-                              _selectedAddress =
-                                  isSelected ? null : addr;
+                              _selectedAddress = isSelected ? null : addr;
                             }),
                             // ✅ Long press to delete
                             onLongPress: () =>
@@ -222,12 +223,10 @@ class _AddressScreenState extends State<AddressScreen> {
                             child: AnimatedContainer(
                               duration: const Duration(milliseconds: 200),
                               decoration: BoxDecoration(
-                                color: isSelected
-                                    ? Colors.black.withOpacity(0.05)
-                                    : Colors.white,
+                                color: Colors.white,
                                 border: Border.all(
                                   color: isSelected
-                                      ? Colors.black
+                                      ? AppColors.primaryOrange
                                       : Colors.grey.shade200,
                                   width: isSelected ? 1.5 : 1,
                                 ),
@@ -235,15 +234,14 @@ class _AddressScreenState extends State<AddressScreen> {
                               ),
                               padding: const EdgeInsets.all(14),
                               child: Row(
-                                crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   // Icon
                                   Icon(
                                     _labelIcon(addr.label),
                                     size: 22,
                                     color: isSelected
-                                        ? Colors.black
+                                        ? AppColors.primaryOrange
                                         : Colors.grey,
                                   ),
                                   const SizedBox(width: 12),
@@ -269,15 +267,14 @@ class _AddressScreenState extends State<AddressScreen> {
                                               Container(
                                                 padding:
                                                     const EdgeInsets.symmetric(
-                                                        horizontal: 8,
-                                                        vertical: 2),
+                                                      horizontal: 8,
+                                                      vertical: 2,
+                                                    ),
                                                 decoration: BoxDecoration(
-                                                  color: AppColors
-                                                      .primaryOrange
+                                                  color: AppColors.primaryOrange
                                                       .withOpacity(0.1),
                                                   borderRadius:
-                                                      BorderRadius.circular(
-                                                          20),
+                                                      BorderRadius.circular(20),
                                                   border: Border.all(
                                                     color:
                                                         AppColors.primaryOrange,
@@ -290,8 +287,7 @@ class _AddressScreenState extends State<AddressScreen> {
                                                     fontSize: 11,
                                                     color:
                                                         AppColors.primaryOrange,
-                                                    fontWeight:
-                                                        FontWeight.w600,
+                                                    fontWeight: FontWeight.w600,
                                                   ),
                                                 ),
                                               )
@@ -300,8 +296,9 @@ class _AddressScreenState extends State<AddressScreen> {
                                               Container(
                                                 padding:
                                                     const EdgeInsets.symmetric(
-                                                        horizontal: 8,
-                                                        vertical: 2),
+                                                      horizontal: 8,
+                                                      vertical: 2,
+                                                    ),
                                                 decoration: BoxDecoration(
                                                   color: Colors.grey.shade100,
                                                   borderRadius:
@@ -334,15 +331,6 @@ class _AddressScreenState extends State<AddressScreen> {
                                           ),
                                         ),
                                         const SizedBox(height: 4),
-                                        // Hint text
-                                        Text(
-                                          "Long press to delete",
-                                          style: TextStyle(
-                                            color: Colors.grey.shade400,
-                                            fontSize: 11,
-                                            fontStyle: FontStyle.italic,
-                                          ),
-                                        ),
                                       ],
                                     ),
                                   ),
@@ -351,7 +339,7 @@ class _AddressScreenState extends State<AddressScreen> {
                                   if (isSelected)
                                     const Icon(
                                       Icons.check_circle,
-                                      color: Colors.black,
+                                      color: AppColors.primaryOrange,
                                       size: 20,
                                     ),
                                 ],
@@ -365,7 +353,9 @@ class _AddressScreenState extends State<AddressScreen> {
               // ── Bottom section ──
               Container(
                 padding: const EdgeInsets.symmetric(
-                    horizontal: 16, vertical: 12),
+                  horizontal: 16,
+                  vertical: 12,
+                ),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   boxShadow: [
@@ -414,7 +404,7 @@ class _AddressScreenState extends State<AddressScreen> {
                           ? null
                           : () => Navigator.pop(context, _selectedAddress),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.black,
+                        backgroundColor: AppColors.primaryOrange,
                         foregroundColor: Colors.white,
                         disabledBackgroundColor: Colors.grey.shade300,
                         minimumSize: const Size(double.infinity, 52),

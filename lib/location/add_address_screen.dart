@@ -49,9 +49,10 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
     );
 
     // ✅ Awaits Firestore save before going back
-    await context
-        .read<AddressCubit>()
-        .addAddress(address, isDefault: _isDefault);
+    await context.read<AddressCubit>().addAddress(
+      address,
+      isDefault: _isDefault,
+    );
 
     if (mounted) {
       Navigator.pop(context);
@@ -79,8 +80,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
           maxLines: maxLines,
           decoration: InputDecoration(
             hintText: hint,
-            hintStyle:
-                TextStyle(color: Colors.grey.shade400, fontSize: 14),
+            hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 14),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide(color: Colors.grey.shade300),
@@ -182,8 +182,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                     const SizedBox(width: 10),
                     const Text(
                       "Make this as a default address",
-                      style:
-                          TextStyle(fontSize: 14, color: Colors.black87),
+                      style: TextStyle(fontSize: 14, color: Colors.black87),
                     ),
                   ],
                 ),
@@ -200,8 +199,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primaryOrange,
                     foregroundColor: Colors.white,
-                    disabledBackgroundColor:
-                        AppColors.primaryOrange.withOpacity(0.6),
+                    disabledBackgroundColor: AppColors.primaryOrange
+                        .withOpacity(0.6),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(14),
                     ),

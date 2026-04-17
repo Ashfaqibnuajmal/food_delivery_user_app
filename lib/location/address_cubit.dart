@@ -22,8 +22,12 @@ class AddressCubit extends Cubit<List<AddressModel>> {
     try {
       final snapshot = await _col.orderBy('createdAt', descending: false).get();
       final addresses = snapshot.docs
-          .map((doc) =>
-              AddressModel.fromMap(doc.id, doc.data() as Map<String, dynamic>))
+          .map(
+            (doc) => AddressModel.fromMap(
+              doc.id,
+              doc.data() as Map<String, dynamic>,
+            ),
+          )
           .toList();
       emit(addresses);
     } catch (e) {
@@ -32,7 +36,10 @@ class AddressCubit extends Cubit<List<AddressModel>> {
   }
 
   // ✅ Add new address to Firestore
-  Future<void> addAddress(AddressModel address, {bool isDefault = false}) async {
+  Future<void> addAddress(
+    AddressModel address, {
+    bool isDefault = false,
+  }) async {
     // If this is default, unset all other defaults in Firestore
     if (isDefault && state.isNotEmpty) {
       final batch = FirebaseFirestore.instance.batch();
