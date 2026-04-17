@@ -23,7 +23,40 @@ class AddressModel {
     this.isDefault = false,
   });
 
+  // ✅ Display address shown in cards
   String get displayAddress => street;
+
+  // ✅ Convert to Firestore map
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'label': label,
+      'fullName': fullName,
+      'phone': phone,
+      'street': street,
+      'city': city,
+      'state': state,
+      'pincode': pincode,
+      'landmark': landmark,
+      'isDefault': isDefault,
+    };
+  }
+
+  // ✅ Create from Firestore document
+  factory AddressModel.fromMap(String docId, Map<String, dynamic> map) {
+    return AddressModel(
+      id: docId,
+      label: map['label'] ?? '',
+      fullName: map['fullName'] ?? '',
+      phone: map['phone'] ?? '',
+      street: map['street'] ?? '',
+      city: map['city'] ?? '',
+      state: map['state'] ?? '',
+      pincode: map['pincode'] ?? '',
+      landmark: map['landmark'],
+      isDefault: map['isDefault'] ?? false,
+    );
+  }
 
   AddressModel copyWith({
     String? id,

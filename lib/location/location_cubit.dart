@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_user_app/locationfix/location/location_state.dart';
+import 'package:food_user_app/location/location_state.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -10,12 +10,14 @@ class LocationCubit extends Cubit<LocationState> {
     emit(LocationLoading());
 
     try {
+      // ✅ Check if GPS is ON
       bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
       if (!serviceEnabled) {
-        emit(LocationServiceDisabled()); // 🔴 New state for GPS off
+        emit(LocationServiceDisabled()); // shows GPS alert dialog
         return;
       }
 
+      // ✅ Check permission
       LocationPermission permission = await Geolocator.checkPermission();
 
       if (permission == LocationPermission.denied) {
@@ -36,12 +38,14 @@ class LocationCubit extends Cubit<LocationState> {
         return;
       }
 
+      // ✅ Get position
       Position position = await Geolocator.getCurrentPosition(
         locationSettings: const LocationSettings(
           accuracy: LocationAccuracy.best,
         ),
       );
 
+      // ✅ Convert lat/lng to readable address
       List<Placemark> placemarks = await placemarkFromCoordinates(
         position.latitude,
         position.longitude,
