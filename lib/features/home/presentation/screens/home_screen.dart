@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:food_user_app/core/widgets/category.dart';
-import 'package:food_user_app/features/home/presentation/widgets/home/best_compo_grid.dart';
-import 'package:food_user_app/features/home/presentation/widgets/home/best_compo_title.dart';
-import 'package:food_user_app/features/home/presentation/widgets/home/food_item_list.dart';
-import 'package:food_user_app/features/home/presentation/widgets/home/home_appbar.dart';
-import 'package:food_user_app/features/home/presentation/widgets/home/recommended_title.dart';
-import 'package:food_user_app/features/home/presentation/widgets/home/search_bar_widget.dart';
-import 'package:food_user_app/features/home/presentation/widgets/home/today_offer_card.dart';
-import 'package:food_user_app/features/home/presentation/widgets/home/today_offer_footer.dart';
-import 'package:food_user_app/features/home/presentation/widgets/home/today_offer_title.dart';
+import 'package:food_user_app/features/home/presentation/widgets/best_compo_grid.dart';
+import 'package:food_user_app/features/home/presentation/widgets/best_compo_title.dart';
+import 'package:food_user_app/features/home/presentation/widgets/food_item_list.dart';
+import 'package:food_user_app/features/home/presentation/widgets/home_appbar.dart';
+import 'package:food_user_app/features/home/presentation/widgets/recommended_title.dart';
+import 'package:food_user_app/features/home/presentation/widgets/search_bar_widget.dart';
+import 'package:food_user_app/features/home/presentation/widgets/today_offer_card.dart';
+import 'package:food_user_app/features/home/presentation/widgets/today_offer_footer.dart';
+import 'package:food_user_app/features/home/presentation/widgets/today_offer_title.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

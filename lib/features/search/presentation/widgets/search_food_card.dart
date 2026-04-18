@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:food_user_app/core/theme/text_style.dart';
 import 'package:food_user_app/core/widgets/food_container.dart';
-import 'package:food_user_app/features/home/presentation/screens/food_details.dart';
-import 'package:food_user_app/features/home/presentation/widgets/best_compo/add_to_cart_button.dart';
+import 'package:food_user_app/features/food_details/screen/food_details.dart';
+import 'package:food_user_app/features/best_compo/widgets/add_to_cart_button.dart';
 import 'package:food_user_app/core/widgets/favorite_button.dart';
 import 'package:food_user_app/features/search/presentation/widgets/search_rating_bar.dart';
 import 'package:shimmer/shimmer.dart';

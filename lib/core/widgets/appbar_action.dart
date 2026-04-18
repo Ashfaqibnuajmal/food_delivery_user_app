@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_user_app/core/theme/app_color.dart';
-import 'package:food_user_app/features/home/presentation/screens/ai_chat.dart';
-import 'package:food_user_app/features/home/presentation/screens/notification.dart';
+import 'package:food_user_app/features/ai/presentation/screen/ai_chat.dart';
+import 'package:food_user_app/features/notifications/notification.dart';
 
 class CustomAppBarActions extends StatelessWidget {
   final bool showChatBot; // control whether chatbot icon is shown

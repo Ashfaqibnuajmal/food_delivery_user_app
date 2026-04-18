@@ -5,7 +5,7 @@ import 'package:food_user_app/features/favorites/presentation/widgets/favorite_a
 import 'package:food_user_app/core/widgets/food_image.dart';
 import 'package:food_user_app/features/favorites/presentation/widgets/favorite_rating.dart';
 import 'package:food_user_app/features/favorites/presentation/widgets/favorite_remove_icon.dart';
-import 'package:food_user_app/features/home/presentation/screens/food_details.dart';
+import 'package:food_user_app/features/food_details/screen/food_details.dart';
 
 class FavoriteCard extends StatelessWidget {
   final Map<String, dynamic> fav;
