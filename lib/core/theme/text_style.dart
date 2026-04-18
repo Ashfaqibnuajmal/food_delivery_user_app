@@ -20,7 +20,7 @@ const TextStyle orangeBoldSmallTextStyle = TextStyle(
 const TextStyle whiteBoldSmallTextStyle = TextStyle(
   fontSize: 14,
   fontWeight: FontWeight.bold,
-  color: AppColors.primaryOrange,
+  color: Colors.white,
 );
 
 // Onboarding Page

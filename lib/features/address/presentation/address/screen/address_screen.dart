@@ -47,7 +47,7 @@ class AddressScreen extends StatelessWidget {
                           final addr = addresses[index];
                           final isSelected =
                               cubit.selectedAddress?.id == addr.id;
-                          AddressCard(
+                          return AddressCard(
                             address: addr,
                             isSelected: isSelected,
                             onTap: () =>
@@ -55,7 +55,6 @@ class AddressScreen extends StatelessWidget {
                             onLongPress: () =>
                                 _showDeleteDialog(context, addr.id),
                           );
-                          return null;
                         },
                       ),
               ),
