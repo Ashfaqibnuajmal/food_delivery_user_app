@@ -6,7 +6,7 @@ import 'package:food_user_app/core/widgets/appbar_action.dart';
 import 'package:food_user_app/core/widgets/loading.dart';
 import 'package:intl/intl.dart';
 import 'package:food_user_app/features/chat/presentation/screens/chat_and_support.dart';
-import 'package:food_user_app/features/profile/services/order_serivices.dart';
+import 'package:food_user_app/features/order/services/order_serivices.dart';
 
 class OrderHistory extends StatelessWidget {
   const OrderHistory({super.key});

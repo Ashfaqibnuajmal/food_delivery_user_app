@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:food_user_app/core/widgets/appbar.dart';
-import 'package:food_user_app/features/profile/screens/settings/about_us.dart';
-import 'package:food_user_app/features/profile/screens/settings/privacy_and_policy.dart';
-import 'package:food_user_app/features/profile/screens/settings/terms_condition.dart';
+import 'package:food_user_app/features/settings/about_us.dart';
+import 'package:food_user_app/features/settings/privacy_and_policy.dart';
+import 'package:food_user_app/features/settings/terms_condition.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
