@@ -3,12 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_user_app/core/theme/app_color.dart';
 import 'package:food_user_app/core/theme/text_style.dart';
 import 'package:food_user_app/core/widgets/loading.dart';
-import 'package:food_user_app/location/address_card.dart';
-import 'package:food_user_app/location/address_cubit.dart';
-import 'package:food_user_app/location/address_model.dart';
-import 'package:food_user_app/location/address_screen.dart';
-import 'package:food_user_app/location/location_cubit.dart';
-import 'package:food_user_app/location/location_state.dart';
+import 'package:food_user_app/features/checkout/presentation/widgets/show_address.dart';
+import 'package:food_user_app/features/address/cubit/address/address_cubit.dart';
+import 'package:food_user_app/features/address/model/address_model.dart';
+import 'package:food_user_app/features/address/presentation/address/screen/address_screen.dart';
+import 'package:food_user_app/features/address/cubit/location/location_cubit.dart';
+import 'package:food_user_app/features/address/cubit/location/location_state.dart';
 import 'package:geolocator/geolocator.dart';
 
 class DeliveryAddressSection extends StatefulWidget {
@@ -135,7 +135,7 @@ class _DeliveryAddressSectionState extends State<DeliveryAddressSection> {
 
                 /// ✅ Manual Address
                 if (showManual)
-                  AddressCard(
+                  ShowAddress(
                     icon: Icons.home_outlined,
                     title: (state).label,
                     subtitle: state.address,
@@ -147,7 +147,7 @@ class _DeliveryAddressSectionState extends State<DeliveryAddressSection> {
                   const Center(child: LoadingIndicator())
                 /// GPS Location
                 else if (state is LocationLoaded)
-                  AddressCard(
+                  ShowAddress(
                     icon: Icons.my_location,
                     title: "Current Location",
                     subtitle: state.address,

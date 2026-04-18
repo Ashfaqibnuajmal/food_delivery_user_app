@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_user_app/location/add_address_state.dart'
+import 'package:food_user_app/features/address/cubit/add_address/add_address_state.dart'
     show AddAddressState;
-import 'package:food_user_app/location/address_cubit.dart';
-import 'package:food_user_app/location/address_model.dart';
+import 'package:food_user_app/features/address/cubit/address/address_cubit.dart';
+import 'package:food_user_app/features/address/model/address_model.dart';
 
 class AddAddressCubit extends Cubit<AddAddressState> {
   final AddressCubit addressCubit;

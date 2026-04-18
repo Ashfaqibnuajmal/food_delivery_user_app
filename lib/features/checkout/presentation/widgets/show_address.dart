@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class AddressCard extends StatelessWidget {
+class ShowAddress extends StatelessWidget {
   final IconData icon;
   final String title; // label
   final String subtitle; // address
   final String phone; // phone
   final VoidCallback onChangeTap;
 
-  const AddressCard({
+  const ShowAddress({
     super.key,
     required this.icon,
     required this.title,
