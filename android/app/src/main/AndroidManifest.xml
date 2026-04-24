@@ -17,6 +17,8 @@
     <!-- 📞 CALL PERMISSION (ADDED) -->
     <uses-permission android:name="android.permission.CALL_PHONE"/>
 
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+
     <!-- GPS Hardware Feature -->
     <uses-feature android:name="android.hardware.location.gps" />
 

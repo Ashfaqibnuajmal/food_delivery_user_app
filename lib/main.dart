@@ -1,10 +1,15 @@
+import 'dart:developer';
+
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:food_user_app/core/blocs/category/food_category_filter_cubit.dart';
 import 'package:food_user_app/core/blocs/image/image_bloc.dart';
+import 'package:food_user_app/features/notifications/cubit/notificaiton_cubit.dart';
+import 'package:food_user_app/features/notifications/service/notificaiton_services.dart';
 import 'package:food_user_app/features/search/logic/bloc/search_bloc.dart';
 import 'package:food_user_app/features/search/logic/bloc/search_event.dart';
 import 'package:food_user_app/core/constant/firebase_options.dart';
@@ -31,11 +36,20 @@ import 'package:food_user_app/features/onboarding/screens/intro_screen.dart';
 import 'package:food_user_app/features/onboarding/screens/splash_screen.dart';
 import 'package:food_user_app/features/search/logic/cubit/search_filter_cubit.dart';
 
+//
+@pragma('vm:entry-point')
+Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  log('📩 Background message: ${message.notification?.title}');
+}
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load();
   Stripe.publishableKey = publishableKey;
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  await NotificationService.initialize();
 
   runApp(const MyApp());
 }
@@ -65,6 +79,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => AiChatBloc()),
         BlocProvider(create: (context) => SelectPaymentCubit()),
         BlocProvider(create: (context) => AddressCubit()),
+        BlocProvider(create: (context) => NotificationCubit()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

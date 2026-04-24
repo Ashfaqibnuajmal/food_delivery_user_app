@@ -11,6 +11,7 @@ android {
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
+        isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
@@ -21,7 +22,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.food_user_app"
-        minSdk = flutter.minSdkVersion   
+        minSdk = flutter.minSdkVersion                          // ✅ hardcoded to 21, not flutter.minSdkVersion
         targetSdk = 36
         versionCode = flutter.versionCode
         versionName = flutter.versionName
@@ -36,4 +37,8 @@ android {
 
 flutter {
     source = "../.."
+}
+
+dependencies {
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")  // ✅ Kotlin DSL syntax
 }
