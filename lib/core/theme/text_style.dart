@@ -47,6 +47,12 @@ const TextStyle greySmallTextStyle = TextStyle(
   fontSize: 14,
   color: Colors.grey,
 );
+// ignore: non_constant_identifier_names
+TextStyle DateAndTime = TextStyle(
+  fontSize: 12,
+  color: Colors.grey,
+  fontWeight: FontWeight.bold,
+);
 
 // Base Text Style for Questions, Links, Buttons, etc.
 const TextStyle anyColorTextStyle = TextStyle(

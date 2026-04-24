@@ -1,7 +1,4 @@
-import 'dart:developer';
-
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -35,13 +32,6 @@ import 'package:food_user_app/features/home/cubit/today_offer_cubit.dart';
 import 'package:food_user_app/features/onboarding/screens/intro_screen.dart';
 import 'package:food_user_app/features/onboarding/screens/splash_screen.dart';
 import 'package:food_user_app/features/search/logic/cubit/search_filter_cubit.dart';
-
-//
-@pragma('vm:entry-point')
-Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  log('📩 Background message: ${message.notification?.title}');
-}
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
