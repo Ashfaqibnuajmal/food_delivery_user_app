@@ -26,7 +26,7 @@ import 'features/address/cubit/location/location_cubit.dart';
 import 'package:food_user_app/core/constant/payment_key.dart';
 import 'package:food_user_app/features/cart/logic/cubit/payment/select_payment_cubit.dart';
 import 'package:food_user_app/features/favorites/bloc/favorite_bloc.dart';
-import 'package:food_user_app/features/ai/bloc/ai_chat_bloc.dart';
+import 'package:food_user_app/features/foodai/bloc/ai_chat_bloc.dart';
 import 'package:food_user_app/features/food_details/cubit/food_portion_cubit.dart';
 import 'package:food_user_app/features/home/cubit/today_offer_cubit.dart';
 import 'package:food_user_app/features/onboarding/screens/intro_screen.dart';

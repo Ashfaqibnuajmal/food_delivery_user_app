@@ -6,6 +6,7 @@ import 'package:food_user_app/core/widgets/snack_bar.dart';
 import 'package:food_user_app/features/cart/data/services/payment_service.dart';
 import 'package:food_user_app/core/enum/payment_mode.dart';
 import 'package:food_user_app/features/cart/logic/cubit/payment/select_payment_cubit.dart';
+import 'package:food_user_app/features/checkout/presentation/widgets/payment_success_overlay.dart';
 
 class StripePayButton extends StatelessWidget {
   final double total;
@@ -37,13 +38,14 @@ class StripePayButton extends StatelessWidget {
               onPressed: () async {
                 try {
                   await PaymentService().makePayment(total.toInt());
-                  CustomSnackBar.showSuccess(
+
+                  // ✅ Show animation instead of snackbar
+                  await PaymentSuccessOverlay.show(
                     context,
-                    message: "Payment Successfully",
+                    onComplete: onPaid, // called after animation closes
                   );
-                  onPaid(); // Notify parent to update stripePaid
                 } catch (e) {
-                  CustomSnackBar.redCustomSnackBar(context, "Payment Faid!");
+                  CustomSnackBar.redCustomSnackBar(context, "Payment Failed!");
                 }
               },
               child: const Row(

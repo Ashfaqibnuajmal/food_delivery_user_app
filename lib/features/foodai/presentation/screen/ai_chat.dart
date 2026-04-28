@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_user_app/core/widgets/appbar.dart';
-import 'package:food_user_app/features/ai/presentation/widgets/chat_input_field.dart';
-import 'package:food_user_app/features/ai/presentation/widgets/chat_message_list.dart';
+import 'package:food_user_app/features/foodai/presentation/widgets/chat_input_field.dart';
+import 'package:food_user_app/features/foodai/presentation/widgets/chat_message_list.dart';
 
 class AiChat extends StatelessWidget {
   const AiChat({super.key});

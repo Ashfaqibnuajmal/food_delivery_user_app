@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_user_app/core/theme/app_color.dart';
-import 'package:food_user_app/features/ai/bloc/ai_chat_bloc.dart';
-import 'package:food_user_app/features/ai/bloc/ai_chat_event.dart';
+import 'package:food_user_app/features/foodai/bloc/ai_chat_bloc.dart';
+import 'package:food_user_app/features/foodai/bloc/ai_chat_event.dart';
 
 class ChatInputField extends StatelessWidget {
   final TextEditingController userPromptController;

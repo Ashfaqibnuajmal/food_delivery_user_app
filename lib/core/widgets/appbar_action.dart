@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_user_app/core/theme/app_color.dart';
-import 'package:food_user_app/features/ai/presentation/screen/ai_chat.dart';
+import 'package:food_user_app/features/foodai/presentation/screen/ai_chat.dart';
 import 'package:food_user_app/features/notifications/cubit/notificaiton_cubit.dart';
 import 'package:food_user_app/features/notifications/presentation/screen/notification_screen.dart';
 

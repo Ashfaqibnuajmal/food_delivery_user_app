@@ -29,7 +29,11 @@ const TextStyle blackBoldTextStyle = TextStyle(
   fontWeight: FontWeight.bold,
   color: Colors.black,
 );
-
+const TextStyle whiteBoldTextStyle = TextStyle(
+  fontSize: 26,
+  fontWeight: FontWeight.bold,
+  color: Colors.white,
+);
 const TextStyle lightBlackTextStyle = TextStyle(
   fontSize: 16,
   color: Colors.black54,
