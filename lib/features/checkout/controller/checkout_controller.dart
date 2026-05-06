@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_user_app/features/cart/logic/bloc/cart_bloc.dart';
 import 'package:food_user_app/features/cart/logic/bloc/cart_event.dart';
+import 'package:food_user_app/features/cart/logic/cubit/payment/select_payment_cubit.dart';
 import 'package:food_user_app/features/checkout/cubit/checkout_cubit.dart';
 import '../../address/cubit/location/location_cubit.dart';
 import '../../address/cubit/location/location_state.dart';
@@ -16,11 +17,12 @@ class CheckoutController {
   bool validateLocation() {
     final locationState = context.read<LocationCubit>().state;
 
-    if (locationState is! LocationLoaded) {
+    if (locationState is! LocationLoaded &&
+        locationState is! ManualAddressSelected) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text(
-            "Please add your current location!",
+            "Please add your delivery address!",
             style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
           ),
           backgroundColor: Colors.white,
@@ -37,17 +39,24 @@ class CheckoutController {
     required double discount,
     required double total,
   }) {
+    // ✅ Read all required data from their cubits/blocs
+    final cartItems = context.read<CartBloc>().state.cartItems;
+    final locationState = context.read<LocationCubit>().state;
+    final paymentMode = context.read<SelectPaymentCubit>().state;
+
     context.read<CheckoutCubit>().placeOrder(
       subtotal: subtotal,
       discount: discount,
       total: total,
+      cartItems: cartItems,
+      locationState: locationState,
+      paymentMode: paymentMode,
     );
   }
 
   /// After order success: clear cart + reset flags
   Future<void> afterOrderSuccess() async {
     context.read<CartBloc>().add(ClearCart());
-
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('coolDrinkBottomSheetShown');
   }

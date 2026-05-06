@@ -9,17 +9,24 @@ class OrderModel {
   String orderStatus;
   DateTime createdAt;
   List<Map<String, dynamic>> foodItems;
-  OrderModel(
-      {required this.orderId,
-      required this.userId,
-      required this.userName,
-      required this.phoneNumber,
-      required this.subTotal,
-      required this.discount,
-      required this.totalAmount,
-      required this.orderStatus,
-      required this.createdAt,
-      required this.foodItems});
+  String deliveryAddress;
+  String paymentMethod;
+
+  OrderModel({
+    required this.orderId,
+    required this.userId,
+    required this.userName,
+    required this.phoneNumber,
+    required this.subTotal,
+    required this.discount,
+    required this.totalAmount,
+    required this.orderStatus,
+    required this.createdAt,
+    required this.foodItems,
+    required this.deliveryAddress,
+    required this.paymentMethod,
+  });
+
   Map<String, dynamic> toMap() {
     return {
       "orderId": orderId,
@@ -32,6 +39,8 @@ class OrderModel {
       "orderStatus": orderStatus,
       "createdAt": createdAt.toIso8601String(),
       "foodItems": foodItems,
+      "deliveryAddress": deliveryAddress,
+      "paymentMethod": paymentMethod,
     };
   }
 
@@ -47,6 +56,8 @@ class OrderModel {
       orderStatus: map["orderStatus"] ?? "Making",
       createdAt: DateTime.tryParse(map["createdAt"] ?? "") ?? DateTime.now(),
       foodItems: List<Map<String, dynamic>>.from(map["foodItems"] ?? []),
+      deliveryAddress: map["deliveryAddress"] ?? "",
+      paymentMethod: map["paymentMethod"] ?? "Cash on Delivery",
     );
   }
 }
