@@ -11,7 +11,7 @@ import 'package:food_user_app/core/widgets/appbar_action.dart';
 import 'package:food_user_app/core/widgets/loading.dart';
 import 'package:food_user_app/features/auth/bloc/auth_bloc_bloc.dart';
 import 'package:food_user_app/features/chat/presentation/screens/chat_and_support.dart';
-import 'package:food_user_app/features/order/screen/order_history.dart';
+import 'package:food_user_app/features/order/screen/order_history_screen.dart';
 import 'package:food_user_app/features/settings/settings.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -217,7 +217,8 @@ class _ProfileScreensState extends State<ProfileScreens> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const OrderHistory(),
+                                  builder: (context) =>
+                                      const OrderHistoryScreen(),
                                 ),
                               );
                             },
