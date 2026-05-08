@@ -54,6 +54,20 @@ class OrderHistoryScreen extends StatelessWidget {
 
                   final allDocs = snapshot.data?.docs ?? [];
 
+                  // client-side sort descending by createdAt
+                  allDocs.sort((a, b) {
+                    final aData = a.data() as Map<String, dynamic>;
+                    final bData = b.data() as Map<String, dynamic>;
+                    final aTs = HistoryService.safeToTimestamp(
+                      aData['createdAt'],
+                    );
+                    final bTs = HistoryService.safeToTimestamp(
+                      bData['createdAt'],
+                    );
+                    if (aTs == null || bTs == null) return 0;
+                    return bTs.compareTo(aTs);
+                  });
+
                   final ongoingOrders = allDocs.where((doc) {
                     final data = doc.data() as Map<String, dynamic>;
                     final status = data['orderStatus'] ?? '';
@@ -90,7 +104,10 @@ class OrderHistoryScreen extends StatelessWidget {
                               padding: const EdgeInsets.all(16),
                               itemCount: completedOrders.length,
                               itemBuilder: (context, index) {
-                                return const CompletedOrderCard();
+                                final data =
+                                    completedOrders[index].data()
+                                        as Map<String, dynamic>;
+                                return CompletedOrderCard(orderData: data);
                               },
                             ),
                     ],

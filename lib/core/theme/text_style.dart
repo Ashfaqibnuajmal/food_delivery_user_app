@@ -214,3 +214,9 @@ TextStyle selectableText({required bool isSelected}) {
     color: isSelected ? AppColors.primaryOrange : Colors.black87,
   );
 }
+
+const TextStyle greenTextStyle = TextStyle(
+  fontSize: 12,
+  fontWeight: FontWeight.w600,
+  color: Colors.green,
+);
