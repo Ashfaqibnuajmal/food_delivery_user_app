@@ -9,7 +9,7 @@ import 'package:food_user_app/features/cart/logic/bloc/cart_state.dart';
 import 'package:food_user_app/features/cart/presentation/screens/cart_screen.dart';
 import 'package:food_user_app/features/favorites/presentation/screens/favorites_screen.dart';
 import 'package:food_user_app/features/home/presentation/screens/home_screen.dart';
-import 'package:food_user_app/features/profile/screens/profile_screens.dart';
+import 'package:food_user_app/features/profile/presentation/screens/profile_screens.dart';
 
 class BottomNavBar extends StatelessWidget {
   const BottomNavBar({super.key});

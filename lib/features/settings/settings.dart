@@ -113,17 +113,6 @@ class SettingsPage extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 10),
-          Center(
-            child: GestureDetector(
-              onTap: () {},
-              child: Image.asset(
-                "assets/socialmidea.png",
-                height: 150,
-                width: 150,
-              ),
-            ),
-          ),
-          const SizedBox(height: 20),
         ],
       ),
     );
