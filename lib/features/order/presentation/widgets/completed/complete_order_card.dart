@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:food_user_app/features/order/controller/completed_order_controller.dart';
-import 'package:food_user_app/features/order/widgets/completed/complete_order_action_button.dart';
-import 'package:food_user_app/features/order/widgets/completed/completed_order_image_stack.dart';
-import 'package:food_user_app/features/order/widgets/completed/completed_order_info_section.dart';
-import 'package:food_user_app/features/order/widgets/completed/reorder_dialog.dart';
+import 'package:food_user_app/features/order/presentation/widgets/completed/complete_order_action_button.dart';
+import 'package:food_user_app/features/order/presentation/widgets/completed/completed_order_image_stack.dart';
+import 'package:food_user_app/features/order/presentation/widgets/completed/completed_order_info_section.dart';
+import 'package:food_user_app/features/order/presentation/widgets/completed/reorder_dialog.dart';
 
 class CompletedOrderCard extends StatelessWidget {
   const CompletedOrderCard({super.key, required this.orderData});

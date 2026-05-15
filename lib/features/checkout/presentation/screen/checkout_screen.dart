@@ -13,7 +13,7 @@ import 'package:food_user_app/features/checkout/presentation/widgets/checkout_pr
 import 'package:food_user_app/features/checkout/presentation/widgets/place_order_button.dart';
 import '../widgets/delivery_address_section.dart';
 import 'package:food_user_app/features/checkout/presentation/widgets/stripe_payment_button.dart';
-import 'package:food_user_app/features/order/screen/order_history_screen.dart';
+import 'package:food_user_app/features/order/presentation/screen/order_history_screen.dart';
 
 class CheckoutScreen extends StatefulWidget {
   final double subtotal;

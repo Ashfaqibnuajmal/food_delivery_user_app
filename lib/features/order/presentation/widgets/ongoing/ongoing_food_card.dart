@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_user_app/core/theme/text_style.dart';
-import 'package:food_user_app/features/order/widgets/ongoing/food_image_widget.dart';
+import 'package:food_user_app/features/order/presentation/widgets/ongoing/food_image_widget.dart';
 
 class OngoingFoodCard extends StatelessWidget {
   const OngoingFoodCard({

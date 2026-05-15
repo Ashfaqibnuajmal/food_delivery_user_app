@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:food_user_app/core/theme/app_color.dart';
 import 'package:food_user_app/core/widgets/appbar_action.dart';
 import 'package:food_user_app/core/widgets/loading.dart';
-import 'package:food_user_app/features/order/widgets/completed/complete_order_card.dart';
+import 'package:food_user_app/features/order/presentation/widgets/completed/complete_order_card.dart';
 import 'package:food_user_app/features/order/services/history_service.dart';
-import 'package:food_user_app/features/order/widgets/ongoing/ongoing_order_card.dart';
+import 'package:food_user_app/features/order/presentation/widgets/ongoing/ongoing_order_card.dart';
 
 class OrderHistoryScreen extends StatelessWidget {
   const OrderHistoryScreen({super.key});

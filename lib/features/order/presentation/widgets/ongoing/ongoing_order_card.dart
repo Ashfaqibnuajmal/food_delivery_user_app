@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:food_user_app/features/order/controller/ongoing_order_controller.dart';
-import 'package:food_user_app/features/order/widgets/ongoing/need_help_button.dart';
-import 'package:food_user_app/features/order/widgets/ongoing/ongoing_food_card.dart';
-import 'package:food_user_app/features/order/widgets/ongoing/ongoing_header_section.dart';
-import 'package:food_user_app/features/order/widgets/ongoing/timeline_widget.dart';
+import 'package:food_user_app/features/order/presentation/widgets/ongoing/need_help_button.dart';
+import 'package:food_user_app/features/order/presentation/widgets/ongoing/ongoing_food_card.dart';
+import 'package:food_user_app/features/order/presentation/widgets/ongoing/ongoing_header_section.dart';
+import 'package:food_user_app/features/order/presentation/widgets/ongoing/timeline_widget.dart';
 
 class OngoingOrderCard extends StatelessWidget {
   const OngoingOrderCard({super.key, required this.orderData});
