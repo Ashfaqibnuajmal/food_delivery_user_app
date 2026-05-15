@@ -10,10 +10,8 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     on<AddToCart>(_onAddCart);
     on<RemoveCartItems>(_onRemoveCart);
     on<ClearCart>(_onClearCart);
-
-    // ✅ New: Handle quantity updates
     on<UpdateCartItemQuantity>(_onUpdateCartItemQuantity);
-
+    on<ReorderCartItems>(_onRecorderCartItems);
     add(const LoadCarts());
   }
 
@@ -82,5 +80,17 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     final pref = await SharedPreferences.getInstance();
     final jsonString = jsonEncode(cartItems);
     await pref.setString('cart', jsonString);
+  }
+
+  Future<void> _onRecorderCartItems(
+    ReorderCartItems event,
+    Emitter<CartState> emit,
+  ) async {
+    if (state.cartItems.isNotEmpty) return;
+    final reorderItems = event.items.map((item) {
+      return Map<String, dynamic>.from(item);
+    }).toList();
+    emit(state.copyWith(cartItems: reorderItems));
+    await _saveToCart(reorderItems);
   }
 }

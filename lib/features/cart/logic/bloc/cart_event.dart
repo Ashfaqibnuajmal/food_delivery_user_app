@@ -32,3 +32,10 @@ class UpdateCartItemQuantity extends CartEvent {
 }
 
 class ClearCart extends CartEvent {}
+
+class ReorderCartItems extends CartEvent {
+  final List<Map<String, dynamic>> items;
+  const ReorderCartItems(this.items);
+  @override
+  List<Object> get props => [items];
+}

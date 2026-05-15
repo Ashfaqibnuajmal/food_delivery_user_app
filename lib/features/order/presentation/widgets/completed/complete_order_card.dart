@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:food_user_app/features/cart/logic/bloc/cart_bloc.dart';
+import 'package:food_user_app/features/cart/logic/bloc/cart_event.dart';
+import 'package:food_user_app/features/cart/presentation/screens/cart_screen.dart';
 import 'package:food_user_app/features/order/controller/completed_order_controller.dart';
 import 'package:food_user_app/features/order/presentation/widgets/completed/complete_order_action_button.dart';
 import 'package:food_user_app/features/order/presentation/widgets/completed/completed_order_image_stack.dart';
@@ -78,7 +82,45 @@ class CompletedOrderCard extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
 
             child: CompletedOrderActionButtons(
-              onReorderTap: () => showReorderDialog(context),
+              onReorderTap: () {
+                final cartItems = context.read<CartBloc>().state.cartItems;
+
+                if (cartItems.isNotEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                        'Please clear your cart before re-ordering.',
+                      ),
+                    ),
+                  );
+                  return;
+                }
+
+                final foodItems = List<Map<String, dynamic>>.from(
+                  orderData['foodItems'] ?? [],
+                );
+
+                if (foodItems.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('No items found in this order.'),
+                    ),
+                  );
+                  return;
+                }
+
+                showReorderDialog(
+                  context: context,
+                  onConfirm: () {
+                    context.read<CartBloc>().add(ReorderCartItems(foodItems));
+
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const CartScreen()),
+                    );
+                  },
+                );
+              },
             ),
           ),
         ],
