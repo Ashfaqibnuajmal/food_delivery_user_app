@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_user_app/core/blocs/category/food_category_filter_cubit.dart';
 import 'package:food_user_app/core/theme/app_color.dart';
 import 'package:food_user_app/core/theme/text_style.dart';
-import 'package:food_user_app/core/widgets/loading.dart';
+import 'package:food_user_app/core/widgets/shimmer_food_grid.dart';
 import 'package:food_user_app/features/favorites/bloc/favorite_bloc.dart';
 import 'package:food_user_app/features/favorites/bloc/favorite_state.dart';
 import 'package:food_user_app/features/search/logic/bloc/search_bloc.dart';
@@ -26,7 +26,7 @@ class SearchFoodGrid extends StatelessWidget {
         stream: FirebaseFirestore.instance.collection(collection).snapshots(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: LoadingIndicator());
+            return ShimmerLoader(type: ShimmerLayoutType.grid, itemCount: 6);
           }
 
           if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
@@ -49,7 +49,6 @@ class SearchFoodGrid extends StatelessWidget {
             builder: (context, searchState) {
               return BlocBuilder<FoodCategoryFilterCubit, String?>(
                 builder: (context, selectedCategory) {
-                  // 🔹 Updated BlocBuilder for combined filters
                   return BlocBuilder<SearchFilterCubit, SearchFilterState>(
                     builder: (context, filterState) {
                       final showFavoritesOnly = filterState.showFavoritesOnly;
@@ -57,7 +56,6 @@ class SearchFoodGrid extends StatelessWidget {
 
                       return BlocBuilder<FavoriteBloc, FavoriteState>(
                         builder: (context, favState) {
-                          // Start with search-filtered items
                           List<Map<String, dynamic>> finalItems =
                               List<Map<String, dynamic>>.from(
                                 searchState.filteredItems,
@@ -78,7 +76,6 @@ class SearchFoodGrid extends StatelessWidget {
                             final favoriteIds = favState.favorites
                                 .map((e) => e['id'].toString())
                                 .toSet();
-
                             finalItems = finalItems.where((item) {
                               final itemId = item['id'].toString();
                               return favoriteIds.contains(itemId);
@@ -92,18 +89,15 @@ class SearchFoodGrid extends StatelessWidget {
                                 .toList();
                           }
 
+                          // 🔹 Price filter
                           final double minPrice = filterState.minPrice;
                           final double maxPrice = filterState.maxPrice;
                           finalItems = finalItems.where((item) {
                             final price = (item['price'] as num).toDouble();
                             return price >= minPrice && price <= maxPrice;
                           }).toList();
-                          // 🔹 Empty state
-                          if (finalItems.isEmpty) {
-                            return const Center(
-                              child: Text("No Food Items Found"),
-                            );
-                          }
+
+                          // 🔹 Rating filter
                           if (filterState.minRating != null) {
                             finalItems = finalItems.where((item) {
                               final rating = (item['averageRating'] ?? 0)
@@ -111,9 +105,11 @@ class SearchFoodGrid extends StatelessWidget {
                               return rating >= filterState.minRating!;
                             }).toList();
                           }
-                          final bool isRatingApplied =
-                              filterState.minRating != null;
+
+                          // 🔹 Empty state
                           if (finalItems.isEmpty) {
+                            final bool isRatingApplied =
+                                filterState.minRating != null;
                             return Center(
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(
@@ -140,6 +136,7 @@ class SearchFoodGrid extends StatelessWidget {
                               ),
                             );
                           }
+
                           // 🔹 Grid view
                           return GridView.builder(
                             padding: const EdgeInsets.all(8),

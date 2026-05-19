@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(height: 30),
             RecommendedTitle(),
             SizedBox(height: 20),
-            SizedBox(height: 95, child: CategoryList()),
+            SizedBox(height: 105, child: CategoryList()),
             SizedBox(height: 20),
             FoodItemsList(),
           ],

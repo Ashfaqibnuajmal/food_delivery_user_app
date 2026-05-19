@@ -4,7 +4,7 @@ import 'ai_chat_event.dart';
 import 'ai_chat_state.dart';
 
 class AiChatBloc extends Bloc<AiChatEvent, AiChatState> {
-  final String apiKey = "AIzaSyBY5c6Xoy95ohk65AsuTNMIeLlfqcMe8SQ";
+  final String apiKey = "AIzaSyAnnGDl-KzOgI5n6zhFM7dbQTWTJC9iUew";
   late GenerativeModel model;
 
   final List<String> allowedKeywords = [
@@ -55,7 +55,7 @@ class AiChatBloc extends Bloc<AiChatEvent, AiChatState> {
     "spicy", "sweet", "savory", "tangy", "crunchy", "crispy", "juicy", "sauce",
   ];
   AiChatBloc() : super(const AiChatInitial()) {
-    model = GenerativeModel(model: 'gemini-2.5-pro', apiKey: apiKey);
+    model = GenerativeModel(model: 'gemini-1.5-flash-latest', apiKey: apiKey);
 
     on<GenerateContentEvent>((event, emit) async {
       final updatedMessages = List<Map<String, dynamic>>.from(state.messages)
@@ -68,7 +68,7 @@ class AiChatBloc extends Bloc<AiChatEvent, AiChatState> {
       if (!allowed) {
         updatedMessages.add({
           'text':
-              "❌ Only food & cooking-related questions are allowed.\nTry asking about recipes, ingredients, or preparation.",
+              " Only food & cooking-related questions are allowed.\nTry asking about recipes, ingredients, or preparation.",
           'isUser': false,
         });
 
@@ -120,6 +120,12 @@ class AiChatBloc extends Bloc<AiChatEvent, AiChatState> {
   String _handleAiError(dynamic error) {
     final errorStr = error.toString().toLowerCase();
 
+    if (errorStr.contains("quota") ||
+        errorStr.contains("429") ||
+        errorStr.contains("resource_exhausted")) {
+      return "⚠️ API quota exceeded.\nPlease check your Google AI billing or switch to a free-tier model.";
+    }
+
     if (errorStr.contains("503")) {
       return "⚠️ **Server is busy right now.**\nPlease try again in a moment.";
     }
@@ -134,6 +140,6 @@ class AiChatBloc extends Bloc<AiChatEvent, AiChatState> {
       return "🚧 AI model is overloaded.\nPlease try again shortly.";
     }
 
-    return "❌ Something went wrong.\nError: $error";
+    return "Something went wrong.\n Please try again later.";
   }
 }

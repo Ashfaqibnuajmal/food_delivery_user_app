@@ -73,7 +73,6 @@ class CustomAppBarActions extends StatelessWidget {
             );
           },
         ),
-
         // 🔴 Badge — only show if unread count > 0
         if (count > 0)
           Positioned(

@@ -21,7 +21,7 @@ class SearchScreen extends StatelessWidget {
       create: (context) => SearchFilterCubit(),
       child: Scaffold(
         backgroundColor: Colors.white,
-        appBar: const CustomAppBar(title: "Search item"),
+        appBar: const CustomAppBar(title: "Search Food's"),
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),

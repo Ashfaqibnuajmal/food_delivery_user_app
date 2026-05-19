@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_user_app/core/widgets/loading.dart';
+import 'package:food_user_app/core/widgets/shimmer_food_grid.dart';
 import 'package:food_user_app/features/chat/logic/controller/chat_controller.dart';
 import 'package:food_user_app/features/chat/logic/cubit/chat_cubit.dart';
 import 'package:food_user_app/features/chat/logic/cubit/chat_state.dart';
@@ -23,7 +23,12 @@ class ChatAndSupport extends StatelessWidget {
           child: BlocBuilder<ChatCubit, ChatState>(
             builder: (context, state) {
               if (state.isLoading) {
-                return const Center(child: LoadingIndicator());
+                return const Center(
+                  child: ShimmerLoader(
+                    type: ShimmerLayoutType.list,
+                    itemCount: 8,
+                  ),
+                );
               }
               return Column(
                 children: [

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_user_app/core/widgets/loading.dart';
+import 'package:food_user_app/core/widgets/shimmer_food_grid.dart';
 import 'package:food_user_app/features/food_details/cubit/food_portion_cubit.dart';
 import 'package:food_user_app/features/food_details/widgets/food_details_add_to_cart.dart';
 import 'package:food_user_app/features/food_details/widgets/food_details_body.dart';
@@ -26,7 +26,9 @@ class _FoodDetailsState extends State<FoodDetails> {
             .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: LoadingIndicator());
+            return const Center(
+              child: ShimmerLoader(type: ShimmerLayoutType.card),
+            );
           }
 
           if (!snapshot.hasData || !snapshot.data!.exists) {

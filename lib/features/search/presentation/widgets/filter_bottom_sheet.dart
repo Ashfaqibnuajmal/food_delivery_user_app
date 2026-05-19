@@ -226,11 +226,7 @@ class FilterBottomSheet extends StatelessWidget {
                 },
                 child: const Text(
                   "Apply Filter",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: whiteBoldSmallTextStyle,
                 ),
               ),
             ),

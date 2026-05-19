@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_user_app/core/services/rating_service.dart';
 import 'package:food_user_app/core/theme/text_style.dart';
 import 'package:food_user_app/core/widgets/food_container.dart';
+import 'package:food_user_app/core/widgets/shimmer_food_grid.dart';
 import 'package:food_user_app/core/widgets/snack_bar.dart';
 import 'package:food_user_app/features/cart/logic/bloc/cart_bloc.dart';
 import 'package:food_user_app/features/cart/logic/bloc/cart_event.dart';
@@ -12,7 +13,6 @@ import 'package:food_user_app/features/favorites/bloc/favorite_bloc.dart';
 import 'package:food_user_app/features/favorites/bloc/favorite_event.dart';
 import 'package:food_user_app/features/favorites/bloc/favorite_state.dart';
 import 'package:food_user_app/core/theme/app_color.dart';
-import 'package:food_user_app/core/widgets/loading.dart';
 import 'package:food_user_app/features/food_details/screen/food_details.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -30,7 +30,12 @@ class BestCompoCardGrid extends StatelessWidget {
             .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: LoadingIndicator());
+            return const Center(
+              child: ShimmerLoader(
+                type: ShimmerLayoutType.horizontal,
+                itemCount: 3,
+              ),
+            );
           }
 
           if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {

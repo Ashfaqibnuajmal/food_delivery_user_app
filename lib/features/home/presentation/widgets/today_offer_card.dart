@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_user_app/core/theme/app_color.dart';
 import 'package:food_user_app/core/theme/text_style.dart';
-import 'package:food_user_app/core/widgets/loading.dart';
+import 'package:food_user_app/core/widgets/shimmer_food_grid.dart';
 import 'package:food_user_app/features/cart/logic/bloc/cart_bloc.dart';
 import 'package:food_user_app/features/cart/logic/bloc/cart_state.dart';
 import 'package:food_user_app/features/home/cubit/today_offer_cubit.dart';
@@ -23,7 +23,12 @@ class TodayOfferCard extends StatelessWidget {
           .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: LoadingIndicator());
+          return const Center(
+            child: ShimmerLoader(
+              type: ShimmerLayoutType.horizontal,
+              itemCount: 3,
+            ),
+          );
         }
         if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
           return const Center(child: Text("Today no offer available!"));

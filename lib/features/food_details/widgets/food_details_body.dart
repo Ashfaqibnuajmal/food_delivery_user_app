@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:food_user_app/core/widgets/shimmer_food_grid.dart';
 import 'package:gap/gap.dart';
 import 'package:food_user_app/core/services/rating_service.dart';
 import 'package:food_user_app/core/theme/app_color.dart';
 import 'package:food_user_app/core/theme/text_style.dart';
-import 'package:food_user_app/core/widgets/loading.dart';
 import 'package:food_user_app/core/widgets/rating_alert_message.dart';
 import 'package:food_user_app/features/food_details/widgets/food_header.dart';
 import 'package:food_user_app/features/food_details/widgets/food_portion_selector.dart';
@@ -22,7 +22,9 @@ class FoodDetailsBody extends StatelessWidget {
           .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: LoadingIndicator());
+          return const Center(
+            child: ShimmerLoader(type: ShimmerLayoutType.card),
+          );
         }
 
         if (!snapshot.hasData || !snapshot.data!.exists) {
