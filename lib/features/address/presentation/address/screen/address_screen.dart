@@ -20,7 +20,7 @@ class AddressScreen extends StatelessWidget {
 
           ScaffoldMessenger.of(
             context,
-          ).showSnackBar(const SnackBar(content: Text('Address deleted!')));
+          ).showSnackBar(const SnackBar(content: Text('Address deleted')));
         },
       ),
     );
