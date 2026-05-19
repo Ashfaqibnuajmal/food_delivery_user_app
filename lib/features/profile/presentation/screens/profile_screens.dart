@@ -3,9 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_user_app/core/blocs/image/image_bloc.dart';
 import 'package:food_user_app/core/blocs/image/image_state.dart';
 import 'package:food_user_app/core/widgets/appbar.dart';
+import 'package:food_user_app/core/widgets/shimmer_food_grid.dart';
 import 'package:food_user_app/features/profile/controller/profile_controller.dart';
 import 'package:food_user_app/features/profile/presentation/widgets/chat_support_card.dart';
 import 'package:food_user_app/features/profile/presentation/widgets/logout_card.dart';
+import 'package:food_user_app/features/profile/presentation/widgets/order_history_card.dart';
 import 'package:food_user_app/features/profile/presentation/widgets/profile_image_widget.dart';
 import 'package:food_user_app/features/profile/presentation/widgets/profile_info_section.dart';
 import 'package:food_user_app/features/profile/presentation/widgets/settings_card.dart';
@@ -30,7 +32,7 @@ class _ProfileScreensState extends State<ProfileScreens> {
         stream: _controller.userProfileStream,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const SizedBox.shrink();
+            return ShimmerLoader(type: ShimmerLayoutType.card);
           }
           if (snapshot.hasError) {
             return const Center(child: Text("Something went wrong"));
@@ -64,6 +66,7 @@ class _ProfileScreensState extends State<ProfileScreens> {
                         ),
                         const SizedBox(height: 30),
                         const ChatSupportCard(),
+                        OrderHistoryCard(),
                         SettingsCard(),
                         ThemeCard(),
                         LogoutCard(

@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:food_user_app/core/theme/app_color.dart';
 import 'package:food_user_app/core/widgets/appbar.dart';
-import 'package:food_user_app/core/widgets/loading.dart';
+import 'package:food_user_app/core/widgets/shimmer_food_grid.dart';
 import 'package:food_user_app/features/order/presentation/widgets/completed/complete_order_card.dart';
 import 'package:food_user_app/features/order/services/history_service.dart';
 import 'package:food_user_app/features/order/presentation/widgets/ongoing/ongoing_order_card.dart';
@@ -33,7 +33,9 @@ class OrderHistoryScreen extends StatelessWidget {
                 stream: HistoryService.getAllOrdersStream(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: LoadingIndicator());
+                    return const Center(
+                      child: ShimmerLoader(type: ShimmerLayoutType.card),
+                    );
                   }
 
                   final allDocs = snapshot.data?.docs ?? [];
