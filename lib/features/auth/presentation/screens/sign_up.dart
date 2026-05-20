@@ -46,7 +46,11 @@ class _SignUpState extends State<SignUp> {
           );
         } else if (state is Authenticated) {
           ShowSnackBar.show(context, "Welcome back! You’re now signed in!");
-          Navigator.of(context).pushReplacementNamed(AppRoutes.home);
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            AppRoutes.home,
+            (route) => false,
+          );
         }
       },
       child: SafeArea(

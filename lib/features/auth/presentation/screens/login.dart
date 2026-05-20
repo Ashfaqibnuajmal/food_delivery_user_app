@@ -44,7 +44,11 @@ class Login extends StatelessWidget {
           );
         } else if (state is Authenticated) {
           ShowSnackBar.show(context, "Welcome back . You're now logged in!");
-          Navigator.of(context).pushReplacementNamed(AppRoutes.home);
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            AppRoutes.home,
+            (route) => false,
+          );
         }
       },
       child: Scaffold(
