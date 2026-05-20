@@ -35,7 +35,7 @@ class ChatController {
   }
 
   Future<void> makeCall() async {
-    final Uri url = Uri(scheme: "tel", path: '9048591273');
+    final Uri url = Uri(scheme: "tel", path: '9846100721');
     if (await canLaunchUrl(url)) {
       await launchUrl(url);
     } else {
