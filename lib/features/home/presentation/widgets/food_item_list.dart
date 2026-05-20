@@ -218,7 +218,7 @@ class FoodItemsList extends StatelessWidget {
                                                   ),
                                                   SizedBox(width: 3),
                                                   Text(
-                                                    "0.0",
+                                                    "N/A",
                                                     style: ratingTextStyle,
                                                   ),
                                                 ],
