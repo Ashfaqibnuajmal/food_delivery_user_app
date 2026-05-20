@@ -31,7 +31,7 @@ class SearchRatingBar extends StatelessWidget {
               children: [
                 Icon(Icons.star, size: 14, color: AppColors.primaryOrange),
                 SizedBox(width: 3),
-                Text("0.0", style: ratingTextStyle),
+                Text("N/A", style: ratingTextStyle),
               ],
             );
           }
