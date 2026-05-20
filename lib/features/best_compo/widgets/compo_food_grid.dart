@@ -1,13 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:food_user_app/core/widgets/shimmer_food_grid.dart';
 import 'package:food_user_app/features/search/logic/bloc/search_bloc.dart';
 import 'package:food_user_app/features/search/logic/bloc/search_event.dart';
 import 'package:food_user_app/features/search/logic/bloc/search_state.dart';
 import 'package:food_user_app/core/theme/app_color.dart';
 import 'package:food_user_app/core/theme/text_style.dart';
 import 'package:food_user_app/core/widgets/food_container.dart';
-import 'package:food_user_app/core/widgets/loading.dart';
 import 'package:food_user_app/features/food_details/screen/food_details.dart';
 import 'package:food_user_app/features/best_compo/widgets/add_to_cart_button.dart';
 import 'package:food_user_app/core/widgets/favorite_button.dart';
@@ -27,7 +27,9 @@ class CompoFoodGrid extends StatelessWidget {
             .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: LoadingIndicator());
+            return const Center(
+              child: ShimmerLoader(type: ShimmerLayoutType.grid, itemCount: 6),
+            );
           }
 
           if (snapshot.hasError) {
@@ -124,7 +126,7 @@ class _CompoFoodCard extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const SizedBox(height: 15),
+                      const SizedBox(height: 25),
                       Center(
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(15),
@@ -163,28 +165,6 @@ class _CompoFoodCard extends StatelessWidget {
                         food["name"] ?? "",
                         style: smallBold,
                         textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(height: 4),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(Icons.timer, color: Colors.grey, size: 16),
-                          const SizedBox(width: 4),
-                          Text(
-                            "${food["prepTimeMinutes"] ?? 0} min",
-                            style: prepkcalTextStyle,
-                          ),
-                          Container(
-                            height: 12,
-                            width: 1,
-                            margin: const EdgeInsets.symmetric(horizontal: 8),
-                            color: Colors.grey.withOpacity(0.4),
-                          ),
-                          Text(
-                            "${food["calories"] ?? 0} kcal",
-                            style: prepkcalTextStyle,
-                          ),
-                        ],
                       ),
                       const Spacer(),
                       Row(
