@@ -22,7 +22,7 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: CustomAppBar(title: "Orders"),
+      appBar: CustomAppBar(title: "Orders", showBack: false),
       body: Column(
         children: [
           // 🛒 CART LIST

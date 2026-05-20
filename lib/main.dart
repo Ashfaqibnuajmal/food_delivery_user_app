@@ -6,7 +6,6 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:food_user_app/core/blocs/category/food_category_filter_cubit.dart';
 import 'package:food_user_app/core/blocs/image/image_bloc.dart';
 import 'package:food_user_app/features/notifications/cubit/notificaiton_cubit.dart';
-import 'package:food_user_app/features/notifications/service/notificaiton_services.dart';
 import 'package:food_user_app/features/search/logic/bloc/search_bloc.dart';
 import 'package:food_user_app/features/search/logic/bloc/search_event.dart';
 import 'package:food_user_app/core/constant/firebase_options.dart';
@@ -38,9 +37,6 @@ Future<void> main() async {
   await dotenv.load();
   Stripe.publishableKey = publishableKey;
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-
-  await NotificationService.initialize();
-
   runApp(const MyApp());
 }
 

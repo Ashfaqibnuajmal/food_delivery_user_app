@@ -1,9 +1,7 @@
 import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:food_user_app/features/auth/data/model/user_model.dart';
-import 'package:food_user_app/features/notifications/service/notificaiton_services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -75,8 +73,6 @@ class AuthService {
       );
       await auth.signInWithCredential(gcred);
 
-      await NotificationService.saveTokenToFirestore(auth.currentUser!.uid);
-
       return auth.currentUser!.uid;
     } on FirebaseAuthException catch (e) {
       log("google sign in error${e.toString()}");
@@ -93,8 +89,6 @@ class AuthService {
         email: email,
         password: password,
       );
-
-      await NotificationService.saveTokenToFirestore(auth.currentUser!.uid);
 
       return currentUser.user!.uid;
     } catch (e) {
