@@ -13,11 +13,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
       // Left logo
       leading: Padding(
         padding: const EdgeInsets.only(left: 12),
-        child: Image.asset(
-          "assets/Logo.jpeg", // replace with your logo
-          height: 50,
-          width: 50,
-        ),
+        child: Image.asset("assets/brand_logo.png", height: 100, width: 100),
       ),
       actions: const [CustomAppBarActions(showChatBot: true)],
     );

@@ -23,7 +23,7 @@
     <uses-feature android:name="android.hardware.location.gps" />
 
     <application
-        android:label="food_user_app"
+        android:label="അമ്മാവന്റെ ചായക്കട"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
 

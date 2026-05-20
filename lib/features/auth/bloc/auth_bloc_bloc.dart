@@ -29,7 +29,7 @@ class AuthBlocBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
     log('Auth check started');
 
     try {
-      await Future.delayed(Duration(seconds: 3));
+      await Future.delayed(Duration(seconds: 1));
       if (!_isFirst) {
         await sharedPref.setBool("_isFirst", true);
         log('Welcome state emitted');
@@ -50,7 +50,7 @@ class AuthBlocBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
 
   void _login(LoginEvent event, Emitter<AuthBlocState> emit) async {
     log('Login started');
-    await Future.delayed(const Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: 1));
     log("_loadingstate");
     emit(AuthBlocLoading());
     try {
@@ -74,7 +74,7 @@ class AuthBlocBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
   void _register(RegisterEvent event, Emitter<AuthBlocState> emit) async {
     log('Register started');
     emit(AuthBlocLoading());
-    await Future.delayed(const Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: 1));
     try {
       final String? user = await authService.registerUser(
         name: event.name,
