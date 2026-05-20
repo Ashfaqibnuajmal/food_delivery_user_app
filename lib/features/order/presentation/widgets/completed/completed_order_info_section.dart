@@ -23,16 +23,20 @@ class CompletedOrderInfoSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
 
         children: [
-          /// FOOD NAMES
-          Text(
-            foodNames.isNotEmpty ? foodNames : 'Food Order',
-
-            style: mediumBold,
-
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
+          SizedBox(
+            height: 45,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: SizedBox(
+                width: 250,
+                child: Text(
+                  foodNames.isNotEmpty ? foodNames : 'Food Order',
+                  style: mediumBold,
+                  maxLines: 2,
+                ),
+              ),
+            ),
           ),
-
           const SizedBox(height: 6),
 
           /// DATE

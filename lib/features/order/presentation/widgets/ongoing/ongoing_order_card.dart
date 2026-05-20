@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:food_user_app/features/order/controller/ongoing_order_controller.dart';
-import 'package:food_user_app/features/order/presentation/widgets/ongoing/need_help_button.dart';
 import 'package:food_user_app/features/order/presentation/widgets/ongoing/ongoing_food_card.dart';
 import 'package:food_user_app/features/order/presentation/widgets/ongoing/ongoing_header_section.dart';
 import 'package:food_user_app/features/order/presentation/widgets/ongoing/timeline_widget.dart';
@@ -37,9 +36,7 @@ class OngoingOrderCard extends StatelessWidget {
               return TimelineWidget(
                 step: {
                   'icon': controller.steps[i]['icon'] as IconData,
-
                   'title': controller.steps[i]['title'] as String,
-
                   'time': controller.simulatedTimes[i],
                 },
 
@@ -61,11 +58,6 @@ class OngoingOrderCard extends StatelessWidget {
             deliveryAddress: controller.deliveryAddress,
             phoneNumber: controller.phoneNumber,
           ),
-
-          const SizedBox(height: 20),
-
-          /// NEED HELP BUTTON
-          const NeedHelpButton(),
 
           const SizedBox(height: 16),
 

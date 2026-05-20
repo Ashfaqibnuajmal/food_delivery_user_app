@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:food_user_app/core/widgets/snack_bar.dart';
 import 'package:food_user_app/features/cart/logic/bloc/cart_bloc.dart';
 import 'package:food_user_app/features/cart/logic/bloc/cart_event.dart';
 import 'package:food_user_app/features/cart/presentation/screens/cart_screen.dart';
@@ -86,12 +87,9 @@ class CompletedOrderCard extends StatelessWidget {
                 final cartItems = context.read<CartBloc>().state.cartItems;
 
                 if (cartItems.isNotEmpty) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text(
-                        'Please clear your cart before re-ordering.',
-                      ),
-                    ),
+                  CustomSnackBar.redCustomSnackBar(
+                    context,
+                    "Please clear you car",
                   );
                   return;
                 }
