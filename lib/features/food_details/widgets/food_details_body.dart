@@ -100,7 +100,11 @@ class FoodDetailsBody extends StatelessWidget {
                               ratingSnapshot.data!.isEmpty) {
                             return const Row(
                               children: [
-                                Icon(Icons.star, size: 16, color: Colors.amber),
+                                Icon(
+                                  Icons.star,
+                                  size: 16,
+                                  color: AppColors.primaryOrange,
+                                ),
                                 SizedBox(width: 4),
                                 Text("N/A"),
                               ],
@@ -141,8 +145,13 @@ class FoodDetailsBody extends StatelessWidget {
                           size: 16,
                           color: AppColors.primaryOrange,
                         ),
+
                         const SizedBox(width: 8),
-                        Text('$prepTime min', style: ratingTextStyle),
+
+                        Text(
+                          prepTime == 0 ? "Ready Now" : "$prepTime min",
+                          style: ratingTextStyle,
+                        ),
                       ],
                     ),
                     Container(
