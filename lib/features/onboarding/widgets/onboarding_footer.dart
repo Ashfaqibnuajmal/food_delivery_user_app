@@ -1,3 +1,5 @@
+// onboarding_footer.dart
+
 import 'package:flutter/material.dart';
 import 'package:food_user_app/core/theme/app_color.dart';
 import 'package:food_user_app/core/theme/text_style.dart';
@@ -29,6 +31,7 @@ class _OnboardingFooterState extends State<OnboardingFooter> {
 
   void _pageListener() {
     final int newPage = widget.controller.page?.round() ?? 0;
+
     if (newPage != currentPage) {
       setState(() {
         currentPage = newPage;
@@ -44,21 +47,32 @@ class _OnboardingFooterState extends State<OnboardingFooter> {
 
   @override
   Widget build(BuildContext context) {
+    // ✅ Responsive values
+    final size = MediaQuery.of(context).size;
+    final width = size.width;
+    final height = size.height;
+
     return Padding(
-      padding: const EdgeInsets.all(20.0),
+      padding: EdgeInsets.symmetric(
+        horizontal: width * 0.05,
+        vertical: height * 0.025,
+      ),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           SmoothPageIndicator(
             controller: widget.controller,
             count: 3,
-            effect: const WormEffect(
+            effect: WormEffect(
               activeDotColor: AppColors.primaryOrange,
-              dotColor: Colors.grey,
-              dotHeight: 12,
-              dotWidth: 12,
+              dotColor: Colors.grey.shade300,
+              dotHeight: width * 0.03,
+              dotWidth: width * 0.03,
             ),
           ),
-          const Gap(20),
+
+          Gap(height * 0.025),
+
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -71,26 +85,28 @@ class _OnboardingFooterState extends State<OnboardingFooter> {
                       curve: Curves.easeInOut,
                     );
                   },
-                  child: const Text("Skip", style: orangeTextStyle),
+                  child: Text(
+                    "Skip",
+                    style: orangeTextStyle.copyWith(fontSize: width * 0.042),
+                  ),
                 )
               else
-                const SizedBox(width: 60), // To keep layout aligned
+                SizedBox(width: width * 0.15),
 
               Container(
                 decoration: BoxDecoration(
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.orange.withOpacity(0.1),
-                      spreadRadius: 7,
-                      blurRadius: 40,
-                      offset: const Offset(0, 0),
+                      color: Colors.orange.withOpacity(0.12),
+                      spreadRadius: 5,
+                      blurRadius: 30,
                     ),
                   ],
                 ),
                 child: ElevatedButton(
                   onPressed: () {
                     if (currentPage == 2) {
-                      widget.onDone(); // Go to next screen
+                      widget.onDone();
                     } else {
                       widget.controller.nextPage(
                         duration: const Duration(milliseconds: 500),
@@ -98,31 +114,45 @@ class _OnboardingFooterState extends State<OnboardingFooter> {
                       );
                     }
                   },
+
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
                     foregroundColor: AppColors.primaryOrange,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: 10,
-                    ),
                     elevation: 1,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: currentPage == 2
+                          ? width * 0.05
+                          : width * 0.035,
+                      vertical: height * 0.015,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
                   ),
+
                   child: currentPage == 2
-                      ? const Row(
+                      ? Row(
+                          mainAxisSize: MainAxisSize.min,
                           children: [
-                            Text("Get Started!", style: orangeBoldTextStyle),
+                            Text(
+                              "Get Started!",
+                              style: orangeBoldTextStyle.copyWith(
+                                fontSize: width * 0.042,
+                              ),
+                            ),
+
+                            SizedBox(width: width * 0.02),
+
                             Icon(
                               Icons.arrow_forward_ios,
+                              size: width * 0.045,
                               color: AppColors.primaryOrange,
                             ),
                           ],
                         )
-                      : const Icon(
+                      : Icon(
                           Icons.arrow_forward_ios,
-                          size: 30,
+                          size: width * 0.06,
                           color: AppColors.primaryOrange,
                         ),
                 ),

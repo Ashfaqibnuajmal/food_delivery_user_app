@@ -17,60 +17,77 @@ class OnboardingContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Stack(
-          children: [
-            Container(
-              height: 400,
-              width: double.infinity,
-              decoration: const BoxDecoration(
-                color: AppColors.primaryOrange,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(30),
-                  bottomRight: Radius.circular(30),
-                ),
-              ),
-            ),
-            Positioned(
-              top: 40,
-              left: 30,
-              right: 30,
-              bottom: 0,
-              child: ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(30),
-                  topRight: Radius.circular(30),
-                ),
-                child: Image.asset(
-                  imagePath,
-                  fit: BoxFit.cover,
-                  width: double.infinity,
-                ),
-              ),
-            ),
-          ],
-        ),
-        const Gap(60),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Column(
+    // ✅ Responsive values
+    final size = MediaQuery.of(context).size;
+    final height = size.height;
+    final width = size.width;
+
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Stack(
             children: [
-              Text(
-                title,
-                style: blackBoldBigTextStyle,
-                textAlign: TextAlign.center,
+              Container(
+                height: height * 0.48,
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                  color: AppColors.primaryOrange,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(30),
+                    bottomRight: Radius.circular(30),
+                  ),
+                ),
               ),
-              const Gap(16),
-              Text(
-                subtitle,
-                style: lightBlackTextStyle,
-                textAlign: TextAlign.center,
+
+              Positioned(
+                top: height * 0.04,
+                left: width * 0.06,
+                right: width * 0.06,
+                bottom: 0,
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30),
+                  ),
+                  child: Image.asset(
+                    imagePath,
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                  ),
+                ),
               ),
             ],
           ),
-        ),
-      ],
+
+          Gap(height * 0.06),
+
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: width * 0.06),
+            child: Column(
+              children: [
+                Text(
+                  title,
+                  style: blackBoldBigTextStyle.copyWith(
+                    fontSize: width * 0.075,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+
+                Gap(height * 0.02),
+
+                Text(
+                  subtitle,
+                  style: lightBlackTextStyle.copyWith(
+                    fontSize: width * 0.04,
+                    height: 1.5,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

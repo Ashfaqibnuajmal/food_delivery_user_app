@@ -15,51 +15,55 @@ class _OnboardingScreensState extends State<OnboardingScreens> {
 
   @override
   void dispose() {
-    super.dispose();
     _controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Column(
-        children: [
-          Expanded(
-            child: PageView(
-              controller: _controller,
-              children: const [
-                // // Page 1
-                OnboardingContent(
-                  imagePath: "assets/intro_image1.jpeg",
-                  title: "Find Food For Love",
-                  subtitle:
-                      'Indulge in the exquisite flavors of our culinary masterpiece – a symphony of succulent grilled chicken, nestled on a bed of perfectly seasoned quinoa and adorned with a medley of vibrant, roasted vegetables.',
-                ),
-                // Page2
-                OnboardingContent(
-                  imagePath: "assets/intro_image2.jpeg",
-                  title: "Swift & Safe Delivery",
-                  subtitle:
-                      "Your favorite meals delivered fresh and on time. With real-time tracking and careful handling, we make sure every order reaches you hot and fast — whether you're at home, work, or anywhere in between.        ",
-                ),
-                // Page3
-                OnboardingContent(
-                  imagePath: "assets/intro_image3.jpeg",
-                  title: "Quality Food, Every Time",
-                  subtitle:
-                      'Our chefs prepare every dish with care, using fresh ingredients and clean cooking methods. We’re here to serve food that’s tasty, hygienic, and made to satisfy your cravings.',
-                ),
-              ],
+
+      // ✅ SafeArea added
+      body: SafeArea(
+        child: Column(
+          children: [
+            Expanded(
+              child: PageView(
+                controller: _controller,
+                children: const [
+                  OnboardingContent(
+                    imagePath: "assets/intro_image1.jpeg",
+                    title: "Find Food For Love",
+                    subtitle:
+                        'Indulge in the exquisite flavors of our culinary masterpiece – a symphony of succulent grilled chicken, nestled on a bed of perfectly seasoned quinoa and adorned with a medley of vibrant, roasted vegetables.',
+                  ),
+
+                  OnboardingContent(
+                    imagePath: "assets/intro_image2.jpeg",
+                    title: "Swift & Safe Delivery",
+                    subtitle:
+                        "Your favorite meals delivered fresh and on time. With real-time tracking and careful handling, we make sure every order reaches you hot and fast — whether you're at home, work, or anywhere in between.",
+                  ),
+
+                  OnboardingContent(
+                    imagePath: "assets/intro_image3.jpeg",
+                    title: "Quality Food, Every Time",
+                    subtitle:
+                        'Our chefs prepare every dish with care, using fresh ingredients and clean cooking methods. We’re here to serve food that’s tasty, hygienic, and made to satisfy your cravings.',
+                  ),
+                ],
+              ),
             ),
-          ),
-          OnboardingFooter(
-            controller: _controller,
-            onDone: () {
-              Navigator.pushReplacementNamed(context, AppRoutes.signUp);
-            },
-          ),
-        ],
+
+            OnboardingFooter(
+              controller: _controller,
+              onDone: () {
+                Navigator.pushReplacementNamed(context, AppRoutes.signUp);
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
