@@ -10,9 +10,14 @@ import 'package:food_user_app/features/cart/presentation/widgets/cart_actions.da
 import 'package:food_user_app/features/cart/presentation/widgets/cart_item_info.dart';
 import 'package:food_user_app/features/cart/presentation/widgets/cart_price_summary.dart';
 
-class CartScreen extends StatelessWidget {
+class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
 
+  @override
+  State<CartScreen> createState() => _CartScreenState();
+}
+
+class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

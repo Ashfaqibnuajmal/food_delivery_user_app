@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_user_app/core/theme/app_color.dart';
 import 'package:food_user_app/core/theme/text_style.dart';
-import 'package:food_user_app/features/checkout/controller/payment_success_controller.dart';
+import 'package:food_user_app/features/payment/payment_success_controller.dart';
 
 class PaymentSuccessOverlay extends StatelessWidget {
   const PaymentSuccessOverlay({super.key});

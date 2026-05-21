@@ -6,7 +6,7 @@ import 'package:food_user_app/core/widgets/snack_bar.dart';
 import 'package:food_user_app/features/payment/payment_service.dart';
 import 'package:food_user_app/core/enum/payment_mode.dart';
 import 'package:food_user_app/features/payment/select_payment_cubit.dart';
-import 'package:food_user_app/features/checkout/presentation/widgets/payment_success_overlay.dart';
+import 'package:food_user_app/features/payment/payment_success_overlay.dart';
 
 class StripePayButton extends StatelessWidget {
   final double total;
