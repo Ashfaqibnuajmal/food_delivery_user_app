@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_user_app/core/widgets/appbar.dart';
-import 'package:food_user_app/features/address/cubit/address/address_cubit.dart';
+import 'package:food_user_app/core/widgets/snack_bar.dart';
+import 'package:food_user_app/features/address/cubit/address_cubit.dart';
 import 'package:food_user_app/features/address/model/address_model.dart';
 import 'package:food_user_app/features/address/presentation/address/widgets/address_bottom_navigation.dart';
 import 'package:food_user_app/features/address/presentation/address/widgets/address_card.dart';
@@ -18,9 +19,7 @@ class AddressScreen extends StatelessWidget {
           context.read<AddressCubit>().removeAddress(id);
           Navigator.pop(context);
 
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(const SnackBar(content: Text('Address deleted')));
+          CustomSnackBar.redCustomSnackBar(context, 'Address deleted');
         },
       ),
     );

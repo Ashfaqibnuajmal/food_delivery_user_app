@@ -19,9 +19,9 @@ import 'package:food_user_app/features/bottom_nav/presentation/screens/main_navi
 import 'package:food_user_app/features/cart/logic/bloc/cart_bloc.dart';
 import 'package:food_user_app/features/cart/logic/cubit/cart_quantity_cubit.dart';
 import 'package:food_user_app/features/cart/logic/cubit/drink_selection_cubit.dart';
-import 'package:food_user_app/features/checkout/cubit/checkout_cubit.dart';
-import 'features/address/cubit/address/address_cubit.dart';
-import 'features/address/cubit/location/location_cubit.dart';
+import 'package:food_user_app/features/checkout/cubit/checkout/checkout_cubit.dart';
+import 'features/address/cubit/address_cubit.dart';
+import 'features/checkout/cubit/location/location_cubit.dart';
 import 'package:food_user_app/core/constant/payment_key.dart';
 import 'package:food_user_app/features/payment/select_payment_cubit.dart';
 import 'package:food_user_app/features/favorites/bloc/favorite_bloc.dart';

@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_user_app/core/theme/app_color.dart';
 import 'package:food_user_app/core/theme/text_style.dart';
 import 'package:food_user_app/features/address/presentation/add_address/screen/add_address_screen.dart';
-import 'package:food_user_app/features/address/cubit/address/address_cubit.dart';
+import 'package:food_user_app/features/address/cubit/address_cubit.dart';
 
 class AddressBottomSection extends StatelessWidget {
   final bool isEnabled;

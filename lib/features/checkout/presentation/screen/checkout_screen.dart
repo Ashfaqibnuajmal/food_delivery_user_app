@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_user_app/core/widgets/appbar.dart';
 import 'package:food_user_app/core/widgets/loading.dart';
 import 'package:food_user_app/features/checkout/controller/checkout_controller.dart';
-import 'package:food_user_app/features/checkout/cubit/checkout_cubit.dart';
+import 'package:food_user_app/features/checkout/cubit/checkout/checkout_cubit.dart';
 import 'package:food_user_app/features/payment/payment_method_widget.dart';
 import 'package:food_user_app/core/enum/payment_mode.dart';
 import 'package:food_user_app/features/payment/select_payment_cubit.dart';

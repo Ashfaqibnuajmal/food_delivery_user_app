@@ -5,7 +5,7 @@ import 'package:food_user_app/core/enum/payment_mode.dart';
 import 'package:food_user_app/features/cart/data/model/order_model.dart';
 import 'package:food_user_app/features/cart/data/services/cart_services.dart';
 import 'package:food_user_app/features/checkout/service/order_service.dart';
-import 'package:food_user_app/features/address/cubit/location/location_state.dart';
+import 'package:food_user_app/features/checkout/cubit/location/location_state.dart';
 
 part 'checkout_state.dart';
 

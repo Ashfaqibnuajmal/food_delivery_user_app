@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_user_app/features/address/cubit/location/location_state.dart';
+import 'package:food_user_app/features/checkout/cubit/location/location_state.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 

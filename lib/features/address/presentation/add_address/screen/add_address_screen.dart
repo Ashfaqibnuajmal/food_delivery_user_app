@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_user_app/core/widgets/appbar.dart';
-import 'package:food_user_app/features/address/cubit/add_address/add_address_cubit.dart';
-import 'package:food_user_app/features/address/cubit/add_address/add_address_state.dart';
-import 'package:food_user_app/features/address/cubit/address/address_cubit.dart';
+import 'package:food_user_app/features/address/cubit/add_address_cubit.dart';
+import 'package:food_user_app/features/address/cubit/add_address_state.dart';
+import 'package:food_user_app/features/address/cubit/address_cubit.dart';
 import 'package:food_user_app/features/address/model/address_model.dart';
 import 'package:food_user_app/features/address/presentation/add_address/widgets/add_address_button.dart';
 import 'package:food_user_app/features/address/presentation/add_address/widgets/add_address_input_field.dart';
