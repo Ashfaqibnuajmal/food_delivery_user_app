@@ -8,7 +8,7 @@ import 'package:food_user_app/features/checkout/controller/checkout_controller.d
 import 'package:food_user_app/features/checkout/cubit/checkout_cubit.dart';
 import 'package:food_user_app/features/checkout/presentation/widgets/payment_method_widget.dart';
 import 'package:food_user_app/core/enum/payment_mode.dart';
-import 'package:food_user_app/features/cart/logic/cubit/payment/select_payment_cubit.dart';
+import 'package:food_user_app/features/payment/select_payment_cubit.dart';
 import 'package:food_user_app/features/checkout/presentation/widgets/checkout_price_row.dart';
 import 'package:food_user_app/features/checkout/presentation/widgets/place_order_button.dart';
 import '../widgets/delivery_address_section.dart';

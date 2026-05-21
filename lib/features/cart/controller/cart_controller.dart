@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_user_app/features/cart/logic/bloc/cart_bloc.dart';
-import 'package:food_user_app/features/cart/logic/cubit/cart/cart_quantity_cubit.dart';
+import 'package:food_user_app/features/cart/logic/cubit/cart_quantity_cubit.dart';
 
 class CartController {
   /// Get all cart items from Bloc

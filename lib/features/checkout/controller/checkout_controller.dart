@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_user_app/features/cart/logic/bloc/cart_bloc.dart';
 import 'package:food_user_app/features/cart/logic/bloc/cart_event.dart';
-import 'package:food_user_app/features/cart/logic/cubit/payment/select_payment_cubit.dart';
+import 'package:food_user_app/features/payment/select_payment_cubit.dart';
 import 'package:food_user_app/features/checkout/cubit/checkout_cubit.dart';
 import '../../address/cubit/location/location_cubit.dart';
 import '../../address/cubit/location/location_state.dart';

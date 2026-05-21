@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_user_app/core/theme/text_style.dart';
 import 'package:food_user_app/features/cart/logic/bloc/cart_bloc.dart';
 import 'package:food_user_app/features/cart/logic/bloc/cart_event.dart';
-import 'package:food_user_app/features/cart/logic/cubit/cart/cart_quantity_cubit.dart';
+import 'package:food_user_app/features/cart/logic/cubit/cart_quantity_cubit.dart';
 
 class CartItemActions extends StatelessWidget {
   final String id;

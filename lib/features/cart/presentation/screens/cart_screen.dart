@@ -10,14 +10,9 @@ import 'package:food_user_app/features/cart/presentation/widgets/cart_actions.da
 import 'package:food_user_app/features/cart/presentation/widgets/cart_item_info.dart';
 import 'package:food_user_app/features/cart/presentation/widgets/cart_price_summary.dart';
 
-class CartScreen extends StatefulWidget {
+class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
 
-  @override
-  State<CartScreen> createState() => _CartScreenState();
-}
-
-class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +20,6 @@ class _CartScreenState extends State<CartScreen> {
       appBar: CustomAppBar(title: "Orders", showBack: false),
       body: Column(
         children: [
-          // 🛒 CART LIST
           Expanded(
             child: BlocBuilder<CartBloc, CartState>(
               builder: (context, state) {
@@ -117,14 +111,16 @@ class _CartScreenState extends State<CartScreen> {
               },
             ),
           ),
-
           BlocBuilder<CartBloc, CartState>(
             builder: (context, state) {
               final cartitems = CartController.getCartItems(context);
+
               if (cartitems.isEmpty) {
-                return SizedBox.shrink();
+                return const SizedBox.shrink();
               }
+
               final totals = CartController.calculateTotals(context);
+
               return Padding(
                 padding: const EdgeInsets.all(16),
                 child: CartPriceSummary(

@@ -77,7 +77,7 @@ class CartItemInfo extends StatelessWidget {
                   );
                 }
                 final data = snapshot.data!;
-                final avg = (data['averageRating'] ?? "Add rating").toDouble();
+                final avg = (data['averageRating'] ?? "N/A").toDouble();
 
                 return Row(
                   children: [

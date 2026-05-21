@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_user_app/core/theme/app_color.dart';
 import 'package:food_user_app/core/theme/text_style.dart';
 import 'package:food_user_app/core/enum/payment_mode.dart';
-import 'package:food_user_app/features/cart/logic/cubit/payment/select_payment_cubit.dart';
+import 'package:food_user_app/features/payment/select_payment_cubit.dart';
 
 class PaymentMethodWidget extends StatelessWidget {
   final SelectPaymentCubit paymentCubit;

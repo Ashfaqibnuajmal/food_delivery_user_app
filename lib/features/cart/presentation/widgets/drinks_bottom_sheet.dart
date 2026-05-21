@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_user_app/core/theme/app_color.dart';
 import 'package:food_user_app/core/widgets/loading.dart';
 import 'package:food_user_app/features/cart/data/services/cart_services.dart';
-import 'package:food_user_app/features/cart/logic/cubit/cart/drink_selection_cubit.dart';
+import 'package:food_user_app/features/cart/logic/cubit/drink_selection_cubit.dart';
 
 class CoolDrinksBottomSheet extends StatelessWidget {
   const CoolDrinksBottomSheet({super.key});
