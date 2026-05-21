@@ -21,13 +21,10 @@ class AboutUs extends StatelessWidget {
             Center(
               child: Column(
                 children: [
-                  Image.asset(
-                    'assets/Logo.jpeg', // replace with your logo path
-                    height: 100,
-                  ),
+                  Image.asset('assets/brand_logo.png', height: 100),
                   const SizedBox(height: 8),
                   const Text(
-                    "Arafa Hotel Vallikkappatta",
+                    "അമ്മാവന്റെ ചായക്കട",
                     style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
                   ),
@@ -54,7 +51,7 @@ class AboutUs extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             const Text(
-              "Arafa Hotel Vallikkappatta has 10 years of experience in providing good home food, "
+              "Ammavande Chayakada has 10 years of experience in providing good home food, "
               "hot and cool items, and delicious dishes with no lag. "
               "We offer several categories of food including breads, meals, biryani, roast, and more. "
               "Our signature items are Biryani rice with Kadai, Vellppam Mutta Roast, and Porotta Beef. "
