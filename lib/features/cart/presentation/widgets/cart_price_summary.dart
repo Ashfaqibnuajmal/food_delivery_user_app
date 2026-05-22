@@ -5,7 +5,7 @@ import 'package:food_user_app/features/cart/logic/bloc/cart_bloc.dart';
 import 'package:food_user_app/features/checkout/presentation/screen/checkout_screen.dart';
 import 'package:food_user_app/features/cart/presentation/widgets/drinks_bottom_sheet.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_user_app/features/payment/select_payment_cubit.dart';
+import 'package:food_user_app/features/checkout/cubit/payment/select_payment_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CartPriceSummary extends StatelessWidget {

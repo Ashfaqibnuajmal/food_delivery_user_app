@@ -1,7 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:food_user_app/core/widgets/snack_bar.dart';
 import 'package:food_user_app/features/cart/logic/bloc/cart_bloc.dart';
 import 'package:food_user_app/features/cart/logic/bloc/cart_event.dart';
-import 'package:food_user_app/features/payment/select_payment_cubit.dart';
+import 'package:food_user_app/features/checkout/cubit/payment/select_payment_cubit.dart';
 import 'package:food_user_app/features/checkout/cubit/checkout/checkout_cubit.dart';
 import '../cubit/location/location_cubit.dart';
 import '../cubit/location/location_state.dart';
@@ -19,14 +20,9 @@ class CheckoutController {
 
     if (locationState is! LocationLoaded &&
         locationState is! ManualAddressSelected) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            "Please add your delivery address!",
-            style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
-          ),
-          backgroundColor: Colors.white,
-        ),
+      CustomSnackBar.redCustomSnackBar(
+        context,
+        "Please add your delivery address!",
       );
       return false;
     }
