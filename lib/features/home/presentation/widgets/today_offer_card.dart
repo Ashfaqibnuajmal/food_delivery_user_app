@@ -23,15 +23,22 @@ class TodayOfferCard extends StatelessWidget {
           .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(
-            child: ShimmerLoader(
-              type: ShimmerLayoutType.horizontal,
-              itemCount: 3,
+          return const SizedBox(
+            height: 190,
+            child: Center(
+              child: ShimmerLoader(
+                type: ShimmerLayoutType.horizontal,
+                itemCount: 3,
+              ),
             ),
           );
         }
+
         if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-          return const Center(child: Text("Today no offer available!"));
+          return const SizedBox(
+            height: 190,
+            child: Center(child: Text("Today no offer available!")),
+          );
         }
 
         final foodItems = snapshot.data!.docs;
