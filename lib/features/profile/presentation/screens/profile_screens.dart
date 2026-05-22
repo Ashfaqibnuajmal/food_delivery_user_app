@@ -4,6 +4,7 @@ import 'package:food_user_app/core/blocs/image/image_bloc.dart';
 import 'package:food_user_app/core/blocs/image/image_state.dart';
 import 'package:food_user_app/core/widgets/appbar.dart';
 import 'package:food_user_app/core/widgets/shimmer_food_grid.dart';
+import 'package:food_user_app/core/widgets/snack_bar.dart';
 import 'package:food_user_app/features/profile/controller/profile_controller.dart';
 import 'package:food_user_app/features/profile/presentation/widgets/chat_support_card.dart';
 import 'package:food_user_app/features/profile/presentation/widgets/logout_card.dart';
@@ -47,9 +48,7 @@ class _ProfileScreensState extends State<ProfileScreens> {
               child: BlocConsumer<ImageBloc, ImageState>(
                 listener: (context, state) {
                   if (state is ImageError) {
-                    ScaffoldMessenger.of(
-                      context,
-                    ).showSnackBar(SnackBar(content: Text(state.message)));
+                    CustomSnackBar.redCustomSnackBar(context, state.message);
                   }
                 },
                 builder: (context, state) {

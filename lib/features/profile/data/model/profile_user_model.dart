@@ -19,10 +19,10 @@ class ProfileUserModel {
   }) {
     return ProfileUserModel(
       uid: uid,
-      name: data['name'] ?? "",
-      email: data['email'] ?? "",
-      phone: data['phone'] ?? "",
-      imageUrl: data['imageUrl'] ?? "",
+      name: data['name']?.toString() ?? "",
+      email: data['email']?.toString() ?? "",
+      phone: data['phone']?.toString() ?? "",
+      imageUrl: data['imageUrl']?.toString() ?? "",
     );
   }
 }
