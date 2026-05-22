@@ -9,7 +9,6 @@ class NotificationCubit extends Cubit<NotificationState> {
 
   NotificationCubit() : super(NotificationInitial());
 
-  // ✅ Real time stream of all notifications
   Stream<QuerySnapshot> getNotificationsStream() {
     return _db
         .collection('notifications')
@@ -17,16 +16,17 @@ class NotificationCubit extends Cubit<NotificationState> {
         .snapshots();
   }
 
-  // ✅ Get unread count based on last seen time
   Future<int> getUnreadCount() async {
     try {
       final prefs = await SharedPreferences.getInstance();
       final lastSeen = prefs.getInt('lastSeenNotification') ?? 0;
-      final lastSeenTime = DateTime.fromMillisecondsSinceEpoch(lastSeen);
 
       final snapshot = await _db
           .collection('notifications')
-          .where('createdAt', isGreaterThan: Timestamp.fromDate(lastSeenTime))
+          .where(
+            'createdAt',
+            isGreaterThan: Timestamp.fromMillisecondsSinceEpoch(lastSeen),
+          )
           .get();
 
       return snapshot.docs.length;
@@ -36,14 +36,40 @@ class NotificationCubit extends Cubit<NotificationState> {
     }
   }
 
-  // ✅ Mark all as read when user opens notification screen
   Future<void> markAllAsRead() async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      await prefs.setInt(
-        'lastSeenNotification',
-        DateTime.now().millisecondsSinceEpoch,
-      );
+
+      final latestSnapshot = await _db
+          .collection('notifications')
+          .orderBy('createdAt', descending: true)
+          .limit(1)
+          .get();
+
+      if (latestSnapshot.docs.isEmpty) {
+        await prefs.setInt(
+          'lastSeenNotification',
+          DateTime.now().millisecondsSinceEpoch,
+        );
+        emit(NotificationInitial());
+        return;
+      }
+
+      final latestData = latestSnapshot.docs.first.data();
+      final latestCreatedAt = latestData['createdAt'];
+
+      if (latestCreatedAt is Timestamp) {
+        await prefs.setInt(
+          'lastSeenNotification',
+          latestCreatedAt.millisecondsSinceEpoch,
+        );
+      } else {
+        await prefs.setInt(
+          'lastSeenNotification',
+          DateTime.now().millisecondsSinceEpoch,
+        );
+      }
+
       emit(NotificationInitial());
     } catch (e) {
       log('Error marking as read: $e');
