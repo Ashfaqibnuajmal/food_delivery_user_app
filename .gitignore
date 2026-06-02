@@ -48,3 +48,9 @@ app.*.map.json
 .env
 .env.*
 !.env.example
+
+# Firebase & Google
+google-services.json
+GoogleService-Info.plist
+*.keystore
+*.jks
