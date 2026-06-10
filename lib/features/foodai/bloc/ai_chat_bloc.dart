@@ -4,7 +4,7 @@ import 'ai_chat_event.dart';
 import 'ai_chat_state.dart';
 
 class AiChatBloc extends Bloc<AiChatEvent, AiChatState> {
-  final String apiKey = "AIzaSyAnnGDl-KzOgI5n6zhFM7dbQTWTJC9iUew";
+  final String apiKey = "AIzaSyDn0_fHXdgxHIz3jnQSJ4KgtKJeuDka0c8";
   late GenerativeModel model;
 
   final List<String> allowedKeywords = [
@@ -55,7 +55,7 @@ class AiChatBloc extends Bloc<AiChatEvent, AiChatState> {
     "spicy", "sweet", "savory", "tangy", "crunchy", "crispy", "juicy", "sauce",
   ];
   AiChatBloc() : super(const AiChatInitial()) {
-    model = GenerativeModel(model: 'gemini-1.5-flash-latest', apiKey: apiKey);
+    model = GenerativeModel(model: 'gemini-2.0-flash', apiKey: apiKey);
 
     on<GenerateContentEvent>((event, emit) async {
       final updatedMessages = List<Map<String, dynamic>>.from(state.messages)
@@ -140,6 +140,6 @@ class AiChatBloc extends Bloc<AiChatEvent, AiChatState> {
       return "🚧 AI model is overloaded.\nPlease try again shortly.";
     }
 
-    return "Something went wrong.\n Please try again later.";
+    return "Something went wrong.\n Please try again later.$error";
   }
 }
