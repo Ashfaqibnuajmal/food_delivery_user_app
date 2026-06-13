@@ -91,49 +91,47 @@ This project follows a Feature-Based Folder Structure for better scalability and
 * Cloud Firestore
 * Firebase Storage
 * Cloudinary
-
 ## Screenshots
 
 ### Splash Screen
 
-(Add Screenshot Here)
+![Splash Screen](screenshots/splash.jpeg)
 
 ### Login Screen
 
-(Add Screenshot Here)
+![Login Screen](screenshots/login.jpeg)
 
 ### Home Screen
 
-(Add Screenshot Here)
-
-### Food Details
-
-(Add Screenshot Here)
+![Home Screen](screenshots/home.jpeg)
 
 ### Favorites
 
-(Add Screenshot Here)
+![Favorites](screenshots/favorites.jpeg)
 
 ### Cart
 
-(Add Screenshot Here)
+![Cart](screenshots/cart.jpeg)
 
 ### Checkout
 
-(Add Screenshot Here)
+![Checkout](screenshots/checkout.jpeg)
 
 ### AI Food Assistant
 
-(Add Screenshot Here)
+![AI Food Assistant](screenshots/chatbot.jpeg)
+
+### Chat Support
+
+![Chat Support](screenshots/chat_support.jpeg)
 
 ### Profile
 
-(Add Screenshot Here)
+![Profile](screenshots/profile.jpeg)
 
 ### Order History
 
-(Add Screenshot Here)
-
+![Order History](screenshots/order_history.jpeg)
 ## Installation
 
 ```bash
